@@ -22,7 +22,7 @@ def count():
     try:
         day = request.args.get('day')
     except:
-        return 'Error. Wrong arguments.'
+        return json.dumps('data',[])
     result = []
     cursor = g.con.cursor()
     cursor.execute("""SELECT * FROM election where day = %s """, (day,))

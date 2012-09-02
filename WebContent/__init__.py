@@ -28,10 +28,9 @@ def count():
     cursor.execute("""SELECT * FROM election where day = %s """, (day,))
     entry = cursor.fetchone()
     while entry:
-        result.append([entry[1],entry[2],entry[3]])
+        result.append({'state':entry[1],'obama':entry[2],'romney':entry[3]})
         entry = cursor.fetchone()
-    print result
-    return json.dumps('data',result)
+    return json.dumps({'data':result})
 
 if __name__ == '__main__':
-    app.run(debug=DEBUG, port = 5000)
+    app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

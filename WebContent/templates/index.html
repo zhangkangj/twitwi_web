@@ -40,7 +40,27 @@
 	</div>
 
 	<div class="container">
-		<h1>Something here</h1>
+		<script type="text/javascript">
+			var width = 1500, height = 1000;
+			var svg = d3.select('body').append("svg").attr('width', width).attr('height', height);
+			var path = d3.geo.path().projection(d3.geo.albersUsa().scale(1400).translate([600,360]));
+			var g = svg.append("g").attr("id", "map");
+			// set up the map
+			d3.json("static/dat/us_states.json", function(json) {
+				var ss = g.selectAll("g").data(json.features).enter().append("g").attr("class", "state").attr("id", function(d){return d.properties.name;});
+				ss.append("path").attr("d", path).style("fill", "SteelBlue");
+				ss.append("text").attr("x", function(d){return path.centroid(d)[0];}).attr("y", function(d){return path.centroid(d)[1];}).attr("dx", "0.35em").style("fill", "white").attr("text-anchor", "middle").text(function(d){return String(d.properties.name)});
+				// set up the count after the map
+				d3.json("count?time=1325394000", function(json) {
+					var color = d3.scale.linear().domain([0, 1]).range(["red", "blue"]);
+					for (var i=0; i<json.data.length; i++) {
+						var item = json.data[i];
+						g.select("#"+item.state).select("path").style("fill",color(item.obama/(item.obama+item.romney))).append("svg:title").text("Obama: "+d3.round(item.obama/(item.obama+item.romney)*100)+"%, Romney: "+d3.round(item.romney/(item.obama+item.romney)*100)+"%");
+					}
+				});
+			});
+
+		</script>
 	</div>
 </body>
 </html>

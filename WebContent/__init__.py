@@ -20,12 +20,12 @@ def welcome():
 @app.route('/count')
 def count():
     try:
-        day = request.args.get('day')
+        time = request.args.get('time')
     except:
         return json.dumps('data',[])
     result = []
     cursor = g.con.cursor()
-    cursor.execute("""SELECT * FROM election where day = %s """, (day,))
+    cursor.execute("""SELECT * FROM election where day = %s """, (time,))
     entry = cursor.fetchone()
     while entry:
         result.append({'state':entry[1],'obama':entry[2],'romney':entry[3]})

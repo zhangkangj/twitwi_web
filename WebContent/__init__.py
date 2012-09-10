@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.before_request
 def before_request():
     try:
-        g.con = MySQLdb.connect(host = '127.0.0.1', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
         print "connected to db"
     except:
         print 'server down'

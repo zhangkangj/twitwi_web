@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var width = 1000, height = 600,  centered, over;
-	var svg = d3.select('#container').append("svg").attr('width', width).attr('height', height);
+	var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
 	svg.append("rect").attr("width", width).attr("height", height).attr("class", "background").on("click", click).on("mouseover", hover);
 	var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
 	var g = svg.append("g").attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");
@@ -12,7 +12,7 @@ $(document).ready(function() {
 		// set up date selector
 		d3.json("/static/dat/times.json", function(json) {
 			var times = json.times.reverse();
-			var ts = d3.select("#container").append("div").append("select");
+			var ts = d3.select("#map_container").append("div").append("select");
 			// compensate the EST timezone offset
 			ts.selectAll("option").data(times).enter().append("option").attr("value", String).text(function(d) {return (new Date((d + 4*3600)*1000)).toDateString();});
 			// initialize with the lastest data
@@ -27,11 +27,14 @@ $(document).ready(function() {
 		// set up the count after date selection
 		d3.json(count_url, function(json) {
 			var color = d3.scale.quantize().range(["#9E2017", "#BB4E55", "#FADCA5", "#40698B", "#0D406B"]);
-			console.log(color)
 			// TODO change count.json's key to state abbreviations
 			for (var i=0; i<json.data.length; i++) {
 				var item = json.data[i];
-				g.select("#"+item.state).select("path").style("fill",color(item.obama/(item.obama+item.romney)));
+				var temp = item.obama/(item.obama+item.romney);
+				if (temp > 0.5) temp = 0.5 + Math.sqrt((temp - 0.5)*2)/2;
+				else temp = 0.5 - Math.sqrt((0.5 - temp)*2)/2;
+				console.log(temp);
+				g.select("#"+item.state).select("path").style("fill",color(temp));
 				//append("svg:title").text(item.state+": Obama: "+d3.round(item.obama/(item.obama+item.romney)*100)+"%, Romney: "+d3.round(item.romney/(item.obama+item.romney)*100)+"%");
 			}
 		});

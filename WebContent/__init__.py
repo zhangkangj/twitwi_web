@@ -15,7 +15,9 @@ def before_request():
 
 @app.route('/')
 def welcome():
-    return render_template('index.html')
+    response = make_response(render_template('index.html'))
+    response.headers['Cache-Control'] = 'no-cache, must-revalidate'
+    return response
 
 @app.route('/count')
 def count():

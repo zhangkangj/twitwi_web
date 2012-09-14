@@ -34,5 +34,15 @@ def count():
         entry = cursor.fetchone()
     return json.dumps({'data':result})
 
+@app.route('/sample')
+def sample_tweet():
+    cursor = g.con.cursor()
+    cursor.execute("""SELECT * FROM election_tweet limit 10 """)
+    entry = cursor.fetchone()
+    result = []
+    while entry:
+        pass
+    return 
+
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

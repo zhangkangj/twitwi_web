@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var width = 1000, height = 600,  centered, over;
+	var width = 1000, height = 600, centered = false, over = true;
 	var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
 	svg.append("rect").attr("width", width).attr("height", height).attr("class", "background").on("click", click).on("mouseover", hover);
 	var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
@@ -33,7 +33,6 @@ $(document).ready(function() {
 				var temp = item.obama/(item.obama+item.romney);
 				if (temp > 0.5) temp = 0.5 + Math.sqrt((temp - 0.5)*2)/2;
 				else temp = 0.5 - Math.sqrt((0.5 - temp)*2)/2;
-				console.log(temp);
 				g.select("#"+item.state).select("path").style("fill",color(temp));
 				//append("svg:title").text(item.state+": Obama: "+d3.round(item.obama/(item.obama+item.romney)*100)+"%, Romney: "+d3.round(item.romney/(item.obama+item.romney)*100)+"%");
 			}
@@ -42,7 +41,6 @@ $(document).ready(function() {
 
 	function click(d) {
 		var x = 0, y = 0, k = 1;
-		centered = null;
 		if (d && centered != d) {
 			var centroid = path.centroid(d);
 			x = -centroid[0];

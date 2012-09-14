@@ -65,6 +65,11 @@ $(document).ready(function() {
 		g.selectAll("g.state").classed("hover", over && function(d) { return d == over; });
 	}
 
+  // carousel
+  $('.carousel').carousel({
+    interval: false
+  })
+
   // topic graph
 	var w = 1000,
 	    h = 600,
@@ -73,17 +78,28 @@ $(document).ready(function() {
 	    root;
 	var force = d3.layout.force()
 	    .on("tick", tick)
-	    .charge(function(d) { return d._children ? -d.size / 100 : -30; })
-	    .linkDistance(function(d) { return d.target._children ? 80 : 30; })
+	    .charge(function(d) { return -30; })
+	    .linkDistance(function(d) { return  120; })
 	    .size([w, h - 160]);
 
 	var vis = d3.select("#topic_container").append("svg:svg")
 	    .attr("width", w)
 	    .attr("height", h);
 
-	d3.json("static/js/flare.json", function(json) {
-	  root = json;
-	  root.fixed = true;
+	d3.json('/topic', function(json) {
+    var keys = [];
+    for (var key in json) {
+      keys.push(key);
+    }
+    var mostRecent = keys[keys.length-1];
+    // convert json
+    var topicArray = []
+    var topicJson = json[mostRecent]['obama'];
+    for (var c in topicJson) {
+      topicArray.push({"topic": c, "count": topicJson[c]});
+    }
+	  root = {"name": "obama" , "children": topicArray};
+	  root.fixed= true;
 	  root.x = w / 2;
 	  root.y = h / 2 - 80;
 	  update();
@@ -92,7 +108,7 @@ $(document).ready(function() {
 	function update() {
 	  var nodes = flatten(root),
 	      links = d3.layout.tree().links(nodes);
-
+    window.console.log("links", links);
 	  // Restart the force layout.
 	  force
 	      .nodes(nodes)
@@ -120,14 +136,14 @@ $(document).ready(function() {
 	      .style("fill", color);
 
 	  node.transition()
-	      .attr("r", function(d) { return d.children ? 4.5 : Math.sqrt(d.size) / 10; });
+	      .attr("r", function(d) { return d.children ? 50 : Math.sqrt(d.count); });
 
 	  // Enter any new nodes.
 	  node.enter().append("svg:circle")
 	      .attr("class", "node")
 	      .attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; })
-	      .attr("r", function(d) { return d.children ? 4.5 : Math.sqrt(d.size) / 10; })
+	      .attr("r", function(d) { return d.children ? 50 : Math.sqrt(d.count); })
 	      .style("fill", color)
 	      .on("click", click)
 	      .call(force.drag);
@@ -146,37 +162,33 @@ $(document).ready(function() {
 	      .attr("cy", function(d) { return d.y; });
 	}
 
-	// Color leaf nodes orange, and packages white or blue.
-	function color(d) {
-	  return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
-	}
 
-	// Toggle children on click.
-	function click(d) {
-	  if (d.children) {
-	    d._children = d.children;
-	    d.children = null;
-	  } else {
-	    d.children = d._children;
-	    d._children = null;
-	  }
-	  update();
-	}
+  function color(d) {
+      return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+  }
 
-	// Returns a list of all nodes under the root.
-	function flatten(root) {
-	  var nodes = [], i = 0;
+  // Toggle children on click.
+  function click(d) {
+    if (d.children) {
+      d._children = d.children;
+      d.children = null;
+    } else {
+      d.children = d._children;
+      d._children = null;
+    }
+    update();
+  }
 
-	  function recurse(node) {
-	    if (node.children) node.size = node.children.reduce(function(p, v) { return p + recurse(v); }, 0);
-	    if (!node.id) node.id = ++i;
-	    nodes.push(node);
-	    return node.size;
-	  }
-
-	  root.size = recurse(root);
-	  return nodes;
-	}
+  function flatten(root) {
+      var nodes = [], i = 0;
+      function recurse(node) {
+        if (node.children) node.count = node.children.reduce(function(p, v) { return p + recurse(v); }, 0);
+        if (!node.id) node.id = ++i;
+        nodes.push(node);
+        return node.count;
+      }
+      root.count = recurse(root);
+      return nodes;
+  }
 });
-
 

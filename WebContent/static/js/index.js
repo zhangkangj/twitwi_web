@@ -75,11 +75,13 @@ $(document).ready(function() {
 	    h = 600,
 	    node,
 	    link,
-	    root;
+	    root1,
+      root2;
 	var force = d3.layout.force()
 	    .on("tick", tick)
-	    .charge(function(d) { return -30; })
+	    .charge(function(d) { return -200; })
 	    .linkDistance(function(d) { return  120; })
+      .gravity(0.005)
 	    .size([w, h - 160]);
 
 	var vis = d3.select("#topic_container").append("svg:svg")
@@ -93,22 +95,31 @@ $(document).ready(function() {
     }
     var mostRecent = keys[keys.length-1];
     // convert json
-    var topicArray = []
-    var topicJson = json[mostRecent]['obama'];
-    for (var c in topicJson) {
-      topicArray.push({"topic": c, "count": topicJson[c]});
+    var topicArray1 = [];
+    var topicJson1 = json[mostRecent]['obama'];
+    var topicArray2 = [];
+    var topicJson2 = json[mostRecent]['romney'];
+
+    for (var c in topicJson1) {
+      topicArray1.push({"topic": c, "count": topicJson1[c]});
     }
-	  root = {"name": "obama" , "children": topicArray};
-	  root.fixed= true;
-	  root.x = w / 2;
-	  root.y = h / 2 - 80;
-	  update();
+    for (var c in topicJson2) {
+      topicArray2.push({"topic": c, "count": topicJson2[c]});
+    }
+	  root1 = {"name": "obama" , "children": topicArray1};
+    root2 = {"name": "romney", "children": topicArray2};
+	  root1.fixed = true;
+    root2.fixed = true;
+	  root1.x = w / 2 - 150;
+	  root1.y = h / 2 - 80;
+    root2.x = w / 2 + 150;
+    root2.y = h / 2 - 80;
+    update();
 	});
 
 	function update() {
-	  var nodes = flatten(root),
+	  var nodes = flatten(root1).concat(flatten(root2)),
 	      links = d3.layout.tree().links(nodes);
-    window.console.log("links", links);
 	  // Restart the force layout.
 	  force
 	      .nodes(nodes)
@@ -118,7 +129,6 @@ $(document).ready(function() {
 	  // Update the links…
 	  link = vis.selectAll("line.link")
 	      .data(links, function(d) { return d.target.id; });
-
 	  // Enter any new links.
 	  link.enter().insert("svg:line", ".node")
 	      .attr("class", "link")
@@ -138,16 +148,26 @@ $(document).ready(function() {
 	  node.transition()
 	      .attr("r", function(d) { return d.children ? 50 : Math.sqrt(d.count); });
 
+    // for displaying text
+    var x = []; var y = []; var name = [];
 	  // Enter any new nodes.
 	  node.enter().append("svg:circle")
 	      .attr("class", "node")
-	      .attr("cx", function(d) { return d.x; })
+	      .attr("cx", function(d) { if(d.name) {x.push(d.x); y.push(d.y); name.push(d.name);} return d.x; })
 	      .attr("cy", function(d) { return d.y; })
 	      .attr("r", function(d) { return d.children ? 50 : Math.sqrt(d.count); })
 	      .style("fill", color)
 	      .on("click", click)
-	      .call(force.drag);
 
+    window.console.log(vis);
+    for ( var i = 0; i < x.length; i++) {
+      vis.append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", ".3em")
+        .attr("x", function(d) {return x[i]})
+        .attr("y", function(d) {return y[i]})
+        .text(function(d) { return name[i]});
+    }
 	  // Exit any old nodes.
 	  node.exit().remove();
 	}

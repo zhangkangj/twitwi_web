@@ -65,11 +65,6 @@ $(document).ready(function() {
 		g.selectAll("g.state").classed("hover", over && function(d) { return d == over; });
 	}
 
-  // carousel
-  $('.carousel').carousel({
-    interval: false
-  })
-
   // topic graph
 	var w = 1000,
 	    h = 600,
@@ -157,9 +152,8 @@ $(document).ready(function() {
 	      .attr("cy", function(d) { return d.y; })
 	      .attr("r", function(d) { return d.children ? 50 : Math.sqrt(d.count); })
 	      .style("fill", color)
-	      .on("click", click)
+	      .on("click", topicClick)
 
-    window.console.log(vis);
     for ( var i = 0; i < x.length; i++) {
       vis.append("text")
         .attr("text-anchor", "middle")
@@ -188,7 +182,7 @@ $(document).ready(function() {
   }
 
   // Toggle children on click.
-  function click(d) {
+  function topicClick(d) {
     if (d.children) {
       d._children = d.children;
       d.children = null;
@@ -210,5 +204,12 @@ $(document).ready(function() {
       root.count = recurse(root);
       return nodes;
   }
+
+  // carousel
+  $('.carousel').carousel({
+    interval: false
+  });
+
 });
+
 

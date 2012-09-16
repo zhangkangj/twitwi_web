@@ -7,11 +7,7 @@ app = Flask(__name__)
 
 @app.before_request
 def before_request():
-    try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
-        print "connected to db"
-    except:
-        print 'server down'
+    return
 
 @app.route('/')
 def welcome():
@@ -26,6 +22,10 @@ def count():
     except:
         return json.dumps('data',[])
     result = []
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
     cursor = g.con.cursor()
     cursor.execute("""SELECT * FROM election where time = %s """, (time,))
     entry = cursor.fetchone()
@@ -37,6 +37,10 @@ def count():
 @app.route('/mention')
 def mention():
     result = {}
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
     cursor = g.con.cursor()
     cursor.execute("""SELECT time, state, entity, count FROM election_count WHERE topic = 'mention' ORDER BY time""")
     row = cursor.fetchone()
@@ -60,6 +64,10 @@ def mention():
 @app.route('/topic')
 def topic():
     result = {}
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
     cursor = g.con.cursor()
     cursor.execute("""SELECT time, topic, entity, count FROM election_count WHERE topic != 'mention' ORDER BY time""")
     row = cursor.fetchone()
@@ -82,13 +90,30 @@ def topic():
 
 @app.route('/sample')
 def sample_tweet():
-    cursor = g.con.cursor()
-    cursor.execute("""SELECT * FROM election_tweet limit 10 """)
-    entry = cursor.fetchone()
     result = []
+    try:
+        time = request.args.get('time')
+        state = request.args.get('state')
+        topic = request.args.get('topic')
+        entity = request.args.get('entity')
+    except:
+        return json.dumps(result)
+    if None in [time, topic, entity]:
+        return json.dumps(result)
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
+    cursor = g.con.cursor()
+    if state == None:
+        cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and topic = %s and entity = %s ORDER BY retweet_count LIMIT 100""" , (time, int(time) + 86400, topic, entity))    
+    else:
+        cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s and entity = %s ORDER BY retweet_count LIMIT 100""" , (time, int(time) + 86400, state, topic, entity))
+    entry = cursor.fetchone()
     while entry:
-        pass
-    return 
+        result.append({'id':entry[0],'created_at':entry[1],'user_id':entry[2], 'screen_name': entry[3], 'text': entry[4], 'retweet_count': entry[5]})
+        entry = cursor.fetchone()
+    return json.dumps(result)
 
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

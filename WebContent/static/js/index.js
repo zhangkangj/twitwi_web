@@ -12,7 +12,7 @@ $(document).ready(function() {
 		// set up date selector
 		d3.json("/static/dat/times.json", function(json) {
 			var times = json.times.reverse();
-			var ts = d3.select("#page").append("div").append("select");
+			var ts = d3.select("#timeline").append("div").append("select");
 			// compensate the EST timezone offset
 			ts.selectAll("option").data(times).enter().append("option").attr("value", String).text(function(d) {return (new Date((d + 4*3600)*1000)).toDateString();});
 			// initialize with the lastest data

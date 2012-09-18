@@ -10,7 +10,6 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="/static/img/twitter_favicon.ico">
 	
-	<link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
 	<link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
 	<link href="/static/css/index.css" rel="stylesheet" type="text/css">
@@ -41,15 +40,55 @@
 			</div>
 		</div>
 	</div>
-	<div id="page">
-		<div id="myCarousel" class="carousel slide">
-			<div class="carousel-inner">
-				<div id="map_container" class="active item"></div>
-				<div id="topic_container" class="item"></div>
-			</div>
-		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
-		  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+
+	<div id="page" class="container-fluid">
+		<div id = "menu" class="pagination offset2">
+			<ul>
+				<li class="active"><a href="#">Election Map</a></li>
+				<li class="disabled"><a href="#">Trending Topics</a></li>
+				<li class="disabled"><a href="#">Network</a></li>
+				<li class="disabled"><a href="#">Real time</a></li>
+			</ul>
 		</div>
+
+		<div class="row">
+			<div class="span10  offset2">
+				<div id="myCarousel" class="carousel slide">
+					<div class="carousel-inner">
+						<div id="map_container" class="active item"></div>
+						<div id="topic_container" class="item"></div>
+					</div>
+				  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
+				  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+				</div>
+			</div>	
+			<div class="span3 hero-unit">
+      			<table id = "tweet" class="table table-hover span2">
+					<thead>
+						<tr>
+							<th> User </th>
+							<th> Time </th>
+							<th> Tweet </th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>Mark</td>
+						<td>Otto</td>
+						<td>@mdo</td>
+					</tr>
+					<tr>
+						<td>Jacob</td>
+						<td>Thornton</td>
+						<td>@fat</td>
+					</tr>
+					</tbody>
+				</table>
+    		</div>
+		</div>
+		
+		<div id = "timeline" class = "offset2"></div>
+		
 	</div>
 </body>
 </html>

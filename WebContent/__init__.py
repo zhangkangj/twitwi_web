@@ -2,7 +2,7 @@ from flask import *
 import MySQLdb
 import json
 
-DEBUG = True
+DEBUG = False
 app = Flask(__name__)
 
 @app.before_request

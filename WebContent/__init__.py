@@ -15,7 +15,11 @@ def welcome():
     response.headers['Cache-Control'] = 'no-cache, must-revalidate'
     return response
 
-@app.route('/count')
+@app.route('/test')
+def test():
+    return render_template('mention_map.html')
+
+@app.route('/count.json')
 def count():
     try:
         time = request.args.get('time')
@@ -34,7 +38,7 @@ def count():
         entry = cursor.fetchone()
     return json.dumps({'data':result})
 
-@app.route('/mention')
+@app.route('/mention.json')
 def mention():
     result = {}
     try:
@@ -61,7 +65,7 @@ def mention():
         row = cursor.fetchone()
     return json.dumps(result)
     
-@app.route('/topic')
+@app.route('/topic.json')
 def topic():
     result = {}
     try:

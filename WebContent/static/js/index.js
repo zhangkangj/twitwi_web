@@ -1,73 +1,161 @@
+function setup_map(json) {
+	// set up the map
+	var ss = g.selectAll("g").data(json.features).enter().append("g").attr("class", "state").attr("id", function(d){return d.properties.abbreviation;}).on("click", click).on("mouseover", hover).on("mousemove", move_box).on('mouseout', hide_box);
+	ss.append("path").attr("d", path);
+	// commit to short-term storage only
+	perform(setup_date_selection, 'times', '/static/dat/times.json', false);
+}
+
+function setup_date_selection(json) {
+	var times = json.times;
+	
+	// set up slider
+	$('<div>').attr('id','slider').slider({
+		value: times.length-1, 
+		min: 0, 
+		max: times.length-1, 
+		step: 1,
+		animate: 500,
+		create: function(event, ui) {$('#date').val(date(times[times.length-1])); update_count(times[0]);},
+		slide: function(event, ui) {$('#date').val(date(times[ui.value]));},
+		change: function(event, ui) {$('#date').val(date(times[ui.value])); update_count(times[ui.value]);}
+	}).prependTo('#control');
+	
+	// set up datepicker
+	$('#date').datepicker({
+		dateFormat: 'D M dd yy',
+		beforeShowDay: function(date) {
+			if (index(times, date) > -1 ) {
+				return [true, ''];
+			}
+			return [false, ''];
+		},
+	}).change(function(event) {$('#slider').slider('value', index(times, new Date($('#date').val())));});
+	
+}
+
+function color_states(json) {
+	current_count = json;
+	// TODO change count.json's key to state abbreviations
+	for (var i=0; i<json.data.length; i++) {
+		var item = json.data[i];
+		g.select("#"+item.state).select("path").style("fill", color(item.obama/(item.obama+item.romney)));
+		//append("svg:title").text(item.state+": Obama: "+d3.round(item.obama/(item.obama+item.romney)*100)+"%, Romney: "+d3.round(item.romney/(item.obama+item.romney)*100)+"%");
+	}
+}
+
+// convert epoch time in seconds into EST date string
+function date(time) {
+	// compensate the EST timezone offset (date strings in EST)
+	return (new Date((time+4*3600)*1000)).toDateString();
+}
+
+// inverse of date: converting date string into epoch time
+function undate(date) {
+	// shift the time compensating for local timezone
+	return date.getTime()/1000+date.getTimezoneOffset()*60-6*3600;
+}
+
+// ugly (but compact) solution for daylight DST discontinuity
+function index(times, date) {
+	return (times.indexOf(undate(date))+1  || times.indexOf(undate(date)-3600)+1 || times.indexOf(undate(date)+3600)+1 || null) - 1;
+}
+
+function update_count(time) {
+	perform(color_states, 'count'+time, "/count.json?time=" + time);
+}
+
+function click(d) {
+	var x = 0, y = 0, k = 1;
+	
+	if (d && centered != d) {
+		var centroid = path.centroid(d);
+		x = -centroid[0];
+		y = -centroid[1];
+		// zoom level depends on the size of the state
+		// make an exception for Hawaii (small area but large span)
+		if (d.properties.name == "Hawaii") {
+			k = 4;
+		} else {
+			k = 200*Math.sqrt(1/(path.area(d) + 20000/path.area(d)));
+		}
+		centered = d;
+		// TODO present detailed state-specific info
+	} else {
+		centered = null;
+		// TODO clear state-specific info
+	}
+	
+	g.selectAll("g.state").classed("deactive", centered && function(d) { return d != centered; });
+
+	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
+}
+
+function hover(d) {
+	over = null;
+	if (d) {
+		over = d;
+		// switch place to be drawn on top
+		var region = g.select('#'+d.properties.abbreviation)[0][0];
+		$(region).parent().append(region);
+		// TODO generate a info box next to the cursor
+		$('#state-name').text(d.properties.name);
+		// calculate stats
+		var o = 1, r = 1, tc = 2, data = current_count.data;
+		for (i in data) {
+			if (data[i].state == d.properties.abbreviation) {
+				o = data[i].obama;
+				r = data[i].romney;
+				tc = (o + r)/100;
+			}
+		}
+		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama           : '+o+', '+(o/tc).toFixed(1)+'%'))
+			.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: '+r+', '+(r/tc).toFixed(1)+'%'));
+		var m = d3.mouse(c);
+		box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')').show();
+	}
+	g.selectAll("g.state").classed("hover", over && function(d) { return d == over; });
+}
+
+function move_box() {
+	var m = d3.mouse(c);
+	box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')');
+}
+
+function hide_box() {
+	box.hide();
+	$('#state-info').empty();
+}
+
+
+
+var width = 1000, height = 500,  box_offset = 15;
+//color scale
+var color = d3.scale.quantize().range(['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#FADCA5', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B']);
+var centered, over;
+var current_count;
+var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
+var g, c, svgns, box;
+
 $(document).ready(function() {
-	var width = 1000, height = 600, centered = false, over = true;
+	/* initialize map */
 	var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
 	svg.append("rect").attr("width", width).attr("height", height).attr("class", "background").on("click", click).on("mouseover", hover);
-	var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
-	var g = svg.append("g").attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");
-	// set up the map
-	d3.json("/static/dat/us_states.json", function(json) {
-		var ss = g.selectAll("g").data(json.features).enter().append("g").attr("class", "state").attr("id", function(d){return d.properties.abbreviation;}).on("click", click).on("mouseover", hover);
-		ss.append("path").attr("d", path);
-		//ss.append("text").attr("x", function(d){return path.centroid(d)[0];}).attr("y", function(d){return path.centroid(d)[1];}).attr("dx", "0.35em").style("fill", "white").attr("text-anchor", "middle").text(function(d){return String(d.properties.name)});
-		// set up date selector
-		d3.json("/static/dat/times.json", function(json) {
-			var times = json.times.reverse();
-			var ts = d3.select("#timeline").append("div").append("select");
-			// compensate the EST timezone offset
-			ts.selectAll("option").data(times).enter().append("option").attr("value", String).text(function(d) {return (new Date((d + 4*3600)*1000)).toDateString();});
-			// initialize with the lastest data
-			update_count(times[0]);
-			// register listener to date selector
-			ts.on("change", function() {return update_count(this.value);});
-		});
-	});
+	g = svg.append("g").attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");	
+
+	c = svg[0][0];
+	svgns = c.namespaceURI;
+	box = $(document.createElementNS(svgns, 'g')).attr('id', 'box').attr('class', 'hover-box').hide()
+		.append($(document.createElementNS(svgns, 'rect')).attr('width','160').attr('height','70').attr('rx', '3'))
+		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
+		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
 	
-	function update_count(time) {
-		var count_url = "/count?time=" + time;
-		// set up the count after date selection
-		d3.json(count_url, function(json) {
-			var color = d3.scale.quantize().range(["#9E2017", "#BB4E55", "#FADCA5", "#40698B", "#0D406B"]);
-			// TODO change count.json's key to state abbreviations
-			for (var i=0; i<json.data.length; i++) {
-				var item = json.data[i];
-				var temp = item.obama/(item.obama+item.romney);
-				if (temp > 0.5) temp = 0.5 + Math.sqrt((temp - 0.5)*2)/2;
-				else temp = 0.5 - Math.sqrt((0.5 - temp)*2)/2;
-				g.select("#"+item.state).select("path").style("fill",color(temp));
-				//append("svg:title").text(item.state+": Obama: "+d3.round(item.obama/(item.obama+item.romney)*100)+"%, Romney: "+d3.round(item.romney/(item.obama+item.romney)*100)+"%");
-			}
-		});
-	}
-
-	function click(d) {
-		var x = 0, y = 0, k = 1;
-		if (d && centered != d) {
-			var centroid = path.centroid(d);
-			x = -centroid[0];
-			y = -centroid[1];
-			// scaling depends on the size of the state
-			k = 200*Math.sqrt(1/(path.area(d) + 20000/path.area(d)));
-			centered = d;
-		} else {
-			centered = null;
-		}
-		g.selectAll("g.state").classed("deactive", centered && function(d) { return d != centered; });
-		g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
-	}
-
-	function hover(d) {
-		over = null;
-		if (d) {
-			over = d;
-			var region = g.select("#"+d.properties.abbreviation)[0][0];
-			region.parentNode.appendChild(region);
-		}
-		g.selectAll("g.state").classed("hover", over && function(d) { return d == over; });
-	}
-
+	perform(setup_map, 'us_states', '/static/dat/us_states.json');
+	$(c).append(box);
+	
   // topic graph
 	var w = 1000,
-	    h = 600,
+	    h = 500,
 	    node,
 	    link,
 	    root1,
@@ -83,7 +171,7 @@ $(document).ready(function() {
 	    .attr("width", w)
 	    .attr("height", h);
 
-	d3.json('/topic', function(json) {
+	d3.json('/topic.json', function(json) {
     var keys = [];
     for (var key in json) {
       keys.push(key);
@@ -158,9 +246,9 @@ $(document).ready(function() {
       vis.append("text")
         .attr("text-anchor", "middle")
         .attr("dy", ".3em")
-        .attr("x", function(d) {return x[i]})
-        .attr("y", function(d) {return y[i]})
-        .text(function(d) { return name[i]});
+        .attr("x", function(d) {return x[i];})
+        .attr("y", function(d) {return y[i];})
+        .text(function(d) { return name[i];});
     }
 	  // Exit any old nodes.
 	  node.exit().remove();

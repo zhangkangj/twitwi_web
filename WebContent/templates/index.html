@@ -10,17 +10,21 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="/static/img/twitter_favicon.ico">
 	
-	<link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
-	<link href="/static/css/index.css" rel="stylesheet" type="text/css">
+	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+	<link type="text/css" href="/static/lib/jquery/jquery-ui-1.8.23.custom.css" rel="Stylesheet"/>			
+	<link type="text/css" href="/static/css/index.css" rel="stylesheet" type="text/css">
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-	<script src="http://d3js.org/d3.v2.js"></script>
-	<script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/static/js/index.js"></script>
+	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
+	<script type="text/javascript" src="/static/lib/jquery/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="/static/lib/jquery/jquery-ui-1.8.23.custom.min.js"></script>
+	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
+	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/js/index.js"></script>
 </head>
 
 <body>
+	<div></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -42,7 +46,7 @@
 	</div>
 
 	<div id="page" class="container-fluid">
-		<div id = "menu" class="pagination offset1">
+		<div id = "menu" class="pagination">
 			<ul>
 				<li class="active"><a href="#">Election Map</a></li>
 				<li class="disabled"><a href="#">Trending Topics</a></li>
@@ -51,43 +55,18 @@
 			</ul>
 		</div>
 
-		<div class="row">
-			<div class="span10  offset1">
-				<div id="myCarousel" class="carousel slide">
-					<div class="carousel-inner">
-						<div id="map_container" class="active item"></div>
-						<div id="topic_container" class="item"></div>
-					</div>
-				  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
-				  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-				</div>
-			</div>	
-			<div class="span3 hero-unit">
-      			<table id = "tweet" class="table table-hover span2">
-					<thead>
-						<tr>
-							<th> User </th>
-							<th> Time </th>
-							<th> Tweet </th>
-						</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-					</tr>
-					<tr>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-					</tr>
-					</tbody>
-				</table>
-    		</div>
+		<div id="myCarousel" class="carousel slide">
+			<div class="carousel-inner">
+				<div id="map_container" class="active item"></div>
+				<div id="topic_container" class="item"></div>
+			</div>
+		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
+		  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		</div>
-		
-		<div id = "timeline" class = "offset1"></div>
+			
+		<div id="control">
+			<div style="margin-left:20px;"><input type="text" id="date" size="10" style="width:140px;"/></div>
+		</div>
 		
 	</div>
 </body>

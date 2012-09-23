@@ -29,9 +29,13 @@ body {
 }
 
 #page {
-	width: 1600px;
+	width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.carousel-inner {
+	margin-left: 100px;
 }
 
 #tweet {
@@ -50,4 +54,109 @@ line.link {
   fill: none;
   stroke: #9ecae1;
   stroke-width: 1.5px;
+}
+
+/* colors */
+.blue1 {color:#0d406b}
+.blue2 {color:#40698b}
+.blue3 {color:#79a5ca}
+.blue4 {color:#a4c6e3}
+.blue5 {color:#d2e0ed}
+.bluebg1 {background-color:#0d406b}
+.bluebg2 {background-color:#40698b}
+.bluebg3 {background-color:#79a5ca}
+.bluebg4 {background-color:#a4c6e3}
+.bluebg5 {background-color:#d2e0ed}
+
+.red1 {color:#9e2017}
+.red2 {color:#bb4e55}
+.red3 {color:#d77176}
+.red4 {color:#e2a6a9}
+.red5 {color:#eecbcb}
+.redbg1 {background-color:#9e2017}
+.redbg2 {background-color:#bb4e55}
+.redbg3 {background-color:#d77176}
+.redbg4 {background-color:#e2a6a9}
+.redbg5 {background-color:#eecbcb}
+
+.yellow1 {color: #fadca5}
+.yellowbg1 {background-color: #fadca5}
+
+.gray1 {color:#333}
+.gray2 {color:#666}
+.gray3 {color:#999}
+.gray4 {color:#ccc}
+.graybg1 {background-color:#333}
+.graybg2 {background-color:#666}
+.graybg3 {background-color:#999}
+.graybg4 {background-color:#ccc}
+
+/* map */
+svg {
+	border: 2px solid #888;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+.state path {
+  opacity: 1;
+  fill: #aaa;
+  stroke: #fff;
+  stroke-width: 1.5px;
+  
+  transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+     -o-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+}
+
+.hover path {
+  stroke: #888;
+  
+}
+
+.deactive path {
+  opacity: 0.5;
+}
+
+.deactive:hover path {
+  opacity: 1;
+}
+
+/* hover-box */
+.hover-box rect {
+  fill: white;
+  stroke: #aaa;
+  stroke-width: 3px;
+}
+
+.hover-box-title {
+  fill: #222;
+  font: bold 14px sans-serif;
+}
+
+.hover-box-body {
+  fill: #444;
+  font: 12px sans-serif;
+}
+
+/* UI control elements */
+#control {
+  margin-left: 100px;
+}
+
+#control div {
+  float: left;
+  font-family: sans-serif;
+}
+
+#slider {
+  margin-top: 7px;
+  width: 83%;
+  max-width: 830px;
 }

@@ -10,21 +10,31 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="/static/img/twitter_favicon.ico">
 	
+	<link type="text/css" href="/static/lib/jquery/jquery-ui-1.8.23.custom.css" rel="Stylesheet"/>
 	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
-	<link type="text/css" href="/static/lib/jquery/jquery-ui-1.8.23.custom.css" rel="Stylesheet"/>			
+	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">	
 	<link type="text/css" href="/static/css/index.css" rel="stylesheet" type="text/css">
 	
-	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
 	<script type="text/javascript" src="/static/lib/jquery/jquery-1.8.0.min.js"></script>
 	<script type="text/javascript" src="/static/lib/jquery/jquery-ui-1.8.23.custom.min.js"></script>
+	<script type="text/javascript" src="/static/lib/jquery/jquery.cycle.all.js"></script>
 	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
+	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
 	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/static/js/index.js"></script>
+	<script type="text/javascript">
+	  	var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-35060935-1']);
+	  	_gaq.push(['_trackPageview']);	
+	  	(function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  	})();
+	</script>
 </head>
 
 <body>
-	<div></div>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -63,11 +73,14 @@
 		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
 		  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		</div>
-			
+
 		<div id="control">
 			<div style="margin-left:20px;"><input type="text" id="date" size="10" style="width:140px;"/></div>
 		</div>
 		
+		<div id = 'tweets_container'>
+			<ul id = 'tweets'></ul>
+		</div>
 	</div>
 </body>
 </html>

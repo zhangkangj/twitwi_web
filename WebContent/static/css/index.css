@@ -8,24 +8,20 @@ body {
   pointer-events: all;
 }
 
-.state path {
-  opacity: 1;
-  fill: #aaa;
-  stroke: #fff;
-  stroke-width: 1.5px;
-  transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out;
-  -o-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out;
+#control {
+  margin-left: 100px;
+  height : 20px;
 }
 
-.hover path {
-  stroke: #888;  
-  stroke-width: 2.5px;
+#control div {
+  float: left;
+  font-family: sans-serif;
 }
 
-.deactive path {
-  opacity: 0.6;
+#slider {
+  margin-top: 7px;
+  width: 83%;
+  max-width: 830px;
 }
 
 #page {
@@ -38,8 +34,8 @@ body {
 	margin-left: 100px;
 }
 
-#tweet {
-	width: 100%;
+#tweets_container {
+	width: 1000px;
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -108,7 +104,6 @@ svg {
   fill: #aaa;
   stroke: #fff;
   stroke-width: 1.5px;
-  
   transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
   -moz-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
   -webkit-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
@@ -117,7 +112,6 @@ svg {
 
 .hover path {
   stroke: #888;
-  
 }
 
 .deactive path {
@@ -143,20 +137,4 @@ svg {
 .hover-box-body {
   fill: #444;
   font: 12px sans-serif;
-}
-
-/* UI control elements */
-#control {
-  margin-left: 100px;
-}
-
-#control div {
-  float: left;
-  font-family: sans-serif;
-}
-
-#slider {
-  margin-top: 7px;
-  width: 83%;
-  max-width: 830px;
 }

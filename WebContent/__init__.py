@@ -17,7 +17,7 @@ def welcome():
 
 @app.route('/test')
 def test():
-    return render_template('mention_map.html')
+    return 400
 
 @app.route('/count.json')
 def count():
@@ -55,13 +55,13 @@ def mention():
         count = row[3]
         if time not in result:
             result[time] = {}
-        entity_dict = result[time]
-        if entity not in entity_dict:
-            entity_dict[entity] = {}
-        state_dict = entity_dict[entity]
+        state_dict = result[time]
         if state not in state_dict:
             state_dict[state] = {}
-        state_dict[state] = count
+        entity_dict = state_dict[state]
+        if entity not in entity_dict:
+            entity_dict[entity] = {}
+        entity_dict[entity] = count
         row = cursor.fetchone()
     return json.dumps(result)
     
@@ -92,7 +92,7 @@ def topic():
         row = cursor.fetchone()
     return json.dumps(result)
 
-@app.route('/sample')
+@app.route('/tweet.json')
 def sample_tweet():
     result = []
     try:
@@ -102,7 +102,7 @@ def sample_tweet():
         entity = request.args.get('entity')
     except:
         return json.dumps(result)
-    if None in [time, topic, entity]:
+    if None in [time, topic]:
         return json.dumps(result)
     try:
         g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
@@ -110,12 +110,19 @@ def sample_tweet():
         return 'server down'
     cursor = g.con.cursor()
     if state == None:
-        cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and topic = %s and entity = %s ORDER BY retweet_count LIMIT 100""" , (time, int(time) + 86400, topic, entity))    
+        if entity == None:
+            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and topic = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, topic))
+        else:
+            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and topic = %s and entity = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, topic, entity))    
     else:
-        cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s and entity = %s ORDER BY retweet_count LIMIT 100""" , (time, int(time) + 86400, state, topic, entity))
+        if entity == None:
+            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, state, topic))
+        else:
+            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s and entity = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, state, topic, entity))
     entry = cursor.fetchone()
     while entry:
-        result.append({'id':entry[0],'created_at':entry[1],'user_id':entry[2], 'screen_name': entry[3], 'text': entry[4], 'retweet_count': entry[5]})
+        id = str(entry[0])
+        result.append({'id':id,'created_at':entry[1],'user_id':entry[2], 'screen_name': entry[3], 'text': entry[4], 'retweet_count': entry[5]})
         entry = cursor.fetchone()
     return json.dumps(result)
 

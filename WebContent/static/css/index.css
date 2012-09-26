@@ -22,6 +22,10 @@ body {
 	margin-left: 100px;
 }
 
+.carousel-control {
+	top: 50%
+}
+
 #tweets_container {
 	width: 1000px;
 	margin-left:auto;

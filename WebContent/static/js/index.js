@@ -24,9 +24,7 @@ function setup_date_selection() {
 		animate: 500,
 		create: function(event, ui) {
 					$('#date').val(date(times[times.length-1])); 
-					console.log('before' + times[times.length-1]);
 					update_time(times[times.length-1]);
-					console.log('after' + times[times.length-1]);
 				},
 		slide:  function(event, ui) {
 					$('#date').val(date(times[ui.value]));
@@ -186,7 +184,6 @@ $(document).ready(function() {
 	// initialize map
 	d3.json("/mention.json", function(json){
 		mention = json;
-
 		d3.json("/static/dat/us_states.json", function(json){
 			var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
 			svg.append("rect").attr("width", width)

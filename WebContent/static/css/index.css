@@ -8,6 +8,26 @@ body {
   pointer-events: all;
 }
 
+#page {
+	width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#menu {
+	margin-left: 100px;
+}
+
+.carousel-inner {
+	margin-left: 100px;
+}
+
+#tweets_container {
+	width: 1000px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
 #control {
   margin-left: 100px;
   height : 20px;
@@ -22,22 +42,6 @@ body {
   margin-top: 7px;
   width: 83%;
   max-width: 830px;
-}
-
-#page {
-	width: 1200px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.carousel-inner {
-	margin-left: 100px;
-}
-
-#tweets_container {
-	width: 1000px;
-	margin-left:auto;
-	margin-right:auto;
 }
 
 circle.node {

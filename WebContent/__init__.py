@@ -2,7 +2,7 @@ from flask import *
 import MySQLdb
 import json
 
-DEBUG = False
+DEBUG = True
 app = Flask(__name__)
 
 @app.before_request
@@ -104,6 +104,7 @@ def sample_tweet():
         return json.dumps(result)
     if None in [time, topic]:
         return json.dumps(result)
+    print time
     try:
         g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
     except:
@@ -111,18 +112,20 @@ def sample_tweet():
     cursor = g.con.cursor()
     if state == None:
         if entity == None:
-            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and topic = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, topic))
+            cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_sample where created_at >= %s and created_at < %s and topic = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, topic))
         else:
-            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and topic = %s and entity = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, topic, entity))    
+            cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_sample where created_at >= %s and created_at < %s and topic = %s and entity = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, topic, entity))    
     else:
         if entity == None:
-            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, state, topic))
+            cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, state, topic))
         else:
-            cursor.execute("""SELECT id,created_at,user_id,screen_name,text,retweet_count FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s and entity = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, state, topic, entity))
+            cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_sample where created_at >= %s and created_at < %s and state  = %s and topic = %s and entity = %s ORDER BY retweet_count DESC LIMIT 10""" , (time, int(time) + 86400, state, topic, entity))
     entry = cursor.fetchone()
     while entry:
         id = str(entry[0])
-        result.append({'id':id,'created_at':entry[1],'user_id':entry[2], 'screen_name': entry[3], 'text': entry[4], 'retweet_count': entry[5]})
+        name = entry[2].decode("utf-8",errors='ignore') 
+        text = entry[4].decode('utf-8',errors='ignore')
+        result.append({'id':id,'created_at':entry[1],'name':name, 'screen_name': entry[3], 'text': text})
         entry = cursor.fetchone()
     return json.dumps(result)
 

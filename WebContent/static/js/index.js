@@ -9,7 +9,11 @@ function setup_map(json) {
 	ss.append("path").attr("d", path);
 }
 
-function setup_date_selection(times) {
+function setup_date_selection() {
+	var times = [];
+	for (time in mention){
+		times.push(parseInt(time));
+	}
 	current_time = times[times.length-1];
 	// set up slider
 	$('<div>').attr('id','slider').slider({
@@ -20,7 +24,9 @@ function setup_date_selection(times) {
 		animate: 500,
 		create: function(event, ui) {
 					$('#date').val(date(times[times.length-1])); 
-					update_time(times[0]);
+					console.log('before' + times[times.length-1]);
+					update_time(times[times.length-1]);
+					console.log('after' + times[times.length-1]);
 				},
 		slide:  function(event, ui) {
 					$('#date').val(date(times[ui.value]));
@@ -72,7 +78,6 @@ function index(times, date) {
 function update_time(time) {
 	current_time = time;
 	color_states(mention[time]);
-	//perform(color_states, 'count'+time, "/count.json?time=" + time);
 	perform(update_tweet, 'tweet'+time, "/tweet.json?topic=mention&time=" + time);
 }
 
@@ -80,15 +85,18 @@ function update_tweet(json){
 	$('#tweets').cycle('destroy');
 	$('#tweets').empty();
 	jQuery.each(json, function(i, val) {
-		  var screen_name = val.screen_name;
-		  var id = val.id;
-		  var text = val.text;
-		  var time = val.created_at;
-		  $('<li>', {}).css({'width': '100%'})
-		  	.append($('<div>')
-		  	.append($('<a>', {
+		var name = val.name;
+		var screen_name = val.screen_name;
+		var id = val.id;
+		var text = val.text;
+		var time = val.created_at;
+		$('<li>', {}).css({'width': '100%'}).append($('<div>')
+			.append($('<a>', {
 			    href: 'http://www.twitter.com/' + screen_name,
-			    text: screen_name}).css({'color': '#333',  'font-weight': 'bold'}))
+			    text: name}).css({'color': '#333',  'font-weight': 'bold'}))
+			.append($('<span>',{
+				text: ' @' + screen_name
+				}).css({'color': '#999'}))
 			.append($('<div>',{
 				text: new Date(time * 1000).toLocaleTimeString(),
 				}).css({float: 'right', 'color': '#999'}))
@@ -142,6 +150,7 @@ function hover_state(d) {
 		var obama_count  = current_count[d.properties.abbreviation].obama;
 		var romney_count = current_count[d.properties.abbreviation].romney;
 		var total_count = obama_count + romney_count;
+		if (total_count == 0) total_count = 1;
 		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count +', '+ (obama_count / total_count * 100).toFixed(1)+'%'))
 						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + ', '+(romney_count / total_count * 100).toFixed(1)+'%'));
 		var m = d3.mouse(c);
@@ -175,34 +184,30 @@ $(document).ready(function() {
 	$('.carousel').carousel({interval: false});
 	  
 	// initialize map
-	var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
-	svg.append("rect").attr("width", width)
-					  .attr("height", height)
-					  .attr("class", "background")
-					  .on("click", click_state)
-					  .on("mouseover", hover_state);
-	g = svg.append("g").attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");	
-	c = svg[0][0];
-	svgns = c.namespaceURI;
-	box = $(document.createElementNS(svgns, 'g')).attr('id', 'box').attr('class', 'hover-box').hide()
-		.append($(document.createElementNS(svgns, 'rect')).attr('width','160').attr('height','70').attr('rx', '3'))
-		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
-		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
-	
-	perform(setup_map, 'us_states', '/static/dat/us_states.json');
-	
 	d3.json("/mention.json", function(json){
 		mention = json;
-		var times = [];
-		for (time in json){
-			times.push(parseInt(time));
-		}
-		setup_date_selection(times);
+
+		d3.json("/static/dat/us_states.json", function(json){
+			var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
+			svg.append("rect").attr("width", width)
+							  .attr("height", height)
+							  .attr("class", "background")
+							  .on("click", click_state)
+							  .on("mouseover", hover_state);
+			g = svg.append("g").attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");	
+			c = svg[0][0];
+			svgns = c.namespaceURI;
+			box = $(document.createElementNS(svgns, 'g')).attr('id', 'box').attr('class', 'hover-box').hide()
+				.append($(document.createElementNS(svgns, 'rect')).attr('width','160').attr('height','70').attr('rx', '3'))
+				.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
+				.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
+			$(c).append(box);
+			setup_map(json);
+			setup_date_selection();
+		});
 	});
 			
-			
-			
-	$(c).append(box);
+
 	
 	// initialize topic graph
 	var node,link,root1,root2;

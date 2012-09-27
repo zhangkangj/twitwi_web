@@ -1,10 +1,7 @@
 google.load('visualization', '1.0', {'packages':['corechart', 'annotatedtimeline']});
 
-google.setOnLoadCallback(drawChart);
+//google.setOnLoadCallback(drawChart);
 
-// Callback that creates and populates a data table,
-// instantiates the pie chart, passes in the data and
-// draws it.
 function drawChart() {
 	 var data = new google.visualization.DataTable();
 	 data.addColumn('date', 'Date');
@@ -181,33 +178,21 @@ function hover_state(d) {
 	g.selectAll("g.state").classed("hover", over_state && function(d) { return d == over_state; });
 }
 
-function draw_state_detail_chart (d){
+function draw_state_detail_chart(d){
 	var state = d.properties.abbreviation;
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Date');
 	data.addColumn('number', 'Obama');
 	data.addColumn('number', 'Romney');
-	/*
+	
 	for (time in mention){
 		var obama_count  = mention[time][state].obama;
 		var romney_count = mention[time][state].romney;
 		data.addRow([new Date(time * 1000), obama_count, romney_count]);
-	}*/
-	data.addRows([
-	              [new Date(2008, 1 ,1), 30000, 40645],
-	              [new Date(2008, 1 ,2), 14045, 20374],
-	              [new Date(2008, 1 ,3), 55022, 50766],
-	              [new Date(2008, 1 ,4), 75284, 14334],
-	              [new Date(2008, 1 ,5), 41476, 66467],
-	              [new Date(2008, 1 ,6), 33322, 39463]
-	            ]);
-	
+	}
     // Instantiate and draw our chart, passing in some options.
-    console.log($('#state_detail_chart').width());
-    $('#state_detail_chart').width(900);
-    console.log($('#state_detail_chart').width());
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('state_detail_chart'));
-    annotatedtimeline.draw(annotatedtimeline, {'displayAnnotations': true});
+    annotatedtimeline.draw(data, {'displayAnnotations': true});
 }
 
 function move_box() {
@@ -272,7 +257,8 @@ $(document).ready(function() {
 			setup_date_selection();
 			$('#state_detail').on('shown',function(){
 				draw_state_detail_chart (centered_state);
-			});
+			});	
+			
 		});
 	});
 			

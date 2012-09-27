@@ -32,6 +32,18 @@ body {
 	margin-right:auto;
 }
 
+#state_detail {
+	width: 800px;
+	height: 600px;
+	left:42%;
+}
+
+#state_detail_chart {
+	width: 700px;
+	height: 400px;
+	margin:auto;
+}
+
 #control {
   margin-left: 100px;
   height : 20px;

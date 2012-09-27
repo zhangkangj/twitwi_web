@@ -17,7 +17,7 @@ def welcome():
 
 @app.route('/test')
 def test():
-    return 400
+    return make_response(render_template('test.html'))
 
 @app.route('/count.json')
 def count():
@@ -104,7 +104,6 @@ def sample_tweet():
         return json.dumps(result)
     if None in [time, topic]:
         return json.dumps(result)
-    print time
     try:
         g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
     except:

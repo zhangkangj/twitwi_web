@@ -1,5 +1,31 @@
- google.load('visualization', '1.0', {'packages':['corechart', 'annotatedtimeline']});
+google.load('visualization', '1.0', {'packages':['corechart', 'annotatedtimeline']});
 
+google.setOnLoadCallback(drawChart);
+
+// Callback that creates and populates a data table,
+// instantiates the pie chart, passes in the data and
+// draws it.
+function drawChart() {
+	 var data = new google.visualization.DataTable();
+	 data.addColumn('date', 'Date');
+	 data.addColumn('number', 'Sold Pencils');
+	 data.addColumn('string', 'title1');
+	 data.addColumn('string', 'text1');
+	 data.addColumn('number', 'Sold Pens');
+	 data.addColumn('string', 'title2');
+	 data.addColumn('string', 'text2');
+	 data.addRows([
+	    [new Date(2008, 1 ,1), 30000, null, null, 40645, null, null],
+	    [new Date(2008, 1 ,2), 14045, null, null, 20374, null, null],
+	    [new Date(2008, 1 ,3), 55022, null, null, 50766, null, null],
+	    [new Date(2008, 1 ,4), 75284, null, null, 14334, 'Out of Stock', 'Ran out of stock on pens at 4pm'],
+	    [new Date(2008, 1 ,5), 41476, 'Bought Pens', 'Bought 200k pens', 66467, null, null],
+	    [new Date(2008, 1 ,6), 33322, null, null, 39463, null, null]
+	  ]);
+	  var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('test'));
+	  annotatedtimeline.draw(data, {'displayAnnotations': true});
+} 
+ 
 function setup_map(json) {
 	var ss = g.selectAll("g").data(json.features).enter()
 			.append("g").attr("class", "state")
@@ -127,7 +153,6 @@ function click_state(d) {
 		});
 		setTimeout(function(){
 			$('#state_detail').modal('show');
-			draw_state_detail_chart (d);
 		}, 200);
 	}
 }
@@ -162,17 +187,27 @@ function draw_state_detail_chart (d){
 	data.addColumn('date', 'Date');
 	data.addColumn('number', 'Obama');
 	data.addColumn('number', 'Romney');
+	/*
 	for (time in mention){
 		var obama_count  = mention[time][state].obama;
 		var romney_count = mention[time][state].romney;
 		data.addRow([new Date(time * 1000), obama_count, romney_count]);
-	}
-    // Set chart options
-    var options = {'width':300, 'height':300};
+	}*/
+	data.addRows([
+	              [new Date(2008, 1 ,1), 30000, 40645],
+	              [new Date(2008, 1 ,2), 14045, 20374],
+	              [new Date(2008, 1 ,3), 55022, 50766],
+	              [new Date(2008, 1 ,4), 75284, 14334],
+	              [new Date(2008, 1 ,5), 41476, 66467],
+	              [new Date(2008, 1 ,6), 33322, 39463]
+	            ]);
+	
     // Instantiate and draw our chart, passing in some options.
     console.log($('#state_detail_chart').width());
+    $('#state_detail_chart').width(900);
+    console.log($('#state_detail_chart').width());
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('state_detail_chart'));
-    annotatedtimeline.draw(annotatedtimeline, options, "800px", "600px");
+    annotatedtimeline.draw(annotatedtimeline, {'displayAnnotations': true});
 }
 
 function move_box() {
@@ -235,6 +270,9 @@ $(document).ready(function() {
 			$(c).append(box);
 			setup_map(json);
 			setup_date_selection();
+			$('#state_detail').on('shown',function(){
+				draw_state_detail_chart (centered_state);
+			});
 		});
 	});
 			

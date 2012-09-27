@@ -21,7 +21,9 @@
 	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
 	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
 	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript" src="/static/js/index.js"></script>
+	
 	<script type="text/javascript">
 	  	var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-35060935-1']);
@@ -67,7 +69,24 @@
 
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
-				<div id="map_container" class="active item"></div>
+				<div id="map_container" class="active item">
+					
+					<div class="modal hide fade" id="state_detail" tabindex="-1">
+					  <div class="modal-header">
+					    <button type="button" class="close" data-dismiss="modal">×</button>
+					    <h3 id="state_detail_name"></h3>
+					  </div>
+					  <div class="modal-body">
+					    <div id="state_detail_chart">
+					    
+					    </div>
+					  </div>
+					  <div class="modal-footer">
+					    <div id="state_detail_graph"> </div>
+					  </div>
+					</div>
+				
+				</div>
 				<div id="topic_container" class="item"></div>
 			</div>
 		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 

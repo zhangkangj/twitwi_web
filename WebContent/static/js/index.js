@@ -1,3 +1,5 @@
+ google.load('visualization', '1.0', {'packages':['corechart']});
+
 function setup_map(json) {
 	var ss = g.selectAll("g").data(json.features).enter()
 			.append("g").attr("class", "state")
@@ -54,23 +56,6 @@ function color_states(json) {
 		var item = json[state];
 		g.select("#" + state).select("path").style("fill", color(item.obama/(item.obama+item.romney)));
 	}
-}
-
-// convert epoch time in seconds into EST date string
-function date(time) {
-	// compensate the EST timezone offset (date strings in EST)
-	return (new Date((time + 4*3600)*1000)).toDateString();
-}
-
-// inverse of date: converting date string into epoch time
-function undate(date) {
-	// shift the time compensating for local timezone
-	return date.getTime()/1000+date.getTimezoneOffset()*60-6*3600;
-}
-
-// ugly (but compact) solution for daylight DST discontinuity
-function index(times, date) {
-	return (times.indexOf(undate(date))+1  || times.indexOf(undate(date)-3600)+1 || times.indexOf(undate(date)+3600)+1 || null) - 1;
 }
 
 function update_time(time) {
@@ -133,6 +118,22 @@ function click_state(d) {
 	}
 	g.selectAll("g.state").classed("deactive", centered && function(d) { return d != centered; });
 	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
+	
+	if (centered != null) {
+		$('#state_detail_name').text(d.properties.name);
+		var obama_count  = current_count[d.properties.abbreviation].obama;
+		var romney_count = current_count[d.properties.abbreviation].romney;
+		draw_state_detail_chart (obama_count, romney_count);
+		$('#state_detail').on('hide', function () {
+			centered = null;
+			current_state = 'US';
+			perform(update_tweet, 'tweet'+current_time, "/tweet.json?topic=mention&time=" + current_time);
+			g.selectAll("g.state").classed("deactive", true);
+			var x = 0, y = 0, k = 1;
+			g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
+		});
+		setTimeout(function(){$('#state_detail').modal('show');}, 600);
+	}
 }
 
 function hover_state(d) {
@@ -141,6 +142,7 @@ function hover_state(d) {
 		over = d;
 		// switch place to be drawn on top
 		var region = g.select('#'+d.properties.abbreviation)[0][0];
+		region.style.cursor = 'hand';
 		$(region).parent().append(region);
 		// TODO generate a info box next to the cursor
 		$('#state-name').text(d.properties.name);
@@ -157,6 +159,23 @@ function hover_state(d) {
 	g.selectAll("g.state").classed("hover", over && function(d) { return d == over; });
 }
 
+function draw_state_detail_chart (obama_count, romney_count){
+	var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    data.addRows([
+      ['Obama', obama_count],
+      ['Romney', obama_count],
+    ]);
+
+    // Set chart options
+    var options = {'width':300, 'height':300, 'is3D':true};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('state_detail_chart'));
+    chart.draw(data, options);
+}
+
 function move_box() {
 	var m = d3.mouse(c);
 	box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')');
@@ -165,6 +184,23 @@ function move_box() {
 function hide_box() {
 	box.hide();
 	$('#state-info').empty();
+}
+
+//convert epoch time in seconds into EST date string
+function date(time) {
+	// compensate the EST timezone offset (date strings in EST)
+	return (new Date((time + 4*3600)*1000)).toDateString();
+}
+
+// inverse of date: converting date string into epoch time
+function undate(date) {
+	// shift the time compensating for local timezone
+	return date.getTime()/1000+date.getTimezoneOffset()*60-6*3600;
+}
+
+// ugly (but compact) solution for daylight DST discontinuity
+function index(times, date) {
+	return (times.indexOf(undate(date))+1  || times.indexOf(undate(date)-3600)+1 || times.indexOf(undate(date)+3600)+1 || null) - 1;
 }
 
 //global variables

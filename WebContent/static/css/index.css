@@ -26,6 +26,12 @@ body {
 	top: 50%
 }
 
+#state_detail_chart{
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+}
+
 #tweets_container {
 	width: 1000px;
 	margin-left:auto;

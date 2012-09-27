@@ -114,11 +114,6 @@ svg {
 	margin-right:auto;
 }
 
-.background {
-  fill: none;
-  pointer-events: all;
-}
-
 .state path {
   opacity: 1;
   fill: #aaa;
@@ -132,14 +127,6 @@ svg {
 
 .hover path {
   stroke: #888;
-}
-
-.deactive path {
-  opacity: 0.5;
-}
-
-.deactive:hover path {
-  opacity: 1;
 }
 
 /* hover-box */

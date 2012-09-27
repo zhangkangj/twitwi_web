@@ -69,22 +69,7 @@
 
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
-				<div id="map_container" class="active item">
-					
-					<div class="modal hide fade" id="state_detail">
-					  <div class="modal-header">
-					    <button type="button" class="close" data-dismiss="modal">×</button>
-					    <h3 id="state_detail_name"></h3>
-					  </div>
-					  <div class="modal-body">
-					    <div id="state_detail_chart"></div>
-					  </div>
-					  <div class="modal-footer">
-					    <div id="state_detail_tweet"> </div>
-					  </div>
-					</div>
-				
-				</div>
+				<div id="map_container" class="active item"> </div>
 				<div id="topic_container" class="item"></div>
 			</div>
 		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
@@ -98,7 +83,19 @@
 		<div id = 'tweets_container'>
 			<ul id = 'tweets'></ul>
 		</div>
-		
+
+		<div class="modal hide fade" id="state_detail">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3 id="state_detail_name"></h3>
+			</div>
+			<div class="modal-body">
+				<div id="state_detail_chart"></div>
+			</div>
+			<div class="modal-footer">
+				<div id="state_detail_tweet"></div>
+			</div>
+		</div>
 		<div id="test" style="width: 800px; height: 400px;"></div>	
 	</div>
 </body>

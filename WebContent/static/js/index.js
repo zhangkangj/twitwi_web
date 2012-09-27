@@ -1,4 +1,4 @@
- google.load('visualization', '1.0', {'packages':['corechart']});
+ google.load('visualization', '1.0', {'packages':['corechart', 'annotatedtimeline']});
 
 function setup_map(json) {
 	var ss = g.selectAll("g").data(json.features).enter()
@@ -51,7 +51,6 @@ function setup_date_selection() {
 }
 
 function color_states(json) {
-	current_count = json;
 	for (state in json){
 		var item = json[state];
 		g.select("#" + state).select("path").style("fill", color(item.obama/(item.obama+item.romney)));
@@ -98,7 +97,7 @@ function update_tweet(json){
 
 function click_state(d) {
 	var x = 0, y = 0, k = 1;
-	if (d && centered != d) {
+	if (d && centered_state != d) {
 		var centroid = path.centroid(d);
 		x = -centroid[0];
 		y = -centroid[1];
@@ -108,38 +107,35 @@ function click_state(d) {
 		} else {
 			k = 200*Math.sqrt(1/(path.area(d) + 20000/path.area(d)));
 		}
-		centered = d;
-		current_state = d.properties.abbreviation;
-		perform(update_tweet, 'tweet'+current_time + current_state, "/tweet.json?topic=mention&time=" + current_time + '&state=' + current_state);
+		centered_state = d;
+		perform(update_tweet, 'tweet'+current_time + d.properties.abbreviation, "/tweet.json?topic=mention&time=" + current_time + '&state=' + d.properties.abbreviation);
 	} else {
-		centered = null;
-		current_state = 'US';
+		centered_state = null;
 		perform(update_tweet, 'tweet'+current_time, "/tweet.json?topic=mention&time=" + current_time);
 	}
-	g.selectAll("g.state").classed("deactive", centered && function(d) { return d != centered; });
+	g.selectAll("g.state").classed("deactive", centered_state && function(d) { return d != centered_state; });
 	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
 	
-	if (centered != null) {
+	if (centered_state != null) {
 		$('#state_detail_name').text(d.properties.name);
-		var obama_count  = current_count[d.properties.abbreviation].obama;
-		var romney_count = current_count[d.properties.abbreviation].romney;
-		draw_state_detail_chart (obama_count, romney_count);
 		$('#state_detail').on('hide', function () {
-			centered = null;
-			current_state = 'US';
+			centered_state_state = null;
 			perform(update_tweet, 'tweet'+current_time, "/tweet.json?topic=mention&time=" + current_time);
 			g.selectAll("g.state").classed("deactive", true);
 			var x = 0, y = 0, k = 1;
 			g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
 		});
-		setTimeout(function(){$('#state_detail').modal('show');}, 600);
+		setTimeout(function(){
+			$('#state_detail').modal('show');
+			draw_state_detail_chart (d);
+		}, 200);
 	}
 }
 
 function hover_state(d) {
-	over = null;
+	over_state = null;
 	if (d) {
-		over = d;
+		over_state = d;
 		// switch place to be drawn on top
 		var region = g.select('#'+d.properties.abbreviation)[0][0];
 		region.style.cursor = 'hand';
@@ -147,33 +143,36 @@ function hover_state(d) {
 		// TODO generate a info box next to the cursor
 		$('#state-name').text(d.properties.name);
 		// calculate stats
-		var obama_count  = current_count[d.properties.abbreviation].obama;
-		var romney_count = current_count[d.properties.abbreviation].romney;
+		var obama_count  = mention[current_time][d.properties.abbreviation].obama;
+		var romney_count = mention[current_time][d.properties.abbreviation].romney;
 		var total_count = obama_count + romney_count;
 		if (total_count == 0) total_count = 1;
 		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count +', '+ (obama_count / total_count * 100).toFixed(1)+'%'))
-						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + ', '+(romney_count / total_count * 100).toFixed(1)+'%'));
+						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + ', '+(romney_count / total_count * 100).toFixed(1)+'%'));	
 		var m = d3.mouse(c);
 		box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')').show();
+		perform(update_tweet, 'tweet'+current_time + d.properties.abbreviation, "/tweet.json?topic=mention&time=" + current_time + '&state=' + d.properties.abbreviation);
 	}
-	g.selectAll("g.state").classed("hover", over && function(d) { return d == over; });
+	g.selectAll("g.state").classed("hover", over_state && function(d) { return d == over_state; });
 }
 
-function draw_state_detail_chart (obama_count, romney_count){
+function draw_state_detail_chart (d){
+	var state = d.properties.abbreviation;
 	var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
-    data.addRows([
-      ['Obama', obama_count],
-      ['Romney', obama_count],
-    ]);
-
+	data.addColumn('date', 'Date');
+	data.addColumn('number', 'Obama');
+	data.addColumn('number', 'Romney');
+	for (time in mention){
+		var obama_count  = mention[time][state].obama;
+		var romney_count = mention[time][state].romney;
+		data.addRow([new Date(time * 1000), obama_count, romney_count]);
+	}
     // Set chart options
-    var options = {'width':300, 'height':300, 'is3D':true};
-
+    var options = {'width':300, 'height':300};
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('state_detail_chart'));
-    chart.draw(data, options);
+    console.log($('#state_detail_chart').width());
+    var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('state_detail_chart'));
+    annotatedtimeline.draw(annotatedtimeline, options, "800px", "600px");
 }
 
 function move_box() {
@@ -206,11 +205,10 @@ function index(times, date) {
 //global variables
 var width = 1000, height = 500,  box_offset = 15;
 var color = d3.scale.quantize().range(['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#FADCA5', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B']);
-var centered, over;
-var current_count;
+var centered_state, over_state;
 var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
 var g, c, svgns, box;
-var current_time, current_state = 'US';
+var current_time;
 var mention, topic;
 
 $(document).ready(function() {
@@ -307,7 +305,7 @@ $(document).ready(function() {
     	.style("fill", color)
     	.on("click", topicClick);
 
-	    for ( var i = 0; i < x.length; i++) {
+	    for (var i = 0; i < x.length; i++) {
 	      vis.append("text")
 	        .attr("text-anchor", "middle")
 	        .attr("dy", ".3em")

@@ -19,6 +19,22 @@ def welcome():
 def test():
     return make_response(render_template('test.html'))
 
+@app.route('/about')
+def about():
+    return make_response(render_template('about.html'))
+
+@app.route('/blog')
+def blog():
+    return make_response(render_template('blog.html'))
+
+@app.route('/contact')
+def contact():
+    return make_response(render_template('contact.html'))
+
+@app.route('/research')
+def research():
+    return make_response(render_template('research.html'))
+
 @app.route('/count.json')
 def count():
     try:

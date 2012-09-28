@@ -18,8 +18,10 @@ body {
 	margin-left: 100px;
 }
 
-.carousel-inner {
-	margin-left: 100px;
+#myCarousel {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .carousel-control {
@@ -61,18 +63,6 @@ body {
   max-width: 830px;
 }
 
-circle.node {
-  cursor: pointer;
-  stroke: #000;
-  stroke-width: .5px;
-}
-
-line.link {
-  fill: none;
-  stroke: #9ecae1;
-  stroke-width: 1.5px;
-}
-
 /* colors */
 .blue1 {color:#0d406b}
 .blue2 {color:#40698b}
@@ -109,8 +99,7 @@ line.link {
 .graybg4 {background-color:#ccc}
 
 /* map */
-svg {
-	border: 2px solid #888;
+#map_container, #topic_container {
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -145,4 +134,34 @@ svg {
 .hover-box-body {
   fill: #444;
   font: 12px sans-serif;
+}
+
+circle {
+  fill: rgb(31, 119, 180);
+  fill-opacity: 0;
+  stroke: rgb(31, 119, 180);
+  stroke-width: 0px;
+}
+
+.dem circle {
+  fill: #40698B;
+  fill-opacity: 1;
+  stroke: #40698B;
+  stroke-width: 1px;
+}
+
+.rep circle {
+  fill: #BB4E55;
+  fill-opacity: 1;
+  stroke: #BB4E55;
+  stroke-width: 1px;
+}
+#topic_left {
+  float: left;
+  margin-left:  75px;
+}
+
+#topic_right {
+  float:right;
+  margin-right: 75px;
 }

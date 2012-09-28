@@ -223,7 +223,7 @@ function index(times, date) {
 }
 
 //global variables
-var width = 1000, height = 500,  box_offset = 15;
+var width = 1000, height = 450,  box_offset = 15;
 var color = d3.scale.quantize().range(['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#FADCA5', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B']);
 var centered_state, over_state;
 var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
@@ -261,121 +261,6 @@ $(document).ready(function() {
 			
 		});
 	});
-			
 
-	
-	// initialize topic graph
-	var node,link,root1,root2;
-	var force = d3.layout.force().on("tick", tick).charge(function(d) { return -200; }).linkDistance(function(d) { return  120; }).gravity(0.005).size([width, height - 160]);
-	var vis = d3.select("#topic_container").append("svg:svg").attr("width", width).attr("height", height);
-
-	d3.json('/topic.json', function(json) {
-	    var keys = [];
-	    for (var key in json) {
-	      keys.push(key);
-	    }
-	    var mostRecent = keys[keys.length-1];
-	    var topicArray1 = [];
-	    var topicJson1 = json[mostRecent]['obama'];
-	    var topicArray2 = [];
-	    var topicJson2 = json[mostRecent]['romney'];
-	
-	    for (var c in topicJson1) {
-	      topicArray1.push({"topic": c, "count": topicJson1[c]});
-	    }
-	    for (var c in topicJson2) {
-	      topicArray2.push({"topic": c, "count": topicJson2[c]});
-	    }
-	    root1 = {"name": "obama" , "children": topicArray1};
-	    root2 = {"name": "romney", "children": topicArray2};
-	    root1.fixed = true;
-	    root2.fixed = true;
-	    root1.x = width / 2 - 150;
-	    root1.y = height / 2 - 80;
-	    root2.x = width / 2 + 150;
-	    root2.y = height / 2 - 80;
-	    update();
-	});
-
-	function update() {
-		var nodes = flatten(root1).concat(flatten(root2)),
-	    links = d3.layout.tree().links(nodes);
-		// Restart the force layout.
-		force.nodes(nodes).links(links).start();
-
-		// Update the links…
-		link = vis.selectAll("line.link").data(links, function(d) { return d.target.id; });
-		// Enter any new links.
-		link.enter().insert("svg:line", ".node").attr("class", "link").attr("x1", function(d) { return d.source.x; })
-	      	.attr("y1", function(d) { return d.source.y; })
-	      	.attr("x2", function(d) { return d.target.x; })
-	      	.attr("y2", function(d) { return d.target.y; });
-
-		// Exit any old links.
-		link.exit().remove();
-
-		// Update the nodes…
-		node = vis.selectAll("circle.node").data(nodes, function(d) { return d.id; }).style("fill", color);
-		node.transition().attr("r", function(d) { return d.children ? 50 : Math.sqrt(d.count);});
-
-		// for displaying text
-		var x = []; var y = []; var name = [];
-		// Enter any new nodes.
-		node.enter().append("svg:circle")
-    	.attr("class", "node")
-    	.attr("cx", function(d) { if(d.name) {x.push(d.x); y.push(d.y); name.push(d.name);} return d.x; })
-    	.attr("cy", function(d) { return d.y; })
-    	.attr("r", function(d) { return d.children ? 50 : Math.sqrt(d.count); })
-    	.style("fill", color)
-    	.on("click", topicClick);
-
-	    for (var i = 0; i < x.length; i++) {
-	      vis.append("text")
-	        .attr("text-anchor", "middle")
-	        .attr("dy", ".3em")
-	        .attr("x", function(d) {return x[i];})
-	        .attr("y", function(d) {return y[i];})
-	        .text(function(d) { return name[i];});
-	    }
-	    //Exit any old nodes.
-	    node.exit().remove();
-	}
-
-	function tick() {
-		link.attr("x1", function(d) { return d.source.x; })
-			.attr("y1", function(d) { return d.source.y; })
-			.attr("x2", function(d) { return d.target.x; })
-			.attr("y2", function(d) { return d.target.y; });
-		node.attr("cx", function(d) { return d.x; })
-			.attr("cy", function(d) { return d.y; });
-	}
-
-
-	  function color(d) {
-	      return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
-	  }
-
-	  // Toggle children on click.
-	  function topicClick(d) {
-		  if (d.children) {
-			  d._children = d.children;
-			  d.children = null;
-		  } else {
-			  d.children = d._children;
-			  d._children = null;
-		  };
-	    update();
-	  }
-
-	  function flatten(root) {
-	      var nodes = [], i = 0;
-	      function recurse(node) {
-	    	  if (node.children) node.count = node.children.reduce(function(p, v) { return p + recurse(v); }, 0);
-	    	  if (!node.id) node.id = ++i;
-	    	  nodes.push(node);
-	    	  return node.count;
-	      }
-	      root.count = recurse(root);
-	      return nodes;
-	  }
+  topic_graph();
 });

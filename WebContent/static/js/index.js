@@ -1,28 +1,5 @@
 google.load('visualization', '1.0', {'packages':['corechart', 'annotatedtimeline']});
 
-//google.setOnLoadCallback(drawChart);
-
-function drawChart() {
-	 var data = new google.visualization.DataTable();
-	 data.addColumn('date', 'Date');
-	 data.addColumn('number', 'Sold Pencils');
-	 data.addColumn('string', 'title1');
-	 data.addColumn('string', 'text1');
-	 data.addColumn('number', 'Sold Pens');
-	 data.addColumn('string', 'title2');
-	 data.addColumn('string', 'text2');
-	 data.addRows([
-	    [new Date(2008, 1 ,1), 30000, null, null, 40645, null, null],
-	    [new Date(2008, 1 ,2), 14045, null, null, 20374, null, null],
-	    [new Date(2008, 1 ,3), 55022, null, null, 50766, null, null],
-	    [new Date(2008, 1 ,4), 75284, null, null, 14334, 'Out of Stock', 'Ran out of stock on pens at 4pm'],
-	    [new Date(2008, 1 ,5), 41476, 'Bought Pens', 'Bought 200k pens', 66467, null, null],
-	    [new Date(2008, 1 ,6), 33322, null, null, 39463, null, null]
-	  ]);
-	  var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('test'));
-	  annotatedtimeline.draw(data, {'displayAnnotations': true});
-} 
- 
 function setup_map(json) {
 	var ss = g.selectAll("g").data(json.features).enter()
 			.append("g").attr("class", "state")
@@ -83,6 +60,7 @@ function color_states(json) {
 function update_time(time) {
 	current_time = time;
 	color_states(mention[time]);
+  update_topic(topic_graph_json[time]);
 	perform(update_tweet, 'tweet'+time, "/tweet.json?topic=mention&time=" + time);
 }
 
@@ -230,11 +208,12 @@ var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0
 var g, c, svgns, box;
 var current_time;
 var mention, topic;
-
+var topic_graph_json;
+var vis_left, vis_right, pack_left, pack_right;
 $(document).ready(function() {
 	// carousel
 	$('.carousel').carousel({interval: false});
-	  
+
 	// initialize map
 	d3.json("/mention.json", function(json){
 		mention = json;
@@ -253,14 +232,21 @@ $(document).ready(function() {
 				.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
 				.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
 			$(c).append(box);
-			setup_map(json);
-			setup_date_selection();
+      initialize(json);
 			$('#state_detail').on('shown',function(){
 				draw_state_detail_chart (centered_state);
 			});	
 			
 		});
 	});
-
-  topic_graph();
 });
+
+// nesting ajax calls?
+function initialize(map_json) {
+ d3.json('/topic.json', function(json) {
+  topic_graph_json = json;
+  topic_graph();  
+  setup_map(map_json);
+	setup_date_selection();
+});
+}

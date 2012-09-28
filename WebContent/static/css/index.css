@@ -139,21 +139,19 @@ body {
 
 circle {
   fill: rgb(31, 119, 180);
-  fill-opacity: 0;
+  fill-opacity: 1;
   stroke: rgb(31, 119, 180);
   stroke-width: 0px;
 }
 
-.dem circle {
+#dem {
   fill: #40698B;
-  fill-opacity: 1;
   stroke: #40698B;
   stroke-width: 1px;
 }
 
-.rep circle {
+#rep {
   fill: #BB4E55;
-  fill-opacity: 1;
   stroke: #BB4E55;
   stroke-width: 1px;
 }

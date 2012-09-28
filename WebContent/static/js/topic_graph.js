@@ -31,6 +31,7 @@ function update_topic(json) {
     var topicArray2 = [];
     var topicJson2 = json['romney'];
     var format = d3.format(",d");
+    var fill = d3.scale.category20c();
     for (var c in topicJson1) {
       topicArray1.push({"name": c, "size": topicJson1[c]});
     }
@@ -48,10 +49,12 @@ function update_topic(json) {
      node_left.attr("class", function(d) { return d.children ? "node" : "dem node"; })
           .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; })
      left_enter.append("circle");
-     node_left.select("circle")
-          .attr("r", function(d) { return d.r; });
-
-    left_enter.filter(function(d) { return !d.children; }).append("text")
+    var left_c =  node_left.select("circle")
+          .attr("r", function(d) { return d.r; })
+          .attr("id", function(d) { return d.children ? "dem" : "leaf";})
+     left_c.filter(function(d) { return !d.children; })
+          .style("fill", function(d) { return fill(d.name);});
+    left_enter.filter(function(d) { return !d.children; }).append("text");
     node_left.select("text")
           .attr("text-anchor", "middle")
           .attr("dy", ".3em")
@@ -66,9 +69,11 @@ function update_topic(json) {
 
       right_enter.append("circle");
 
-      node_right.select("circle")
-          .attr("r", function(d) { return d.r; });
-
+      var right_c = node_right.select("circle")
+          .attr("r", function(d) { return d.r; })
+          .attr("id", function(d) { return d.children ? "rep" : "leaf";})
+      right_c.filter(function(d) { return !d.children; })
+          .style("fill", function(d) { return fill(d.name);});
       right_enter.filter(function(d) { return !d.children; }).append("text")
 
       node_right.select("text")

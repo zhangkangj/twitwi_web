@@ -140,4 +140,9 @@ $(document).ready(function() {
 			});
 		});
 	});
+	
+	$('#tweets').hover(function(){$('#tweets').cycle('pause');},
+					   function(){$('#tweets').cycle('resume');});
+	$('#state_detail_tweet').hover(function(){$('#state_detail_tweet').cycle('pause');},
+			   function(){$('#state_detail_tweet').cycle('resume');});
 });

@@ -164,6 +164,6 @@ circle {
 }
 
 #topic_right {
-  float:right;
-  margin-right: 75px;
+  float:left;
+  margin-left: 75px;
 }

@@ -146,6 +146,7 @@ function draw_state_detail_chart(d){
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('state_detail_chart'));
     annotatedtimeline.draw(data, {'displayAnnotations': true});
+    perform(update_state_tweet, 'tweet'+current_time + d.properties.abbreviation, "/tweet.json?topic=mention&time=" + current_time + '&state=' + d.properties.abbreviation);
 }
 
 function move_box() {

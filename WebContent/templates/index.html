@@ -62,11 +62,11 @@
 	<div id="page" class="container-fluid">
 		<div id = "menu" class="pagination">
 			<ul>
-				<li id = "map_menu" class="active menu_element">
+				<li id = "map_menu" class="active menu_element" onclick="slide_carousel('map_container')">
 					<span>Election Map</span>
 				</li>
-				<li id = "topic_menu" class="disabled menu_element">
-					<span>Election Trends</span>
+				<li id = "topic_menu" class="disabled menu_element" onclick="slide_carousel('topic_container')">
+					<span>Election Topics</span>
 				</li>
 			</ul>
 		</div>
@@ -98,7 +98,7 @@
 			<div class="modal-body">
 				<div id="state_detail_chart"></div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" style="text-align:left;">
 				<div id="state_detail_tweet"></div>
 			</div>
 		</div>

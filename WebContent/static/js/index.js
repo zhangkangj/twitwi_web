@@ -39,6 +39,39 @@ function update_tweet(json){
 	});
 }
 
+function update_state_tweet(json){
+	console.log(json);
+	$('#state_detail_tweet').cycle('destroy');
+	$('#state_detail_tweet').empty();
+	jQuery.each(json, function(i, val) {
+		var name = val.name;
+		var screen_name = val.screen_name;
+		var id = val.id;
+		var text = val.text;
+		var time = val.created_at;
+		$('<li>', {}).css({'width': '100%'}).append($('<div>')
+			.append($('<a>', {
+			    href: 'http://www.twitter.com/' + screen_name,
+			    text: name}).css({'color': '#333',  'font-weight': 'bold'}))
+			.append($('<span>',{
+				text: ' @' + screen_name
+				}).css({'color': '#999'}))
+			.append($('<div>',{
+				text: new Date(time * 1000).toLocaleTimeString(),
+				}).css({float: 'right', 'color': '#999'}))
+			.append($('<br>'))
+			.append($('<a>',{
+				href: 'http://www.twitter.com/' + screen_name + '/status/' + id,
+				text: text}).css({'color': '#333'}))
+			.append($('<br>')))
+			.appendTo('#state_detail_tweet');
+		});
+	$('#state_detail_tweet').cycle({ 
+	    fx: 'scrollDown', 
+	    timeout: '2000'
+	});
+}
+
 
 //convert epoch time in seconds into EST date string
 function date(time) {
@@ -57,6 +90,20 @@ function index(times, date) {
 	return (times.indexOf(undate(date))+1  || times.indexOf(undate(date)-3600)+1 || times.indexOf(undate(date)+3600)+1 || null) - 1;
 }
 
+function slide_carousel(id){
+	 if (id == 'map_container'){
+	    	$('#topic_container').attr('class', 'item carousel_element');
+	    	$('#map_container').attr('class', 'active item carousel_element');
+	    	$('#topic_menu').attr('class', 'disable menu_element');
+	    	$('#map_menu').attr('class', 'active menu_element');
+	    }else if (id == 'topic_container'){
+	    	$('#map_container').attr('class', 'item carousel_element');
+	    	$('#topic_container').attr('class', 'active item carousel_element');
+	    	$('#map_menu').attr('class', 'disable menu_element');
+	    	$('#topic_menu').attr('class', 'active menu_element');
+	    }
+}
+
 //global variables
 var width = 1000, height = 450,  box_offset = 15;
 var color = d3.scale.quantize().range(['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', 'F6CECE', '#CEE3F6', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B']);
@@ -72,7 +119,6 @@ $(document).ready(function() {
 	$('#myCarousel').carousel({interval: false});
 	$('#myCarousel').bind('slid', function() {
 		var active_id = $('.active').filter(".carousel_element")[0].id;
-		console.log(active_id);
 	    if (active_id == 'map_container'){
 	    	$('#topic_menu').attr('class', 'disable menu_element');
 	    	$('#map_menu').attr('class', 'active menu_element');

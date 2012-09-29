@@ -101,9 +101,11 @@ function click_state(d) {
 			g.selectAll("g.state").classed("deactive", true);
 			var x = 0, y = 0, k = 1;
 			g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
+			$('#slideshow').cycle('resume');
 		});
 		setTimeout(function(){
 			$('#state_detail').modal('show');
+			$('#tweets').cycle('pause');
 		}, 200);
 	}
 }

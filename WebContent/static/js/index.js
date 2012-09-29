@@ -69,8 +69,19 @@ var vis_left, vis_right, pack_left, pack_right;
 
 $(document).ready(function() {
 	// carousel
-	$('.carousel').carousel({interval: false});
-
+	$('#myCarousel').carousel({interval: false});
+	$('#myCarousel').bind('slid', function() {
+		var active_id = $('.active').filter(".carousel_element")[0].id;
+		console.log(active_id);
+	    if (active_id == 'map_container'){
+	    	$('#topic_menu').attr('class', 'disable menu_element');
+	    	$('#map_menu').attr('class', 'active menu_element');
+	    }else if (active_id == 'topic_container'){
+	    	$('#map_menu').attr('class', 'disable menu_element');
+	    	$('#topic_menu').attr('class', 'active menu_element');
+	    }
+	});
+	
 	// initialize
 	d3.json('/topic.json', function(json) {
 		topic_graph_json = json;

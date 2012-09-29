@@ -19,6 +19,10 @@ body {
 	margin-top: 0px
 }
 
+.menu_element {
+	color: #999;
+}
+
 #myCarousel {
   width: 1000px;
   margin-left: auto;

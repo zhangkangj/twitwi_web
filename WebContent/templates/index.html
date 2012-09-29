@@ -62,15 +62,21 @@
 	<div id="page" class="container-fluid">
 		<div id = "menu" class="pagination">
 			<ul>
-				<li class="active"><a href="#">Election Map</a></li>
-				<li class="disabled"><a href="#">Election Trends</a></li>
+				<li id = "map_menu" class="active menu_element">
+					<span>Election Map</span>
+				</li>
+				<li id = "topic_menu" class="disabled menu_element">
+					<span>Election Trends</span>
+				</li>
 			</ul>
 		</div>
 
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
-				<div id="map_container" class="active item"> </div>
-				<div id="topic_container" class="item"><div id="topic_left"></div><div id="topic_right"></div></div>
+				<div id="map_container" class="active item carousel_element"> </div>
+				<div id="topic_container" class="item carousel_element">
+					<div id="topic_left"></div><div id="topic_right"></div>
+				</div>
 			</div>
 		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
 		  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>

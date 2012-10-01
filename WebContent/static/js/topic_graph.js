@@ -1,6 +1,6 @@
 function topic_graph(){
   var width = 900,
-      height = 225;
+      height = 200;
 
   vis_left = d3.select("#topic_left").append("svg")
       .attr("width", width)
@@ -12,8 +12,8 @@ function topic_graph(){
       .attr("height", height)
       .attr("id", "bottom_rect")
       .append("g");
-
 }
+
 function update_topic(json) {
     var topicArray1 = [];
     var topicJson1 = json['obama'];
@@ -28,46 +28,21 @@ function update_topic(json) {
       sum_1 += topicJson1[c];
     }
 
-    var sum_array = [];
     for (var c in topicJson1) {
-      sum_array.push(Math.sqrt(topicJson1[c]/sum_1));
+      topicArray1.push({"name": c, "size": (topicJson1[c]/sum_1)*800});
     }
 
-    for (var k = 0; k < sum_array.length; k++){
-      sum_2 += sum_array[k];
-    }
-
-    var i = 0;
-    for (var c in topicJson1) {
-      topicArray1.push({"name": c, "size": (sum_array[i]/sum_2)*800});
-      i++;
-    }
-
-    sum_1 = 0;
-    sum_2 = 0; 
     for (var c in topicJson2) {
-      sum_1 += topicJson2[c];
+      sum_2 += topicJson2[c];
     }
 
-    sum_array = [];
     for (var c in topicJson2) {
-      sum_array.push(Math.sqrt(topicJson2[c]/sum_1));
-    }
-
-    for (var k = 0; k < sum_array.length; k++){
-      sum_2 += sum_array[k];
-    }
-
-    i = 0;
-    for (var c in topicJson2) {
-      topicArray2.push({"name": c, "size": (sum_array[i]/sum_2)*800});
-      i++;
+      topicArray2.push({"name": c, "size": (topicJson2[c]/sum_2)*800});
     }
 
     topicArray1 = topicArray1.sort(sortingFunc);
     topicArray2 = topicArray2.sort(sortingFunc);
-    var node_left = vis_left.selectAll("g.node")
-          .data(topicArray1);
+    var node_left = vis_left.selectAll("g.node").data(topicArray1);
 
      var width_count = 0;
      var left_enter =  node_left.enter().append("g");
@@ -78,6 +53,8 @@ function update_topic(json) {
     var left_c =  node_left.select("rect")
           .attr("width", function(d) { return d.size; })
           .attr("height", function(d) { return 100;})
+          .on("click", click_topic)
+          .on("mouseover", hover_topic)
           .attr("id", function(d) { return d.children ? "dem" : "leaf";});
      left_c.filter(function(d) { return !d.children; })
           .style("fill", function(d) { return fill(d.name);});
@@ -99,6 +76,8 @@ function update_topic(json) {
     var right_c =  node_right.select("rect")
           .attr("width", function(d) { return d.size; })
           .attr("height", function(d) { return 100;})
+          .on("click", click_topic)
+          .on("mouseover", hover_topic)
           .attr("id", function(d) { return d.children ? "dem" : "leaf";});
     right_c.style("fill", function(d) { return fill(d.name);});
 
@@ -112,11 +91,22 @@ function update_topic(json) {
 }
 
 function sortingFunc(a,b) {
-var nA = a.name.toLowerCase();
-   var nB = b.name.toLowerCase();
-     if(nA < nB)
-           return -1;
-       else if(nA > nB)
-             return 1;
-        return 0;
+  var nA = a.name.toLowerCase();
+  var nB = b.name.toLowerCase();
+  if(nA < nB)
+    return -1;
+  else if(nA > nB)
+    return 1;
+  return 0;
+}
+
+function click_topic(d) {
+  window.console.log("clicked", d.name);
+  window.console.log("clicked", d.size);
+}
+
+function hover_topic(d) {
+  window.console.log("hovered", d.name);
+  window.console.log("hovered", d.size);
+
 }

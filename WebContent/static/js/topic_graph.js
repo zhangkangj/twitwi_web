@@ -52,7 +52,7 @@ function update_topic(json) {
 		val = width_count;
 		width_count += d.size;
 		return "translate(" + val + "," + 30 + ")";
-	})
+	});
 	left_enter.append("rect");
 	var left_c = node_left.select("rect").attr("width", function(d) {
 		return d.size;
@@ -132,5 +132,4 @@ function click_topic(d) {
 function hover_topic(d) {
 	window.console.log("hovered", d.name);
 	window.console.log("hovered", d.size);
-
 }

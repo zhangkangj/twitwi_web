@@ -94,7 +94,7 @@ function click_state(d) {
 	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
 	
 	if (centered_state != null) {
-		$('#state_detail_name').text(d.properties.name);
+		$('#state_detail_name').text("Twitter mentions in " + d.properties.name);
 		$('#state_detail').on('hide', function () {
 			centered_state_state = null;
 			perform(update_tweet, 'tweet'+current_time, "/tweet.json?topic=mention&time=" + current_time);

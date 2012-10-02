@@ -98,7 +98,6 @@ def topic():
                     result[time][entity][topic] = 0
                 else:
                     result[time][entity][topic] = round(result[time][entity][topic] * math.sqrt(1.0 * result[time][entity][topic] / total)) 
-                    print round(result[time][entity][topic] * math.sqrt(result[time][entity][topic] / total))
     return json.dumps(result)
 
 @app.route('/tweet.json')

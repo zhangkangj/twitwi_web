@@ -35,25 +35,6 @@ def contact():
 def research():
     return make_response(render_template('research.html'))
 
-@app.route('/count.json')
-def count():
-    try:
-        time = request.args.get('time')
-    except:
-        return json.dumps('data',[])
-    result = []
-    try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
-    except:
-        return 'server down'
-    cursor = g.con.cursor()
-    cursor.execute("""SELECT * FROM election where time = %s """, (time,))
-    entry = cursor.fetchone()
-    while entry:
-        result.append({'state':entry[1],'obama':entry[2],'romney':entry[3]})
-        entry = cursor.fetchone()
-    return json.dumps({'data':result})
-
 @app.route('/mention.json')
 def mention():
     result = {}

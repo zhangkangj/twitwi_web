@@ -113,6 +113,7 @@ var g, c, svgns, box;
 var current_time;
 var mention_json, topic_graph_json;
 var vis_left, vis_right, pack_left, pack_right;
+var current_topic;
 
 $(document).ready(function() {
 	// carousel

@@ -79,10 +79,10 @@ function date(time) {
 	return (new Date((time + 4*3600)*1000)).toDateString();
 }
 
-// inverse of date: converting date string into epoch time
+// "inverse" of date: converting Date object into epoch time
 function undate(date) {
 	// shift the time compensating for local timezone
-	return date.getTime()/1000+date.getTimezoneOffset()*60-6*3600;
+	return date.getTime()/1000+date.getTimezoneOffset()*60-5*3600;
 }
 
 // ugly (but compact) solution for daylight DST discontinuity
@@ -110,7 +110,7 @@ var color = d3.scale.quantize().range(['#9E2017', '#BB4E55', '#d77176', '#e2a6a9
 var centered_state, over_state;
 var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
 var g, c, svgns, box;
-var current_time;
+var times, current_time;
 var mention_json, topic_graph_json;
 var vis_left, vis_right, pack_left, pack_right;
 var current_topic;

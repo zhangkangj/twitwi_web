@@ -27,10 +27,12 @@ function setup_map(json) {
 }
 
 function setup_date_selection() {
-	var times = [];
+	times = [];
 	for (time in mention_json){
 		times.push(parseInt(time));
 	}
+	// there is no consistent ordering on property name
+	times = times.sort();
 	current_time = times[times.length-1];
 	// set up slider
 	$('<div>').attr('id','slider').slider({

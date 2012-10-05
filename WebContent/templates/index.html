@@ -1,29 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
 <head>
-	<title>TwiThinks!</title>
+	{% block head %}
+	<title>twithinks{% block subtitle %}{% endblock %}</title>
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-ico">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<link rel="shortcut icon" href="/static/img/twitter_favicon.ico">
-	<!--<link type="text/css" href="/static/lib/jquery-ui/dotluv-theme/jquery-ui-1.8.23.custom.css" rel="Stylesheet"/>-->
-	<link type="text/css" href="/static/lib/jquery-ui/custom-theme/jquery-ui-1.8.24.custom.css" rel="Stylesheet"/>
-	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">	
-	<link type="text/css" href="/static/css/index.css" rel="stylesheet" type="text/css">
+	<meta name="keyword" content="twitter data analysis, election twitter data">
 	
-	<script type="text/javascript" src="/static/lib/jquery/jquery-1.8.0.min.js"></script>
-	<script type="text/javascript" src="/static/lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
-	<script type="text/javascript" src="/static/lib/jquery/jquery.cycle.all.js"></script>
-	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
-	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
+	<script type="text/javascript">
+		// build absolute path in JS with this constant
+		var TWITWI_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
 	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="/static/js/index.js"></script>
-	<script type="text/javascript" src="/static/js/map.js"></script>
-	<script type="text/javascript" src="/static/js/topic_graph.js"></script>
+	
+	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	
+	{% block page_head %}
+		<link type="text/css" href="/static/lib/jquery-ui/custom-theme/jquery-ui-1.8.24.custom.css" rel="stylesheet"/>
+		<link type="text/css" href="/static/css/index.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="/static/lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
+		
+		<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
+		<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="/static/js/index.js"></script>
+		<script type="text/javascript" src="/static/js/map.js"></script>
+		<script type="text/javascript" src="/static/js/topic_graph.js"></script>
+		<script type="text/javascript" src="/static/lib/jquery/jquery.cycle.all.js"></script>
+	{% endblock %}
 	
 	<script type="text/javascript">
 	  	var _gaq = _gaq || [];
@@ -34,10 +46,13 @@
 		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  	})();
+		
 	</script>
+	{% endblock %}
 </head>
 
 <body>
+	{% block body %}
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -49,17 +64,18 @@
 				<a class="brand" href="#">TwiThinks!</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li class="active"><a href="#">Home</a></li>
-						<li><a href="/research">Research</a></li>
-						<li><a href="/blog">Blog</a></li>
-						<li><a href="/contact">Contact</a></li>
-						<li><a href="/about">About</a></li>
+						<li {% if request.path==url_for('index') %}class="active"{% endif %}><a href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">Home</a></li>
+						<li {% if request.path==url_for('research') %}class="active"{% endif %}><a href="{% if request.path==url_for('research') %}#{% else %}{{ url_for('research') }}{% endif %}">Research</a></li>
+						<li {% if request.path==url_for('blog') %}class="active"{% endif %}><a href="{% if request.path==url_for('blog') %}#{% else %}{{ url_for('blog') }}{% endif %}">Blog</a></li>
+						<li {% if request.path==url_for('contact') %}class="active"{% endif %}><a href="{% if request.path==url_for('contact') %}#{% else %}{{ url_for('contact') }}{% endif %}">Contact</a></li>
+						<li {% if request.path==url_for('about') %}class="active"{% endif %}><a href="{% if request.path==url_for('about') %}#{% else %}{{ url_for('about') }}{% endif %}">About</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 	
+	{% block content %}
 	<div id="page" class="container-fluid">
 		<div id = "menu" class="pagination">
 			<ul>
@@ -104,10 +120,12 @@
 			</div>
 		</div>
 	</div>
+	{% endblock %}
 	
-	<footer class="footer navbar-fixed-bottom">
+	<footer class="footer">
 		<hr>
     	<div align="center"> © TwiThinks 2012</div>
     </footer>
+	{% endblock %}
 </body>
 </html>

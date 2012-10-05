@@ -1,0 +1,7 @@
+TwiThinks Website README
+v0.1
+10/5/2012
+
+test_server.py
+
+written for purpose of client-side code testing (with the absence of backend database). It handles AJAX calls by passing it onto the live server at TWITWI_ROOT and relaying back to client.

@@ -11,7 +11,7 @@ def before_request():
     return
 
 @app.route('/')
-def welcome():
+def index():
     response = make_response(render_template('index.html'))
     response.headers['Cache-Control'] = 'no-cache, must-revalidate'
     return response

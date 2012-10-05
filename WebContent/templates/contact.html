@@ -1,55 +1,17 @@
-<!DOCTYPE html>
+{% extends 'index.html' %}
 
-<html lang="en">
-<head>
-	<title>TwiThinks!</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<link rel="shortcut icon" href="/static/img/twitter_favicon.ico">
-	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">	
-	<link type="text/css" href="/static/css/contact.css" rel="stylesheet" type="text/css">
-</head>
+{% block subtitle %} : contact {% endblock %}
 
-<body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
-				</a> 
-				<a class="brand" href="/">TwiThinks!</a>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li><a href="/">Home</a></li>
-						<li><a href="/research">Research</a></li>
-						<li><a href="/blog">Blog</a></li>
-						<li class="active"><a href="#">Contact</a></li>
-						<li><a href="/about">About</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	
+{% block content %}
 	<div id="page" class="container-fluid">
 		<div class="page_title">Contact</div>
-    <div class="page_content">
-		<p>
-			If you want to request a feature, report a bug or just say hi, please email us:
-		</p>
-		<p>
-		  twitwi [DOT] mit [DOT] edu
-		</p>
-    </div>
+		<div class="page_content">
+			<p>
+				If you want to request a feature, report a bug or just say hi, please email us:
+			</p>
+			<p>
+			  twitwi [DOT] mit [DOT] edu
+			</p>
+		</div>
 	</div>
-	
-	<footer class="footer navbar-fixed-bottom">
-		<hr>
-    	<div align="center"> © TwiThinks 2012</div>
-    </footer>
-</body>
-</html>
+{% endblock %}

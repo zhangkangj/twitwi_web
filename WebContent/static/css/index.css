@@ -39,13 +39,13 @@ body {
 	margin-right:auto;
 }
 
-#state_detail {
+#detail {
 	width: 800px;
 	left:42%;
 	top:42%
 }
 
-#state_detail_chart {
+#detail_chart {
 	width: 700px;
 	height: 400px;
 	margin:auto;

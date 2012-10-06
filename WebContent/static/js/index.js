@@ -41,8 +41,8 @@ function update_tweet(json){
 
 function update_state_tweet(json){
 	console.log(json);
-	$('#state_detail_tweet').cycle('destroy');
-	$('#state_detail_tweet').empty();
+	$('#detail_tweet').cycle('destroy');
+	$('#detail_tweet').empty();
 	jQuery.each(json, function(i, val) {
 		var name = val.name;
 		var screen_name = val.screen_name;
@@ -64,9 +64,9 @@ function update_state_tweet(json){
 				href: 'http://www.twitter.com/' + screen_name + '/status/' + id,
 				text: text}).css({'color': '#333'}))
 			.append($('<br>')))
-			.appendTo('#state_detail_tweet');
+			.appendTo('#detail_tweet');
 		});
-	$('#state_detail_tweet').cycle({ 
+	$('#detail_tweet').cycle({ 
 	    fx: 'scrollDown', 
 	    timeout: '2000'
 	});
@@ -144,6 +144,6 @@ $(document).ready(function() {
 	
 	$('#tweets').hover(function(){$('#tweets').cycle('pause');},
 					   function(){$('#tweets').cycle('resume');});
-	$('#state_detail_tweet').hover(function(){$('#state_detail_tweet').cycle('pause');},
-			   function(){$('#state_detail_tweet').cycle('resume');});
+	$('#detail_tweet').hover(function(){$('#detail_tweet').cycle('pause');},
+			   		   function(){$('#detail_tweet').cycle('resume');});
 });

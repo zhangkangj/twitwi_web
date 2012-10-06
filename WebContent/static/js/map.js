@@ -13,7 +13,7 @@ function setup_map(json) {
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
 	$(c).append(box);
-	$('#state_detail').on('shown',function(){
+	$('#detail').on('shown',function(){
 		draw_state_detail_chart (centered_state);
 	});
 	var ss = g.selectAll("g").data(json.features).enter()
@@ -96,8 +96,8 @@ function click_state(d) {
 	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
 	
 	if (centered_state != null) {
-		$('#state_detail_name').text("Twitter mentions in " + d.properties.name);
-		$('#state_detail').on('hide', function () {
+		$('#detail_name').text("Twitter mentions in " + d.properties.name);
+		$('#detail').on('hide', function () {
 			centered_state_state = null;
 			perform(update_tweet, 'tweet'+current_time, "/tweet.json?topic=mention&time=" + current_time);
 			g.selectAll("g.state").classed("deactive", true);
@@ -106,7 +106,7 @@ function click_state(d) {
 			$('#slideshow').cycle('resume');
 		});
 		setTimeout(function(){
-			$('#state_detail').modal('show');
+			$('#detail').modal('show');
 			$('#tweets').cycle('pause');
 		}, 200);
 	}
@@ -148,7 +148,7 @@ function draw_state_detail_chart(d){
 		var romney_count = mention_json[time][state].romney;
 		data.addRow([new Date(time * 1000), obama_count, romney_count]);
 	}
-    var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('state_detail_chart'));
+    var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
     annotatedtimeline.draw(data, {'displayAnnotations': true});
     perform(update_state_tweet, 'tweet'+current_time + d.properties.abbreviation, "/tweet.json?topic=mention&time=" + current_time + '&state=' + d.properties.abbreviation);
 }

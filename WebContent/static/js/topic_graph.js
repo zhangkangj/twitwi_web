@@ -1,6 +1,5 @@
 function topic_graph() {
 	var width = 900, height = 200;
-
 	vis_left = d3.select("#topic_left").append("svg").attr("width", width)
 			.attr("height", height).attr("id", "top_rect").append("g");
 	vis_right = d3.select("#topic_right").append("svg").attr("width", width)
@@ -89,7 +88,7 @@ function update_topic(json) {
 		val = width_count;
 		width_count += d.size;
 		return "translate(" + val + "," + 0 + ")";
-	})
+	});
 	right_enter.append("rect");
 	var right_c = node_right.select("rect").attr("width", function(d) {
 		return d.size;

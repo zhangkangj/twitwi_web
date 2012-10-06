@@ -87,7 +87,7 @@ function click_state(d) {
 			k = 200*Math.sqrt(1/(path.area(d) + 20000/path.area(d)));
 		}
 		centered_state = d;
-		perform(update_tweet, 'tweet'+current_time + d.properties.abbreviation, "/tweet.json?topic=mention&time=" + current_time + '&state=' + d.properties.abbreviation);
+		update_state_tweet(current_time, d.properties.abbreviation);
 	} else {
 		centered_state = null;
 		perform(update_tweet, 'tweet'+current_time, "/tweet.json?topic=mention&time=" + current_time);
@@ -131,7 +131,7 @@ function hover_state(d) {
 						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + ', '+(romney_count / total_count * 100).toFixed(1)+'%'));	
 		var m = d3.mouse(c);
 		box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')').show();
-		perform(update_tweet, 'tweet'+current_time + d.properties.abbreviation, "/tweet.json?topic=mention&time=" + current_time + '&state=' + d.properties.abbreviation);
+		update_state_tweet(current_time, d.properties.abbreviation);
 	}
 	g.selectAll("g.state").classed("hover", over_state && function(d) { return d == over_state; });
 }
@@ -142,7 +142,6 @@ function draw_state_detail_chart(d){
 	data.addColumn('date', 'Date');
 	data.addColumn('number', 'Obama');
 	data.addColumn('number', 'Romney');
-	
 	for (time in mention_json){
 		var obama_count  = mention_json[time][state].obama;
 		var romney_count = mention_json[time][state].romney;
@@ -150,7 +149,15 @@ function draw_state_detail_chart(d){
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
     annotatedtimeline.draw(data, {'displayAnnotations': true});
-    perform(update_state_tweet, 'tweet'+current_time + d.properties.abbreviation, "/tweet.json?topic=mention&time=" + current_time + '&state=' + d.properties.abbreviation);
+    update_state_tweet(current_time, d.properties.abbreviation);
+}
+
+function update_state_tweet(time, state){
+	perform(update_detail_tweet, 'tweet'+ time + state, "/tweet.json?topic=mention&time=" + time + '&state=' + state);
+}
+
+function update_state_tweet(time, state){
+	perform(update_tweet, 'tweet'+time + state, "/tweet.json?topic=mention&time=" + time + '&state=' + state);
 }
 
 function move_box() {

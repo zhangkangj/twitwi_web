@@ -4,7 +4,7 @@ import math
 import urllib2 as ul
 
 DEBUG = True
-TWITWI_ROOT = 'http://twitwi.mit.edu:5000'
+TWITWI_ROOT = 'http://twitwi.mit.edu'
 app = Flask(__name__)
 
 @app.before_request

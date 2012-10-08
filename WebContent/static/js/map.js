@@ -95,6 +95,7 @@ function click_state(d) {
 	g.selectAll("g.state").classed("deactive", centered_state && function(d) { return d != centered_state; });
 	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
 	
+	console.log(centered_state);
 	if (centered_state != null) {
 		$('#detail_name').text("Twitter mentions in " + d.properties.name);
 		$('#detail').on('hide', function () {

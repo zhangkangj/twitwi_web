@@ -22,8 +22,9 @@ function update_topic(json) {
 
 	for ( var c in topicJson1) {
 		topicArray1.push({
-			"name" : c,
-			"size" : (topicJson1[c] / sum_1) * 800
+			"topic" : c,
+			"size" : (topicJson1[c] / sum_1) * 800,
+			"entity": "obama"
 		});
 	}
 
@@ -33,8 +34,9 @@ function update_topic(json) {
 
 	for ( var c in topicJson2) {
 		topicArray2.push({
-			"name" : c,
-			"size" : (topicJson2[c] / sum_2) * 800
+			"topic" : c,
+			"size" : (topicJson2[c] / sum_2) * 800,
+			"entity": "romney"
 		});
 	}
 
@@ -64,7 +66,7 @@ function update_topic(json) {
 	left_c.filter(function(d) {
 		return !d.children;
 	}).style("fill", function(d) {
-		return fill(d.name);
+		return fill(d.topic);
 	});
 	left_enter.filter(function(d) {
 		return !d.children;
@@ -73,7 +75,7 @@ function update_topic(json) {
 			function(d) {
 				return "translate(" + d.size / 2 + "," + 50 + ")";
 			}).text(function(d) {
-		return d.name.substring(0, d.size / 9);
+		return d.topic.substring(0, d.size / 9);
 	});
 
 	node_left.exit().remove();
@@ -99,7 +101,7 @@ function update_topic(json) {
 				return d.children ? "dem" : "leaf";
 			});
 	right_c.style("fill", function(d) {
-		return fill(d.name);
+		return fill(d.topic);
 	});
 
 	right_enter.append("text");
@@ -107,15 +109,15 @@ function update_topic(json) {
 			function(d) {
 				return "translate(" + d.size / 2 + "," + 50 + ")";
 			}).text(function(d) {
-		return d.name.substring(0, d.size / 9);
+		return d.topic.substring(0, d.size / 9);
 	});
 
 	node_right.exit().remove();
 }
 
 function sortingFunc(a, b) {
-	var nA = a.name.toLowerCase();
-	var nB = b.name.toLowerCase();
+	var nA = a.topic.toLowerCase();
+	var nB = b.topic.toLowerCase();
 	if (nA < nB)
 		return -1;
 	else if (nA > nB)
@@ -124,11 +126,10 @@ function sortingFunc(a, b) {
 }
 
 function click_topic(d) {
-	window.console.log("clicked", d.name);
-	window.console.log("clicked", d.size);
+	console.log("clicked", d.topic, d.entity);
 }
 
 function hover_topic(d) {
-	window.console.log("hovered", d.name);
-	window.console.log("hovered", d.size);
+	console.log("hovered", d.topic, d.entity);
+	//window.console.log("hovered", d.size);
 }

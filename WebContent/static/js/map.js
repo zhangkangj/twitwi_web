@@ -13,9 +13,6 @@ function setup_map(json) {
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
 	$(c).append(box);
-	$('#detail').on('shown',function(){
-		draw_state_detail_chart (centered_state);
-	});
 	var ss = g.selectAll("g").data(json.features).enter()
 			.append("g").attr("class", "state")
 				.attr("id", function(d){return d.properties.abbreviation;})
@@ -95,16 +92,20 @@ function click_state(d) {
 	g.selectAll("g.state").classed("deactive", centered_state && function(d) { return d != centered_state; });
 	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
 	
-	console.log(centered_state);
 	if (centered_state != null) {
-		$('#detail_name').text("Twitter mentions in " + d.properties.name);
+		$('#detail_name').text("Twitter mentions @" + d.properties.name);
+		$('#detail').unbind();
 		$('#detail').on('hide', function () {
 			centered_state_state = null;
 			perform(update_tweet, 'tweet'+current_time, "/tweet.json?topic=mention&time=" + current_time);
 			g.selectAll("g.state").classed("deactive", true);
 			var x = 0, y = 0, k = 1;
 			g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
-			$('#slideshow').cycle('resume');
+			console.log(123);
+			$('#tweets').cycle('resume');
+		});
+		$('#detail').on('shown',function(){
+			draw_state_detail_chart (centered_state);
 		});
 		setTimeout(function(){
 			$('#detail').modal('show');
@@ -158,7 +159,7 @@ function update_state_detail_tweet(time, state){
 }
 
 function update_state_tweet(time, state){
-	perform(update_tweet, 'tweet'+time + state, "/tweet.json?topic=mention&time=" + time + '&state=' + state);
+	perform(update_tweet, 'tweet'+ time + state, "/tweet.json?topic=mention&time=" + time + '&state=' + state);
 }
 
 function move_box() {

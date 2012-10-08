@@ -13,26 +13,40 @@ function update_topic(json) {
 	var topicJson2 = json['romney'];
 	var format = d3.format(",d");
 	var fill = d3.scale.category20c();
+	
 	// normalizing
-	var sum_1 = 0;
-	var sum_2 = 0;
-	for ( var c in topicJson1) {
+	var sum_1 = 0, sum_2 = 0;
+	for (var c in topicJson1) {
 		sum_1 += topicJson1[c];
 	}
-
-	for ( var c in topicJson1) {
+	for (var c in topicJson2) {
+		sum_2 += topicJson2[c];
+	}
+	for (var c in topicJson1) {
+		if (topicJson1[c] / sum_1 < 0.1){
+			topicJson1[c] = 0;
+		}
+	}
+	for (var c in topicJson2) {
+		if (topicJson2[c] / sum_2 < 0.1){
+			topicJson2[c] = 0;
+		}
+	}
+	sum_1 = 0; sum_2 = 0;
+	for (var c in topicJson1) {
+		sum_1 += topicJson1[c];
+	}
+	for (var c in topicJson2) {
+		sum_2 += topicJson2[c];
+	}
+	for (var c in topicJson1) {
 		topicArray1.push({
 			"topic" : c,
 			"size" : (topicJson1[c] / sum_1) * 800,
 			"entity": "obama"
 		});
 	}
-
-	for ( var c in topicJson2) {
-		sum_2 += topicJson2[c];
-	}
-
-	for ( var c in topicJson2) {
+	for (var c in topicJson2) {
 		topicArray2.push({
 			"topic" : c,
 			"size" : (topicJson2[c] / sum_2) * 800,
@@ -125,11 +139,42 @@ function sortingFunc(a, b) {
 	return 0;
 }
 
+function hover_topic(d) {
+	perform(update_tweet, 'tweet' + time + d.topic, "/tweet.json?topic=" + d.topic + "&time=" + time);
+	//TODO show small box
+}
+
 function click_topic(d) {
+	$('#detail_name').text("Twitter mentions #" + d.topic);
+	$('#detail').unbind();
+	$('#detail').on('hide', function () {
+		perform(update_tweet, 'tweet' + current_time + d.topic, "/tweet.json?topic=" + d.topic + "&time=" + current_time);
+		$('#tweets').cycle('resume');
+	});
+	$('#detail').on('shown',function(){
+		draw_topic_detail_chart(d);
+	});
+	$('#tweets').cycle('pause');
+	$('#detail').modal('show');
 	console.log("clicked", d.topic, d.entity);
 }
 
-function hover_topic(d) {
-	console.log("hovered", d.topic, d.entity);
-	//window.console.log("hovered", d.size);
+function update_topic_detail_tweet(time, topic){
+	perform(update_detail_tweet, 'tweet' + time + topic, "/tweet.json?topic=" + topic + "&time=" + time);
+}
+
+function draw_topic_detail_chart(d){
+	var topic = d.topic;
+	var data = new google.visualization.DataTable();
+	data.addColumn('date', 'Date');
+	data.addColumn('number', 'Obama');
+	data.addColumn('number', 'Romney');
+	for (time in topic_graph_json){
+		var obama_count  = topic_graph_json[time]["obama"][topic];
+		var romney_count = topic_graph_json[time]["romney"][topic];
+		data.addRow([new Date(time * 1000), obama_count, romney_count]);
+	}
+    var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
+    annotatedtimeline.draw(data, {'displayAnnotations': true});
+    update_topic_detail_tweet(current_time, d.topic);
 }

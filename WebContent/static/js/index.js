@@ -106,13 +106,13 @@ function slide_carousel(id){
 //global variables
 var width = 1000, height = 500,  box_offset = 15;
 var color = d3.scale.quantize().range(['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', 'F6CECE', '#CEE3F6', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B']);
-var centered_state, over_state;
 var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
 var g, c, svgns, box;
-var times, current_time;
+var centered_state, over_state;
+var current_time;
+var current_topic;
 var mention_json, topic_graph_json;
 var vis_left, vis_right, pack_left, pack_right;
-var current_topic;
 
 $(document).ready(function() {
 	// carousel

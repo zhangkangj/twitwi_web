@@ -88,14 +88,14 @@ def topic():
             topic_dict[topic] = {}
         topic_dict[topic] = count
         row = cursor.fetchone()
-    for time in result:
-        for entity in result[time]:
-            total = 0
-            for topic in result[time][entity]:
-                total += result[time][entity][topic] 
-            for topic in result[time][entity]:
-                if result[time][entity][topic] < total * 0.05:
-                    result[time][entity][topic] = 0
+#    for time in result:
+#        for entity in result[time]:
+#            total = 0
+#            for topic in result[time][entity]:
+#                total += result[time][entity][topic] 
+#            for topic in result[time][entity]:
+#                if result[time][entity][topic] < total * 0.05:
+#                    result[time][entity][topic] = 0
 #                else:
 #                    result[time][entity][topic] = round(result[time][entity][topic] * math.sqrt(1.0 * result[time][entity][topic] / total)) 
     return json.dumps(result)

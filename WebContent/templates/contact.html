@@ -2,13 +2,21 @@
 
 {% block subtitle %} : contact {% endblock %}
 
+{% block page_head %}
+<link type="text/css" href="/static/css/contact.css" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
-	<div>
-		<p>
-			If you want to request a feature, report a bug or just say hi, please email us:
-		</p>
-		<p>
-			twitwi [DOT] mit [DOT] edu
-		</p>
+	<div class = 'container'>
+		<div class = 'shadowlight contentblock'>
+			<h3> Contact</h3>
+			<hr>
+			<p>
+				If you want to request a feature, report a bug or just say hi, please email us:
+			</p>
+			<p>
+				twitwi [DOT] mit [DOT] edu
+			</p>
+		</div>
 	</div>
 {% endblock %}

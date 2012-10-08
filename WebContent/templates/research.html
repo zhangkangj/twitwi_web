@@ -2,34 +2,63 @@
 
 {% block subtitle %} : research {% endblock %}
 
+{% block page_head %}
+<link type="text/css" href="/static/css/research.css" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
-
-<div>
-
-<h4>Open data?</h4>
-
-As data scientists, we get great intuitions from simple things like counting numbers and basic arithmetics. Yet, in the days of Big Data, these seemingly simple tasks aren't simple after all. For example, counting Twitter mentions requires a huge amount of work to build a robust database system and an analytic engine. We have gone through that pain, and we want to make this easy for everyone else. Therefore, we'd like to release our data for academic research to the extent permitted by Twitter Terms of Service.
-
-<h4>What is available?</h4>
-
-Number of mentions of Obama and Romney in each state / about each topic on each day since 2012. That's what you see on the Website. Find out more about how they are measured. 
-
-<h4>How reliable?</h4>
-
-There are many Twitter research groups and each of them collect and analyze data in its own way. The difficulty of data verification has casted suspicion on Twitter research. Thus, we'd to provide a trust-worthy and unbiased data source. For any statistics we present, we will back it up by the tweets and algorithms used. Up on request, we will release the tweet IDs for independent verification.
-
-<h4>What can I use it for?</h4>
-
-Academic research or other not-for-profit purposes. If you want to use the data for other purposes or if you aren't sure, please let us know. We have to ensure that any usage complies with Twitter's Terms of Service so that the data are always openly available.
-
-<h4>How to get it?</h4>
-
-We are working on an open API end point. But if you want to play with the data now, please contact us. Also, we are interested in learning your research.
-
-<h4>Want more?</h4>
-
-We do have the capacity to track a lot more things. Let us know and convince us the greatness of your idea.
-
+<div class = 'container'>
+	<div class = 'shadowlight contentblock'>
+		<h3>For Researchers</h3>
+		<hr>
+		
+		<h4>Open data?</h4>
+		<p>
+			As data scientists, we get great intuitions from simple things like counting numbers and basic arithmetics. 
+			Yet, in the days of Big Data, these seemingly simple tasks aren't simple after all. 
+			For example, counting Twitter mentions requires a huge amount of work to build a robust database system and an analytic engine. 
+			We have gone through that pain, and we want to make this easy for everyone else. 
+			Therefore, we'd like to release our data for academic research to the extent permitted by Twitter Terms of Service.
+		</p>
+		<br>
+		
+		<h4>What is available?</h4>
+		<p>
+			Number of mentions of Obama and Romney in each state / about each topic on each day since 2012. 
+			That's what you see on the Website. Find out more about how they are measured. 
+		</p>
+		<br>
+		
+		<h4>How reliable?</h4>
+		<p>
+			There are many Twitter research groups and each of them collect and analyze data in its own way. 
+			The difficulty of data verification has casted suspicion on Twitter research. 
+			Thus, we'd to provide a trust-worthy and unbiased data source. 
+			For any statistics we present, we will back it up by the tweets and algorithms used. 
+			Up on request, we will release the tweet IDs for independent verification.
+		</p>
+		<br>
+		
+		<h4>What can I use it for?</h4>
+		<p>
+			Academic research or other not-for-profit purposes. 
+			If you want to use the data for other purposes, please let us know. 
+			We have to ensure that any usage complies with Twitter's Terms of Service so that the data are always openly available.
+		</p>
+		<br>
+		
+		<h4>How to get it?</h4>
+		<p>
+			We are working on an open API end point. 
+			But if you want to play with the data now, please contact us. 
+			Also, we are interested in learning your research.
+		</p>
+		<br>
+		
+		<h4>Want more?</h4>
+		<p>
+			We do have the capacity to track a lot more things. Tell us how great your idea is.
+		</p>
+	</div>
 </div>
-
 {% endblock %}

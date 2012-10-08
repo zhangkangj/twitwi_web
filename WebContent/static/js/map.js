@@ -149,10 +149,10 @@ function draw_state_detail_chart(d){
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
     annotatedtimeline.draw(data, {'displayAnnotations': true});
-    update_state_tweet(current_time, d.properties.abbreviation);
+    update_state_detail_tweet(current_time, d.properties.abbreviation);
 }
 
-function update_state_tweet(time, state){
+function update_state_detail_tweet(time, state){
 	perform(update_detail_tweet, 'tweet'+ time + state, "/tweet.json?topic=mention&time=" + time + '&state=' + state);
 }
 

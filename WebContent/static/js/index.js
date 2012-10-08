@@ -40,7 +40,6 @@ function update_tweet(json){
 }
 
 function update_detail_tweet(json){
-	console.log(json);
 	$('#detail_tweet').cycle('destroy');
 	$('#detail_tweet').empty();
 	jQuery.each(json, function(i, val) {

@@ -23,6 +23,11 @@ body {
 	color: #999;
 }
 
+
+.twitter-share-button {
+  margin: 30px;
+}
+
 #myCarousel {
   width: 1000px;
   margin-left: auto;
@@ -68,41 +73,6 @@ body {
   color: #999;
 }
 
-/* colors */
-.blue1 {color:#0d406b}
-.blue2 {color:#40698b}
-.blue3 {color:#79a5ca}
-.blue4 {color:#a4c6e3}
-.blue5 {color:#d2e0ed}
-.bluebg1 {background-color:#0d406b}
-.bluebg2 {background-color:#40698b}
-.bluebg3 {background-color:#79a5ca}
-.bluebg4 {background-color:#a4c6e3}
-.bluebg5 {background-color:#d2e0ed}
-
-.red1 {color:#9e2017}
-.red2 {color:#bb4e55}
-.red3 {color:#d77176}
-.red4 {color:#e2a6a9}
-.red5 {color:#eecbcb}
-.redbg1 {background-color:#9e2017}
-.redbg2 {background-color:#bb4e55}
-.redbg3 {background-color:#d77176}
-.redbg4 {background-color:#e2a6a9}
-.redbg5 {background-color:#eecbcb}
-
-.yellow1 {color: #fadca5}
-.yellowbg1 {background-color: #fadca5}
-
-.gray1 {color:#333}
-.gray2 {color:#666}
-.gray3 {color:#999}
-.gray4 {color:#ccc}
-.graybg1 {background-color:#333}
-.graybg2 {background-color:#666}
-.graybg3 {background-color:#999}
-.graybg4 {background-color:#ccc}
-
 /* map */
 #map_container, #topic_container {
 	margin-left:auto;
@@ -142,13 +112,6 @@ body {
   font: 12px sans-serif;
 }
 
-circle {
-  fill: rgb(31, 119, 180);
-  fill-opacity: 1;
-  stroke: rgb(31, 119, 180);
-  stroke-width: 0px;
-}
-
 #top_rect {
   fill: #40698B;
   stroke: #40698B;
@@ -167,8 +130,4 @@ circle {
 
 #topic_right {
   margin-left: 100px;
-}
-
-.carousel-inner {
-  background-color: white;
 }

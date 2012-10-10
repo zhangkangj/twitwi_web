@@ -1,5 +1,5 @@
 function topic_graph() {
-	var width = 900, height = 200;
+	var width = 900, height = 150;
 	vis_left = d3.select("#topic_left").append("svg").attr("width", width)
 			.attr("height", height).attr("id", "top_rect").append("g");
 	vis_right = d3.select("#topic_right").append("svg").attr("width", width)
@@ -23,12 +23,12 @@ function update_topic(json) {
 		sum_2 += topicJson2[c];
 	}
 	for (var c in topicJson1) {
-		if (topicJson1[c] / sum_1 < 0.1){
+		if (topicJson1[c] / sum_1 < 0.15){
 			topicJson1[c] = 0;
 		}
 	}
 	for (var c in topicJson2) {
-		if (topicJson2[c] / sum_2 < 0.1){
+		if (topicJson2[c] / sum_2 < 0.15){
 			topicJson2[c] = 0;
 		}
 	}

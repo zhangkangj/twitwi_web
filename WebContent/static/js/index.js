@@ -161,4 +161,5 @@ $(document).ready(function() {
 			function(){$("#detail_tweet").cycle("pause");},
 			function(){$("#detail_tweet").cycle("resume");}
 	);
+	$('.black').tooltip("hide");
 });

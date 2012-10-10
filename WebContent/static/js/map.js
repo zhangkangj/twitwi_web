@@ -101,7 +101,6 @@ function click_state(d) {
 			g.selectAll("g.state").classed("deactive", true);
 			var x = 0, y = 0, k = 1;
 			g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
-			console.log(123);
 			$('#tweet').cycle('resume');
 		});
 		$('#detail').on('shown',function(){
@@ -129,8 +128,8 @@ function hover_state(d) {
 		var romney_count = mention_json[current_time][d.properties.abbreviation].romney;
 		var total_count = obama_count + romney_count;
 		if (total_count == 0) total_count = 1;
-		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count +', '+ (obama_count / total_count * 100).toFixed(1)+'%'))
-						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + ', '+(romney_count / total_count * 100).toFixed(1)+'%'));	
+		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count + " mentions"))
+						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + " mentions"));	
 		var m = d3.mouse(c);
 		box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')').show();
 		update_state_tweet(current_time, d.properties.abbreviation);

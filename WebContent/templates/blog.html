@@ -29,23 +29,29 @@
 			In total there are tens of billions of rows. They are stored on a single machine that costs ~3000 dollars. Here is some general experience:
 		</p>
 		
-		<strong>Hardware:</strong>
+		<strong>Hardware</strong>
 		<p>
-			Of course, we have to build the hardware ourselves. Some specs: 32GB Rem, 2 x 128GB Ocz SSD on RAID 0, 4 x 3TB Seagate hard drives on RAID 10. There are three layers of storage: memory, SSD and HD, with increasing performance and cost. Surely you want to put the most frequently accessed data, such as table index, on memory. We use SSD array for most non-volatile storage except for tweets. Tweets reside on the HD array since sequential scan is the most common operation and HD array is just the most cost-efficient.		</p>
+			Of course, we have to build the hardware ourselves. Some specs: 32GB Rem, 2 x 128GB SSD on RAID 0, 4 x 3TB hard drives on RAID 10. There are three layers of storage: memory, SSD and HD, with increasing performance and cost. Surely we want to put the most frequently accessed data, such as table index, on memory. We use SSD array for most non-volatile storage except for tweets. Tweets reside on the HD array since sequential scan is the most common operation and HD array is just the most cost-efficient.	
+		</p>
 		
-		<strong>Software:</strong>
+		<strong>Software</strong>
 		<p>
 			There are many database systems to choose from, but on a single node, the good old MySQL is probably the best choice. Putting a few billion rows in a table is not easy. The main problem is that you can't load the entire index into memory. We deploy a variety of tricks to handle that: partitioning, bulk loading, logging and sorting. They are implemented in Java as an optimization layer on top of MySQL.
 		</p>
 		
-		<strong>Fault Tolerance:</strong>
+		<strong>Fault Tolerance</strong>
 		<p>
 			Losing so much data is just not an option. Hard drives tend to fail in a year or two, so a redundant array is a must. Also, if an operation takes a little time, log ahead so that an OS/power failure would not lead to catastrophic consequences. 
 		</p>
 		
-		<strong>Schema Design:</strong>
+		<strong>Schema Design</strong>
 		<p>
 			Many people like to normalize their database to save space or just to make it more elegant. This is not necessarily true for Big Data, since I/O is more of a bottleneck than storage space. It is better to have a few redundant columns in one table than to do a join with another table. After all, the schema design that suits the access pattern is the best.			 
+		</p>
+		
+		<strong>Other Thoughts</strong>
+		<p>
+			Simple analyses like counting words or basic arithmetics can reveal tons of interesting facts from Big Data. But we just showed how much work needed to be done before we can get our hands dirty. For small data, tools like MS Excel abstract away most of low level implementations. We are looking forward to a generic, inexpensive and preferably open-sourced solution that works for Big Data.
 		</p>
 		<br>
 	</div>

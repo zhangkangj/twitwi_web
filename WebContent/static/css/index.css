@@ -15,16 +15,18 @@ body {
 }
 
 #menu {
+	width: 1000px;
 	margin-left: 100px;
-	margin-top: 0px
+	margin-top: 0px;
 }
 
-.menu_element {
+.black{
 	color: #999;
 }
 
-.twitter-share-button {
-	margin: 30px;
+.active_menu_element {
+	color: #999;
+	background-color: green;
 }
 
 #myCarousel {

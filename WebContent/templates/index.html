@@ -16,10 +16,12 @@
 	
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
 	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-popover.js"></script>
 	
 	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
 	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	
+
 	{% block page_head %}
 	<link type="text/css" href="/static/lib/jquery-ui/custom-theme/jquery-ui-1.8.24.custom.css" rel="stylesheet"/>
 	<link type="text/css" href="/static/css/index.css" rel="stylesheet" />
@@ -74,18 +76,19 @@
 	
 	{% block content %}
 	<div id="page" class="container-fluid">
-		<div id = "menu" class="pagination">
-			<ul>
-				<li id = "map_menu" class="disable menu_element" onclick="slide_carousel('map_container')">
-					<span>Election Map</span>
+		<div id = "menu">
+			<ul class="nav nav-tabs">
+				<li id = "map_menu" class="active">
+					<a href="#"  class="black" onclick="slide_carousel('map_container')">Election Map</a>
 				</li>
-				<li id = "topic_menu" class="active menu_element" onclick="slide_carousel('topic_container')">
-					<span>Election Topics</span>
+				<li id = "topic_menu">
+					<a href="#" class="black" onclick="slide_carousel('topic_container')">Election Topics</a>
+				</li>
+				<li class="pull-right">
+					<a href="https://twitter.com/share" style = "height:20px; margin:0px" class="twitter-share-button pull-right" data-lang="en" data-text = "twithinks, 2012 Presidential Election on Twitter" data-size="large">Tweet</a>
 				</li>
 			</ul>
-			<a href="https://twitter.com/share" class="twitter-share-button pull-right" data-lang="en" data-text = "twithinks, 2012 Presidential Election on Twitter" data-size="large">Tweet</a>			
-		</div>
-
+		</div>	
 
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
@@ -112,7 +115,7 @@
 			</div>
 		</div>
 		
-		<div class="modal hide fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal hide fade" id="detail" tabindex="-1">
 			<div class="modal-header">
 				<h3 id="detail_name"></h3>
 			</div>
@@ -120,7 +123,7 @@
 				<div id="detail_chart"></div>
 			</div>
 			<div class="modal-footer" style="text-align:left;">
-				<div id = "detail_tweet_panel">				
+				<div id = "detail_tweet_panel">
 					<div id="detail_tweet"></div>
 					<div style = "float:right;">
 						<button id = "detail_tweet_up" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;" > &and;</button>

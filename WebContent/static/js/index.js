@@ -105,13 +105,13 @@ function slide_carousel(id){
 	 if (id == "map_container"){
 	    	$("#topic_container").attr("class", "item carousel_element");
 	    	$("#map_container").attr("class", "active item carousel_element");
-	    	$("#topic_menu").attr("class", "active menu_element");
-	    	$("#map_menu").attr("class", "disable menu_element");
+	    	$("#topic_menu").attr("class", "");
+	    	$("#map_menu").attr("class", "active");
 	    }else if (id == "topic_container"){
 	    	$("#map_container").attr("class", "item carousel_element");
 	    	$("#topic_container").attr("class", "active item carousel_element");
-	    	$("#map_menu").attr("class", "active menu_element");
-	    	$("#topic_menu").attr("class", "disable menu_element");
+	    	$("#map_menu").attr("class", "");
+	    	$("#topic_menu").attr("class", "active");
 	    }
 }
 
@@ -132,11 +132,11 @@ $(document).ready(function() {
 	$("#myCarousel").bind("slid", function() {
 		var active_id = $(".active").filter(".carousel_element")[0].id;
 	    if (active_id == "map_container"){
-	    	$("#topic_menu").attr("class", "active menu_element");
-	    	$("#map_menu").attr("class", "disable menu_element");
+	    	$("#topic_menu").attr("class", "");
+	    	$("#map_menu").attr("class", "active");
 	    }else if (active_id == "topic_container"){
-	    	$("#map_menu").attr("class", "active menu_element");
-	    	$("#topic_menu").attr("class", "disable menu_element");
+	    	$("#map_menu").attr("class", "");
+	    	$("#topic_menu").attr("class", "active");
 	    }
 	});
 	

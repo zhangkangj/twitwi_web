@@ -149,12 +149,12 @@ function click_topic(d) {
 	$('#detail').unbind();
 	$('#detail').on('hide', function () {
 		perform(update_tweet, 'tweet' + current_time + d.topic, "/tweet.json?topic=" + d.topic + "&time=" + current_time);
-		$('#tweets').cycle('resume');
+		$('#tweet').cycle('resume');
 	});
 	$('#detail').on('shown',function(){
 		draw_topic_detail_chart(d);
 	});
-	$('#tweets').cycle('pause');
+	$('#tweet').cycle('pause');
 	$('#detail').modal('show');
 	console.log("clicked", d.topic, d.entity);
 }

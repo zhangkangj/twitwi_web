@@ -102,14 +102,14 @@ function click_state(d) {
 			var x = 0, y = 0, k = 1;
 			g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
 			console.log(123);
-			$('#tweets').cycle('resume');
+			$('#tweet').cycle('resume');
 		});
 		$('#detail').on('shown',function(){
 			draw_state_detail_chart (centered_state);
 		});
 		setTimeout(function(){
 			$('#detail').modal('show');
-			$('#tweets').cycle('pause');
+			$('#tweet').cycle('pause');
 		}, 200);
 	}
 }

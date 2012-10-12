@@ -132,7 +132,7 @@ function hover_state(d) {
 						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + " mentions"));	
 		var m = d3.mouse(c);
 		box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')').show();
-		update_state_tweet(current_time, d.properties.abbreviation);
+		//update_state_tweet(current_time, d.properties.abbreviation);
 	}
 	g.selectAll("g.state").classed("hover", over_state && function(d) { return d == over_state; });
 }

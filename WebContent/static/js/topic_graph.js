@@ -140,7 +140,7 @@ function sortingFunc(a, b) {
 }
 
 function hover_topic(d) {
-	perform(update_tweet, 'tweet' + time + d.topic, "/tweet.json?topic=" + d.topic + "&time=" + time);
+	//perform(update_tweet, 'tweet' + time + d.topic, "/tweet.json?topic=" + d.topic + "&time=" + time);
 	//TODO show small box
 }
 

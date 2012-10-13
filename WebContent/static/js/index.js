@@ -1,5 +1,3 @@
-google.load("visualization", "1.0", {"packages":["corechart", "annotatedtimeline"]});
-
 function update_time(time) {
 	current_time = time;
 	color_states(mention_json[time]);
@@ -123,8 +121,10 @@ var g, c, svgns, box;
 var centered_state, over_state;
 var current_time;
 var current_topic;
-var mention_json, topic_graph_json;
+var mention_json, topic_graph_json, map_json;
 var vis_left, vis_right, pack_left, pack_right;
+var load_counter = 2;
+
 
 $(document).ready(function() {
 	// carousel
@@ -141,17 +141,12 @@ $(document).ready(function() {
 	});
 	
 	// initialize
-	d3.json("/topic.json", function(json) {
-		topic_graph_json = json;
-		d3.json("/mention.json", function(json){
-			mention_json = json;
-			d3.json("/static/dat/us_states.json", function(json){
-				topic_graph();
-				setup_map(json);
-				setup_date_selection();
-			});
-		});
-	});
+	load_counter--;
+	if (load_counter == 0){
+		topic_graph();
+		setup_map();
+		setup_date_selection();	
+	}
 	
 	$("#tweet_panel").hover(
 			function(){$("#tweet").cycle("pause");},
@@ -163,3 +158,21 @@ $(document).ready(function() {
 	);
 	$('.black').tooltip("hide");
 });
+
+d3.json("/topic.json", function(json) {
+	topic_graph_json = json;
+	d3.json("/mention.json", function(json){
+		mention_json = json;
+		d3.json("/static/dat/us_states.json", function(json){
+			map_json = json;
+			load_counter--;
+			if (load_counter == 0){
+				topic_graph();
+				setup_map();
+				setup_date_selection();	
+			}
+		});
+	});
+});
+
+google.load("visualization", "1.0", {"packages":["corechart", "annotatedtimeline"]});

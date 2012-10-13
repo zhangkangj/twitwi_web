@@ -1,4 +1,4 @@
-function setup_map(json) {
+function setup_map() {
 	var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
 	svg.append("rect").attr("width", width)
 					  .attr("height", height)
@@ -13,7 +13,7 @@ function setup_map(json) {
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
 	$(c).append(box);
-	var ss = g.selectAll("g").data(json.features).enter()
+	var ss = g.selectAll("g").data(map_json.features).enter()
 			.append("g").attr("class", "state")
 				.attr("id", function(d){return d.properties.abbreviation;})
 				.on("click", click_state)

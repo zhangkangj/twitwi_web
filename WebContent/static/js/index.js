@@ -115,7 +115,8 @@ function slide_carousel(id){
 
 //global variables
 var width = 1000, height = 500,  box_offset = 15;
-var color = d3.scale.quantize().range(["#9E2017", "#BB4E55", "#d77176", "#e2a6a9", "F6CECE", "#CEE3F6", "#a4c6e3", "#79a5ca", "#40698B", "#0D406B"]);
+var gradient = ['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#eecbcb', '#fadca5', '#d2e0ed', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B'];
+var color = d3.scale.quantize().range(gradient);
 var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
 var g, c, svgns, box;
 var centered_state, over_state;

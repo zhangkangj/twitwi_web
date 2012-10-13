@@ -12,15 +12,22 @@ function setup_map() {
 		.append($(document.createElementNS(svgns, 'rect')).attr('width','160').attr('height','70').attr('rx', '3'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
-	$(c).append(box);
 	var ss = g.selectAll("g").data(map_json.features).enter()
-			.append("g").attr("class", "state")
+				.append("g").attr("class", "state")
 				.attr("id", function(d){return d.properties.abbreviation;})
 				.on("click", click_state)
 				.on("mouseover", hover_state)
 				.on("mousemove", move_box)
 				.on('mouseout', hide_box);
 	ss.append("path").attr("d", path);
+	// legend
+	var gradient_width=40, gradient_height=10, gradient_count=gradient.length;
+	var legend = svg.append('g').attr('id', 'legend').attr('transform', 'translate('+(width/2-gradient_width*gradient_count/2)+','+(height-gradient_height-10)+')');
+	legend.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
+	legend.append('text').text('Romney').attr('x', -65).attr('y', 10);
+	legend.append('text').text('Obama').attr('x', gradient_width*gradient_count+10).attr('y', 10);
+	
+	$(c).append(box);
 }
 
 function setup_date_selection() {
@@ -48,8 +55,28 @@ function setup_date_selection() {
 		change: function(event, ui) {
 					$('#date').val(date(times[ui.value])); 
 					update_time(times[ui.value]);
+					if (ui.value == 0) {
+						$('#prev-day-btn').addClass('disabled');
+					} else if (ui.value == times.length-1) {
+						$('#next-day-btn').addClass('disabled');
+					} else {
+						$('#next-day-btn').removeClass('disabled');
+						$('#prev-day-btn').removeClass('disabled');
+					}
 				}
 	}).prependTo('#control');
+	// set up day increment/decrement buttons
+	$('<div>').insertAfter('#slider').addClass('btn-group').append(
+		$('<button>').attr('id', 'prev-day-btn').addClass('btn').append('<i class="icon-chevron-left"></i>').click(function() {
+			var v = $('#slider').slider('value');
+			$('#slider').slider('value', Math.max(v-1, 0));
+		})
+	).append(
+		$('<button>').attr('id', 'next-day-btn').addClass('btn').append('<i class="icon-chevron-right"></i>').click(function() {
+			var v = $('#slider').slider('value');
+			$('#slider').slider('value', Math.min(v+1, times.length-1));
+		})
+	);
 	// set up datepicker
 	$('#date').datepicker({
 		dateFormat: 'D M dd yy',
@@ -121,13 +148,13 @@ function hover_state(d) {
 		var region = g.select('#'+d.properties.abbreviation)[0][0];
 		region.style.cursor = 'hand';
 		$(region).parent().append(region);
-		// TODO generate a info box next to the cursor
+		// show a hover box next to the cursor
 		$('#state-name').text(d.properties.name);
 		// calculate stats
 		var obama_count  = mention_json[current_time][d.properties.abbreviation].obama;
 		var romney_count = mention_json[current_time][d.properties.abbreviation].romney;
-		var total_count = obama_count + romney_count;
-		if (total_count == 0) total_count = 1;
+		var total_count = Math.max(1, obama_count + romney_count);
+
 		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count + " mentions"))
 						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + " mentions"));	
 		var m = d3.mouse(c);

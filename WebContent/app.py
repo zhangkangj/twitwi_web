@@ -1,4 +1,4 @@
-from flask import *
+from flask import render_template, make_response, response, request, g
 import MySQLdb
 import json
 import math
@@ -18,23 +18,23 @@ def index():
 
 @app.route('/test')
 def test():
-    return make_response(render_template('test.html'))
+    return render_template('test.html')
 
 @app.route('/about')
 def about():
-    return make_response(render_template('about.html'))
+    return render_template('about.html')
 
 @app.route('/blog')
 def blog():
-    return make_response(render_template('blog.html'))
+    return render_template('blog.html')
 
 @app.route('/contact')
 def contact():
-    return make_response(render_template('contact.html'))
+    return render_template('contact.html')
 
 @app.route('/research')
 def research():
-    return make_response(render_template('research.html'))
+    return render_template('research.html')
 
 @app.route('/mention.json')
 def mention():

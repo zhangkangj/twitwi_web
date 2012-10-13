@@ -23,10 +23,10 @@ function setup_map(json) {
 	ss.append("path").attr("d", path);
 	// legend
 	var gradient_width=40, gradient_height=10, gradient_count=gradient.length;
-	var lengend = svg.append('g').attr('id', 'legend').attr('transform', 'translate('+(width/2-gradient_width*gradient_count/2)+','+(height-gradient_height-10)+')');
-	lengend.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
-	lengend.append('text').text('Romney').attr('x', -65).attr('y', 10);
-	lengend.append('text').text('Obama').attr('x', gradient_width*gradient_count+10).attr('y', 10);
+	var legend = svg.append('g').attr('id', 'legend').attr('transform', 'translate('+(width/2-gradient_width*gradient_count/2)+','+(height-gradient_height-10)+')');
+	legend.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
+	legend.append('text').text('Romney').attr('x', -65).attr('y', 10);
+	legend.append('text').text('Obama').attr('x', gradient_width*gradient_count+10).attr('y', 10);
 	
 	$(c).append(box);
 }

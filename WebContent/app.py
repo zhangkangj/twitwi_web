@@ -1,4 +1,4 @@
-from flask import render_template, make_response, response, request, g
+from flask import Flask, render_template, make_response, request, g
 import MySQLdb
 import json
 import math

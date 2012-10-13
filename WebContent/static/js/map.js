@@ -56,8 +56,28 @@ function setup_date_selection() {
 		change: function(event, ui) {
 					$('#date').val(date(times[ui.value])); 
 					update_time(times[ui.value]);
+					if (ui.value == 0) {
+						$('#prev-day-btn').addClass('disabled');
+					} else if (ui.value == times.length-1) {
+						$('#next-day-btn').addClass('disabled');
+					} else {
+						$('#next-day-btn').removeClass('disabled');
+						$('#prev-day-btn').removeClass('disabled');
+					}
 				}
 	}).prependTo('#control');
+	// set up day increment/decrement buttons
+	$('<div>').insertAfter('#slider').addClass('btn-group').append(
+		$('<button>').attr('id', 'prev-day-btn').addClass('btn').append('<i class="icon-chevron-left"></i>').click(function() {
+			var v = $('#slider').slider('value');
+			$('#slider').slider('value', Math.max(v-1, 0));
+		})
+	).append(
+		$('<button>').attr('id', 'next-day-btn').addClass('btn').append('<i class="icon-chevron-right"></i>').click(function() {
+			var v = $('#slider').slider('value');
+			$('#slider').slider('value', Math.min(v+1, times.length-1));
+		})
+	);
 	// set up datepicker
 	$('#date').datepicker({
 		dateFormat: 'D M dd yy',
@@ -129,7 +149,7 @@ function hover_state(d) {
 		var region = g.select('#'+d.properties.abbreviation)[0][0];
 		region.style.cursor = 'hand';
 		$(region).parent().append(region);
-		// TODO generate a info box next to the cursor
+		// show a hover box next to the cursor
 		$('#state-name').text(d.properties.name);
 		// calculate stats
 		var obama_count  = mention_json[current_time][d.properties.abbreviation].obama;

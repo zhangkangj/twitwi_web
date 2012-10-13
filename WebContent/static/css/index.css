@@ -80,9 +80,13 @@ body {
 
 #slider {
   margin-top: 7px;
-  width: 83%;
-  max-width: 830px;
+  width: 73%;
+  max-width: 710px;
   color: #999;
+}
+
+#slider+div {
+	margin-left: 20px;
 }
 
 /* map */

@@ -12,7 +12,7 @@ function setup_map(json) {
 		.append($(document.createElementNS(svgns, 'rect')).attr('width','160').attr('height','70').attr('rx', '3'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
-	$(c).append(box);
+	
 	var ss = g.selectAll("g").data(json.features).enter()
 			.append("g").attr("class", "state")
 				.attr("id", function(d){return d.properties.abbreviation;})
@@ -21,6 +21,14 @@ function setup_map(json) {
 				.on("mousemove", move_box)
 				.on('mouseout', hide_box);
 	ss.append("path").attr("d", path);
+	// legend
+	var gradient_width=40, gradient_height=10, gradient_count=gradient.length;
+	var lengend = svg.append('g').attr('id', 'legend').attr('transform', 'translate('+(width/2-gradient_width*gradient_count/2)+','+(height-gradient_height-10)+')');
+	lengend.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
+	lengend.append('text').text('Romney').attr('x', -65).attr('y', 10);
+	lengend.append('text').text('Obama').attr('x', gradient_width*gradient_count+10).attr('y', 10);
+	
+	$(c).append(box);
 }
 
 function setup_date_selection() {
@@ -126,8 +134,8 @@ function hover_state(d) {
 		// calculate stats
 		var obama_count  = mention_json[current_time][d.properties.abbreviation].obama;
 		var romney_count = mention_json[current_time][d.properties.abbreviation].romney;
-		var total_count = obama_count + romney_count;
-		if (total_count == 0) total_count = 1;
+		var total_count = Math.max(1, obama_count + romney_count);
+
 		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count + " mentions"))
 						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + " mentions"));	
 		var m = d3.mouse(c);

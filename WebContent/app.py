@@ -39,7 +39,7 @@ def research():
 def mention():
     result = {}
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -66,7 +66,7 @@ def mention():
 def topic():
     result = {}
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -112,7 +112,7 @@ def sample_tweet():
     if None in [time, topic]:
         return json.dumps(result)
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'team', passwd = 'twitwi', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()

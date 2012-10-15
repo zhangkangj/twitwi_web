@@ -41,8 +41,8 @@ body {
 }
 
 #tweet_container {
-	width: 900px;
-	margin-left:80px;
+	width: 880px;
+	margin-left:120px;
 	margin-right:auto;
 	display:inline-block;
 }

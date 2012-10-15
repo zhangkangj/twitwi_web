@@ -17,7 +17,8 @@ function update_tweet(json){
 		$("<li>", {}).css({"width": "100%"}).append($("<div>")
 			.append($("<a>", {
 			    href: "http://www.twitter.com/" + screen_name,
-			    text: name}).css({"color": "#333",  "font-weight": "bold"}))
+			    text: name,
+			    target: "_blank"}).css({"color": "#333",  "font-weight": "bold"}))
 			.append($("<span>",{
 				text: " @" + screen_name
 				}).css({"color": "#999"}))
@@ -27,7 +28,8 @@ function update_tweet(json){
 			.append($("<br>"))
 			.append($("<a>",{
 				href: "http://www.twitter.com/" + screen_name + "/status/" + id,
-				text: text}).css({"color": "#333"}))
+				text: text,
+				target: "_blank"}).css({"color": "#333"}))
 			.append($("<br>")))
 			.appendTo("#tweet");
 	});
@@ -55,7 +57,8 @@ function update_detail_tweet(json){
 		$("<li>", {}).css({"width": "100%"}).append($("<div>")
 			.append($("<a>", {
 			    href: "http://www.twitter.com/" + screen_name,
-			    text: name}).css({"color": "#333",  "font-weight": "bold"}))
+			    text: name,
+			    target: "_blank"}).css({"color": "#333",  "font-weight": "bold"}))
 			.append($("<span>",{
 				text: " @" + screen_name
 				}).css({"color": "#999"}))
@@ -65,7 +68,8 @@ function update_detail_tweet(json){
 			.append($("<br>"))
 			.append($("<a>",{
 				href: "http://www.twitter.com/" + screen_name + "/status/" + id,
-				text: text}).css({"color": "#333"}))
+				text: text,
+				target: "_blank"}).css({"color": "#333"}))
 			.append($("<br>")))
 			.appendTo("#detail_tweet");
 		});

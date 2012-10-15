@@ -114,8 +114,9 @@ function slide_carousel(id){
 }
 
 //global variables
-var width = 1000, height = 500,  box_offset = 15;
-var gradient = ['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#eecbcb', '#fadca5', '#d2e0ed', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B'];
+var width = 1000, height = 500;
+var box_offset = 15;
+var gradient = ['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#eecbcb', '#d2e0ed', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B'];
 var color = d3.scale.quantize().range(gradient);
 var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
 var g, c, svgns, box;
@@ -141,14 +142,6 @@ $(document).ready(function() {
 	    }
 	});
 	
-	// initialize
-	load_counter--;
-	if (load_counter == 0){
-		topic_graph();
-		setup_map();
-		setup_date_selection();	
-	}
-	
 	$("#tweet_panel").hover(
 			function(){$("#tweet").cycle("pause");},
 			function(){$("#tweet").cycle("resume");}
@@ -158,6 +151,14 @@ $(document).ready(function() {
 			function(){$("#detail_tweet").cycle("resume");}
 	);
 	$('.black').tooltip("hide");
+	
+	// initialize
+	load_counter--;
+	if (load_counter == 0){
+		topic_graph();
+		setup_map();
+		setup_date_selection();	
+	}
 });
 
 d3.json("/topic.json", function(json) {

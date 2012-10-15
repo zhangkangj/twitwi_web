@@ -13,7 +13,6 @@ def before_request():
 @app.route('/')
 def index():
     response = make_response(render_template('index.html'))
-    response.headers['Cache-Control'] = 'no-cache, must-revalidate'
     return response
 
 @app.route('/test')

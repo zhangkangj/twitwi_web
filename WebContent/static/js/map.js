@@ -192,7 +192,7 @@ function draw_state_detail_chart(d){
 		}
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
-    annotatedtimeline.draw(data, {'displayAnnotations': true});
+    annotatedtimeline.draw(data, {'displayAnnotations': true, 'zoomStartTime': new Date(1343793600000)});
     update_state_detail_tweet(current_time, d.properties.abbreviation);
 }
 

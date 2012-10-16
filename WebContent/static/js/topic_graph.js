@@ -172,7 +172,19 @@ function draw_topic_detail_chart(d){
 	for (time in topic_graph_json){
 		var obama_count  = topic_graph_json[time]["obama"][topic];
 		var romney_count = topic_graph_json[time]["romney"][topic];
-		data.addRow([new Date(time * 1000), obama_count, romney_count]);
+		time = parseInt(time) + 46800;
+		if (news_json[time] == null){
+			data.addRow([new Date(time * 1000), obama_count, null, null, romney_count, null, null]);	
+		} else{
+			var parts = news_json[time].split(':');
+			if (parts[0] == 'O'){
+				data.addRow([new Date(time * 1000 + 1), obama_count, 'Obama', parts[1], romney_count, null, null]);
+			} else if (parts[0] == 'R') {
+				data.addRow([new Date(time * 1000 + 1), obama_count, null, null, romney_count, 'Romney', parts[1]]);
+			} else {
+				data.addRow([new Date(time * 1000 + 1), obama_count, parts[1], null, romney_count, null, null]);	
+			}
+		}
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
     annotatedtimeline.draw(data, {'displayAnnotations': true});

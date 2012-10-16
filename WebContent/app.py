@@ -6,6 +6,20 @@ import math
 DEBUG = True
 app = Flask(__name__)
 
+news = {1344704400:'R:Paul Ryan as VP Candidate',
+        1340902800:'O:Obama-sings-boyfriend video went viral',
+        1346346000:'R:Accepts GOP Nomination',
+        1346173200:'R:RNC',
+        1346778000:'O:DNC',
+        1346950800:'O:Accepts Democrat Nomination',
+        1347901200:'R:"47%" fundraising video',
+        1349283600:'B:1st Presidential Debate',
+        1349974800:'B:VP Debate',
+        1350406800:'B:2nd Presidential Debate',
+        1327428000:'O:State of the Union Address',
+        1336582800:'O:Supports Same Sex Marriage',
+}
+
 @app.before_request
 def before_request():
     return
@@ -87,16 +101,6 @@ def topic():
             topic_dict[topic] = {}
         topic_dict[topic] = count
         row = cursor.fetchone()
-#    for time in result:
-#        for entity in result[time]:
-#            total = 0
-#            for topic in result[time][entity]:
-#                total += result[time][entity][topic] 
-#            for topic in result[time][entity]:
-#                if result[time][entity][topic] < total * 0.05:
-#                    result[time][entity][topic] = 0
-#                else:
-#                    result[time][entity][topic] = round(result[time][entity][topic] * math.sqrt(1.0 * result[time][entity][topic] / total)) 
     return json.dumps(result)
 
 @app.route('/tweet.json')
@@ -135,5 +139,9 @@ def sample_tweet():
         entry = cursor.fetchone()
     return json.dumps(result)
 
+@app.route('/news.json')
+def get_news():
+    return json.dumps(news)
+    
 if __name__ == '__main__':
-    app.run(debug=DEBUG, host = '0.0.0.0', port = 80)
+    app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

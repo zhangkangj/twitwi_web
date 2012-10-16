@@ -169,11 +169,27 @@ function draw_state_detail_chart(d){
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Date');
 	data.addColumn('number', 'Obama');
+	data.addColumn('string', 'title1');
+	data.addColumn('string', 'text1');
 	data.addColumn('number', 'Romney');
-	for (time in mention_json){
+	data.addColumn('string', 'title1');
+	data.addColumn('string', 'text1');
+	for (var time in mention_json){
 		var obama_count  = mention_json[time][state].obama;
 		var romney_count = mention_json[time][state].romney;
-		data.addRow([new Date(time * 1000), obama_count, romney_count]);
+		time = parseInt(time) + 46800;
+		if (news_json[time] == null){
+			data.addRow([new Date(time * 1000), obama_count, null, null, romney_count, null, null]);	
+		} else{
+			var parts = news_json[time].split(':');
+			if (parts[0] == 'O'){
+				data.addRow([new Date(time * 1000), obama_count, 'Obama', parts[1], romney_count, null, null]);
+			} else if (parts[0] == 'R') {
+				data.addRow([new Date(time * 1000), obama_count, null, null, romney_count, 'Romney', parts[1]]);
+			} else {
+				data.addRow([new Date(time * 1000), obama_count, parts[1], null, romney_count, null, null]);	
+			}
+		}
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
     annotatedtimeline.draw(data, {'displayAnnotations': true});

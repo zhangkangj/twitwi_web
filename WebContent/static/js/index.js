@@ -127,7 +127,7 @@ var g, c, svgns, box;
 var centered_state, over_state;
 var current_time;
 var current_topic;
-var mention_json, topic_graph_json, map_json;
+var mention_json, topic_graph_json, map_json, news_json;
 var vis_left, vis_right, pack_left, pack_right;
 var load_counter = 2;
 
@@ -163,6 +163,10 @@ $(document).ready(function() {
 		setup_map();
 		setup_date_selection();	
 	}
+});
+
+d3.json("/news.json", function(json) {
+	news_json = json;
 });
 
 d3.json("/topic.json", function(json) {

@@ -156,7 +156,6 @@ function click_topic(d) {
 	});
 	$('#tweet').cycle('pause');
 	$('#detail').modal('show');
-	console.log("clicked", d.topic, d.entity);
 }
 
 function update_topic_detail_tweet(time, topic){
@@ -168,11 +167,15 @@ function draw_topic_detail_chart(d){
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Date');
 	data.addColumn('number', 'Obama');
+	data.addColumn('string', 'title1');
+	data.addColumn('string', 'text1');
 	data.addColumn('number', 'Romney');
-	for (time in topic_graph_json){
+	data.addColumn('string', 'title1');
+	data.addColumn('string', 'text1');
+	for (var time in topic_graph_json){
 		var obama_count  = topic_graph_json[time]["obama"][topic];
 		var romney_count = topic_graph_json[time]["romney"][topic];
-		time = parseInt(time) + 46800;
+		time = parseInt(time);
 		if (news_json[time] == null){
 			data.addRow([new Date(time * 1000), obama_count, null, null, romney_count, null, null]);	
 		} else{

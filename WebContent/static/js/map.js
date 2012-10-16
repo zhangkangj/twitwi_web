@@ -177,7 +177,7 @@ function draw_state_detail_chart(d){
 	for (var time in mention_json){
 		var obama_count  = mention_json[time][state].obama;
 		var romney_count = mention_json[time][state].romney;
-		time = parseInt(time) + 46800;
+		time = parseInt(time);
 		if (news_json[time] == null){
 			data.addRow([new Date(time * 1000), obama_count, null, null, romney_count, null, null]);	
 		} else{

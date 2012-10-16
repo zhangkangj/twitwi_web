@@ -6,18 +6,18 @@ import math
 DEBUG = True
 app = Flask(__name__)
 
-news = {1344704400:'R:Paul Ryan as VP Candidate',
-        1340902800:'O:Obama-sings-boyfriend video went viral',
-        1346346000:'R:Accepts GOP Nomination',
-        1346173200:'R:RNC',
-        1346778000:'O:DNC',
-        1346950800:'O:Accepts Democrat Nomination',
-        1347901200:'R:"47%" fundraising video',
-        1349283600:'B:1st Presidential Debate',
-        1349974800:'B:VP Debate',
-        1350406800:'B:2nd Presidential Debate',
-        1327428000:'O:State of the Union Address',
-        1336582800:'O:Supports Same Sex Marriage',
+news = {1344704400-46800:'R:Paul Ryan as VP Candidate',
+        1340902800-46800:'O:Obama-sings-boyfriend video went viral',
+        1346346000-46800:'R:Accepts GOP Nomination',
+        1346173200-46800:'R:RNC',
+        1346778000-46800:'O:DNC',
+        1346950800-46800:'O:Accepts Democrat Nomination',
+        1347901200-46800:'R:"47%" fundraising video',
+        1349283600-46800:'B:1st Presidential Debate',
+        1349974800-46800:'B:VP Debate',
+        1350406800-46800:'B:2nd Presidential Debate',
+        1327428000-46800:'O:State of the Union Address',
+        1336582800-46800:'O:Supports Same Sex Marriage',
 }
 
 @app.before_request

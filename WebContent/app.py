@@ -142,6 +142,6 @@ def sample_tweet():
 @app.route('/news.json')
 def get_news():
     return json.dumps(news)
-    
+
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

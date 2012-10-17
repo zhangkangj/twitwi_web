@@ -127,11 +127,3 @@ body {
   fill: #444;
   font: 12px sans-serif;
 }
-
-#topic_obama {
-  	cursor: pointer;
-}
-
-#topic_romney {
- 	cursor: pointer;
-}

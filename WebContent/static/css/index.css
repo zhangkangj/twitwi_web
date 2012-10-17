@@ -1,11 +1,11 @@
 body {
 	padding-top: 60px;
-  background-image: url('../img/bgnoise.png');
+	background-image: url('../img/bgnoise.png');
 }
 
 .background {
-  fill: none;
-  pointer-events: all;
+	fill: none;
+	pointer-events: all;
 }
 
 #page {
@@ -128,24 +128,10 @@ body {
   font: 12px sans-serif;
 }
 
-#top_rect {
-  fill: #40698B;
-  stroke: #40698B;
-  stroke-width: 1px;
-}
-
-#bottom_rect {
-  fill: #BB4E55;
-  stroke: #BB4E55;
-  stroke-width: 1px;
-}
-
-#topic_left {
+#topic_obama {
   	cursor: pointer;
-  	margin-left:100px
 }
 
-#topic_right {
+#topic_romney {
  	cursor: pointer;
- 	margin-left:100px
 }

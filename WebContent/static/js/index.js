@@ -1,3 +1,66 @@
+function setup_time(){
+	times = [];
+	for (var time in mention_json){
+		times.push(parseInt(time));
+	}
+	times = times.sort();
+	current_time = times[times.length-1];
+}
+
+function setup_date_selection() {
+	// set up slider
+	$('<div>').attr('id','slider').slider({
+		value: times.length-1, 
+		min: 0, 
+		max: times.length-1, 
+		step: 1,
+		animate: 500,
+		create: function(event, ui) {
+					$('#date').val(date(times[times.length-1])); 
+					update_time(times[times.length-1]);
+				},
+		slide:  function(event, ui) {
+					$('#date').val(date(times[ui.value]));
+				},
+		change: function(event, ui) {
+					$('#date').val(date(times[ui.value])); 
+					update_time(times[ui.value]);
+					if (ui.value == 0) {
+						$('#prev-day-btn').addClass('disabled');
+					} else if (ui.value == times.length-1) {
+						$('#next-day-btn').addClass('disabled');
+					} else {
+						$('#next-day-btn').removeClass('disabled');
+						$('#prev-day-btn').removeClass('disabled');
+					}
+				}
+	}).prependTo('#control');
+	// set up day increment/decrement buttons
+	$('<div>').insertAfter('#slider').addClass('btn-group').append(
+		$('<button>').attr('id', 'prev-day-btn').addClass('btn').append('<i class="icon-chevron-left"></i>').click(function() {
+			var v = $('#slider').slider('value');
+			$('#slider').slider('value', Math.max(v-1, 0));
+		})
+	).append(
+		$('<button>').attr('id', 'next-day-btn').addClass('btn').append('<i class="icon-chevron-right"></i>').click(function() {
+			var v = $('#slider').slider('value');
+			$('#slider').slider('value', Math.min(v+1, times.length-1));
+		})
+	);
+	// set up datepicker
+	$('#date').datepicker({
+		dateFormat: 'D M dd yy',
+		beforeShowDay: function(date) {
+			if (index(times, date) > -1 ) {
+				return [true, ''];
+			}
+			return [false, ''];
+		},
+	}).change(function(event) {
+		$('#slider').slider('value', index(times, new Date($('#date').val())));
+	});
+}
+
 function update_time(time) {
 	current_time = time;
 	color_states(mention_json[time]);
@@ -125,7 +188,7 @@ var color = d3.scale.quantize().range(gradient);
 var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
 var g, c, svgns, box;
 var centered_state, over_state;
-var current_time;
+var current_time, times;
 var current_topic;
 var mention_json, topic_graph_json, map_json, news_json;
 var vis_left, vis_right, pack_left, pack_right;
@@ -159,9 +222,10 @@ $(document).ready(function() {
 	// initialize
 	load_counter--;
 	if (load_counter == 0){
-		topic_graph();
+		setup_time();
+		setup_topic();
 		setup_map();
-		setup_date_selection();	
+		setup_date_selection();
 	}
 });
 
@@ -177,9 +241,10 @@ d3.json("/topic.json", function(json) {
 			map_json = json;
 			load_counter--;
 			if (load_counter == 0){
-				topic_graph();
+				setup_time();
+				setup_topic();
 				setup_map();
-				setup_date_selection();	
+				setup_date_selection();
 			}
 		});
 	});

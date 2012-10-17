@@ -30,67 +30,6 @@ function setup_map() {
 	$(c).append(box);
 }
 
-function setup_date_selection() {
-	times = [];
-	for (time in mention_json){
-		times.push(parseInt(time));
-	}
-	// there is no consistent ordering on property name
-	times = times.sort();
-	current_time = times[times.length-1];
-	// set up slider
-	$('<div>').attr('id','slider').slider({
-		value: times.length-1, 
-		min: 0, 
-		max: times.length-1, 
-		step: 1,
-		animate: 500,
-		create: function(event, ui) {
-					$('#date').val(date(times[times.length-1])); 
-					update_time(times[times.length-1]);
-				},
-		slide:  function(event, ui) {
-					$('#date').val(date(times[ui.value]));
-				},
-		change: function(event, ui) {
-					$('#date').val(date(times[ui.value])); 
-					update_time(times[ui.value]);
-					if (ui.value == 0) {
-						$('#prev-day-btn').addClass('disabled');
-					} else if (ui.value == times.length-1) {
-						$('#next-day-btn').addClass('disabled');
-					} else {
-						$('#next-day-btn').removeClass('disabled');
-						$('#prev-day-btn').removeClass('disabled');
-					}
-				}
-	}).prependTo('#control');
-	// set up day increment/decrement buttons
-	$('<div>').insertAfter('#slider').addClass('btn-group').append(
-		$('<button>').attr('id', 'prev-day-btn').addClass('btn').append('<i class="icon-chevron-left"></i>').click(function() {
-			var v = $('#slider').slider('value');
-			$('#slider').slider('value', Math.max(v-1, 0));
-		})
-	).append(
-		$('<button>').attr('id', 'next-day-btn').addClass('btn').append('<i class="icon-chevron-right"></i>').click(function() {
-			var v = $('#slider').slider('value');
-			$('#slider').slider('value', Math.min(v+1, times.length-1));
-		})
-	);
-	// set up datepicker
-	$('#date').datepicker({
-		dateFormat: 'D M dd yy',
-		beforeShowDay: function(date) {
-			if (index(times, date) > -1 ) {
-				return [true, ''];
-			}
-			return [false, ''];
-		},
-	}).change(function(event) {
-		$('#slider').slider('value', index(times, new Date($('#date').val())));
-	});
-}
-
 function color_states(json) {
 	for (state in json){
 		var item = json[state];
@@ -153,8 +92,6 @@ function hover_state(d) {
 		// calculate stats
 		var obama_count  = mention_json[current_time][d.properties.abbreviation].obama;
 		var romney_count = mention_json[current_time][d.properties.abbreviation].romney;
-		var total_count = Math.max(1, obama_count + romney_count);
-
 		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count + " mentions"))
 						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + " mentions"));	
 		var m = d3.mouse(c);
@@ -192,8 +129,12 @@ function draw_state_detail_chart(d){
 		}
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
+    google.visualization.events.addListener(annotatedtimeline, 'select', function(){
+    	var time = times[annotatedtimeline.getSelection()[0].row];
+    	update_state_detail_tweet(time, state);
+    }); 
     annotatedtimeline.draw(data, {'displayAnnotations': true, 'zoomStartTime': new Date(1343793600000)});
-    update_state_detail_tweet(current_time, d.properties.abbreviation);
+    update_state_detail_tweet(current_time, state);
 }
 
 function update_state_detail_tweet(time, state){

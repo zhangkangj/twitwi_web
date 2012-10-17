@@ -21,6 +21,12 @@ function update_topic(json) {
     	var topic = data_obama[chart_obama.getSelection()[0].row][0];
     	click_topic(topic);
     }); 
+    google.visualization.events.addListener(chart_obama, 'onmouseover', function(){
+    	$("#topic_obama").css("cursor", "pointer");
+    }); 
+    google.visualization.events.addListener(chart_obama, 'onmouseout', function(){
+    	$("#topic_obama").css("cursor", "auto");
+    }); 
     
 	var options = {'width':415,
 			   'height':500,
@@ -39,6 +45,12 @@ function update_topic(json) {
     google.visualization.events.addListener(chart_romney, 'select', function(){
     	var topic = data_romney[chart_romney.getSelection()[0].row][0];
     	click_topic(topic);
+    }); 
+    google.visualization.events.addListener(chart_romney, 'onmouseover', function(){
+    	$("#topic_romney").css("cursor", "pointer");
+    }); 
+    google.visualization.events.addListener(chart_romney, 'onmouseout', function(){
+    	$("#topic_romney").css("cursor", "auto");
     }); 
 }
 

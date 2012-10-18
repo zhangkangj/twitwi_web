@@ -15,10 +15,15 @@ function update_topic(json) {
 		data_obama.push([key, json['obama'][key]]);
 	}
 	data_obama = data_obama.sort(sortingFunc);
+	data_obama.unshift(['candidate', 'mentions']);
     var chart_obama = new google.visualization.PieChart(document.getElementById('topic_obama'));
+    console.log(google.visualization.arrayToDataTable(data_obama));
     chart_obama.draw(google.visualization.arrayToDataTable(data_obama), options);
     google.visualization.events.addListener(chart_obama, 'select', function(){
-    	var topic = data_obama[chart_obama.getSelection()[0].row][0];
+    	console.log(chart_obama.getSelection()[0].row);
+    	console.log(data_obama);
+    	var topic = data_obama[chart_obama.getSelection()[0].row + 1][0];
+    	console.log(topic);
     	click_topic(topic);
     }); 
     google.visualization.events.addListener(chart_obama, 'onmouseover', function(){
@@ -40,10 +45,11 @@ function update_topic(json) {
 		data_romney.push([key, json['romney'][key]]);
 	}
 	data_romney = data_romney.sort(sortingFunc);
+	data_romney.unshift(['candidate', 'mentions']);
     var chart_romney = new google.visualization.PieChart(document.getElementById('topic_romney'));
     chart_romney.draw(google.visualization.arrayToDataTable(data_romney), options);	
     google.visualization.events.addListener(chart_romney, 'select', function(){
-    	var topic = data_romney[chart_romney.getSelection()[0].row][0];
+    	var topic = data_romney[chart_romney.getSelection()[0].row + 1][0];
     	click_topic(topic);
     }); 
     google.visualization.events.addListener(chart_romney, 'onmouseover', function(){

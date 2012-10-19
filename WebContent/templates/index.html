@@ -28,10 +28,10 @@
 	<link type="text/css" href="/static/css/index.css" rel="stylesheet" />
 	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"/>
 	
-	<!--<script type="text/javascript" src="/static/lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
-	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>-->
+	<!--<script type="text/javascript" src="/static/lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>-->
+	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-	<script src="http://d3js.org/d3.v2.min.js"></script>
+	<!--<script src="http://d3js.org/d3.v2.min.js"></script> -->
 	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript" src="/static/js/index.js"></script>
@@ -88,9 +88,10 @@
 				<li id = "topic_menu">
 					<a href="#" class="black" onclick="slide_carousel('topic_container')" rel="tooltip" data-placement="bottom" data-original-title="This chart shows what topics people are talking about when a candidate is mentioned.">Election Topics </a>
 				</li>
+				<!--
 				<li id = "realtime_menu">
 					<a href="#" class="black" onclick="slide_carousel('realtime_container')" rel="tooltip" data-placement="bottom" data-original-title="Election tweets in real time.">Election Realtime </a>
-				</li>
+				</li>-->
 				<li class="pull-right">
 					<a href="https://twitter.com/share" style = "height:20px; margin:0px" class="twitter-share-button pull-right" data-lang="en" data-text = "twithinks, 2012 Presidential Election on Twitter" data-size="large">Tweet</a>
 				</li>
@@ -108,7 +109,10 @@
   						<div id = "topic_romney" class = "span5" style = "margin-left:30px"></div>
 					</div>
 				</div>
-				<div id="realtime_container" class="item carousel_element"></div>
+				<!-- 
+				<div id="realtime_container" class="item carousel_element">
+					<h4> Under Construction</h4>
+				</div> -->
 			</div>
 		  	<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
 			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>

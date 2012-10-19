@@ -1,3 +1,11 @@
+var width = 1000, height = 500;
+var box_offset = 15;
+var gradient = ['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#eecbcb', '#d2e0ed', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B'];
+var color = d3.scale.quantize().range(gradient);
+var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
+var g, c, svgns, box;
+var centered_state, over_state;
+
 function setup_map() {
 	var svg = d3.select('#map_container').append("svg").attr('width', width).attr('height', height);
 	svg.append("rect").attr("width", width)

@@ -192,17 +192,9 @@ function slide_carousel(id){
 }
 
 //global variables
-var width = 1000, height = 500;
-var box_offset = 15;
-var gradient = ['#9E2017', '#BB4E55', '#d77176', '#e2a6a9', '#eecbcb', '#d2e0ed', '#a4c6e3', '#79a5ca', '#40698B', '#0D406B'];
-var color = d3.scale.quantize().range(gradient);
-var path = d3.geo.path().projection(d3.geo.albersUsa().scale(width).translate([0, 0]));
-var g, c, svgns, box;
-var centered_state, over_state;
 var current_time, times;
 var current_topic;
 var mention_json, topic_graph_json, map_json, news_json;
-var vis_left, vis_right, pack_left, pack_right;
 var load_counter = 2;
 
 

@@ -174,6 +174,8 @@ function slide_carousel(id){
 		 $("#map_menu").attr("class", "active");
 		 $("#topic_menu").attr("class", "");
 		 $("#realtime_menu").attr("class", "");
+		 $("#control").fadeIn();
+		 $("#tweet_panel").fadeIn();
 	 } else if (id == "topic_container"){
 		 $("#map_container").attr("class", "item carousel_element");
 		 $("#topic_container").attr("class", "active item carousel_element");
@@ -181,13 +183,17 @@ function slide_carousel(id){
 		 $("#map_menu").attr("class", "");
 		 $("#topic_menu").attr("class", "active");
 		 $("#realtime_menu").attr("class", "");
+		 $("#control").fadeIn();
+		 $("#tweet_panel").fadeIn();
 	 } else if (id == "realtime_container"){
 		 $("#map_container").attr("class", "item carousel_element");
 		 $("#topic_container").attr("class", "item carousel_element");
 		 $("#realtime_container").attr("class", "active item carousel_element");
 		 $("#map_menu").attr("class", "");
 		 $("#topic_menu").attr("class", "");
-		 $("#realtime_menu").attr("class", "active"); 
+		 $("#realtime_menu").attr("class", "active");
+		 $("#control").fadeOut();
+		 $("#tweet_panel").fadeOut();
 	 }
 }
 
@@ -203,13 +209,7 @@ $(document).ready(function() {
 	$("#myCarousel").carousel({interval: false});
 	$("#myCarousel").bind("slid", function() {
 		var active_id = $(".active").filter(".carousel_element")[0].id;
-	    if (active_id == "map_container"){
-	    	$("#topic_menu").attr("class", "");
-	    	$("#map_menu").attr("class", "active");
-	    }else if (active_id == "topic_container"){
-	    	$("#map_menu").attr("class", "");
-	    	$("#topic_menu").attr("class", "active");
-	    }
+		slide_carousel(active_id);
 	});
 	
 	$("#tweet_panel").hover(
@@ -245,7 +245,6 @@ d3.json("/topic.json", function(json) {
 			load_counter--;
 			if (load_counter == 0){
 				setup_time();
-				setup_topic();
 				setup_map();
 				setup_date_selection();
 			}

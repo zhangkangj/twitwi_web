@@ -1,6 +1,4 @@
-function setup_topic(){
-	
-}
+var obama_topic = null, romney_topic = null;
 
 function update_topic(json) {
 	var options = {'width':600,
@@ -19,7 +17,13 @@ function update_topic(json) {
     var chart_obama = new google.visualization.PieChart(document.getElementById('topic_obama'));
     chart_obama.draw(google.visualization.arrayToDataTable(data_obama), options);
     google.visualization.events.addListener(chart_obama, 'select', function(){
-    	var topic = data_obama[chart_obama.getSelection()[0].row + 1][0];
+    	var topic;
+    	if (chart_obama.getSelection().length == 0) {
+    		topic = obama_topic;
+    	} else {
+        	topic = data_obama[chart_obama.getSelection()[0].row + 1][0];
+        	obama_topic = topic;
+    	}
     	click_topic(topic);
     }); 
     google.visualization.events.addListener(chart_obama, 'onmouseover', function(){
@@ -45,7 +49,13 @@ function update_topic(json) {
     var chart_romney = new google.visualization.PieChart(document.getElementById('topic_romney'));
     chart_romney.draw(google.visualization.arrayToDataTable(data_romney), options);	
     google.visualization.events.addListener(chart_romney, 'select', function(){
-    	var topic = data_romney[chart_romney.getSelection()[0].row + 1][0];
+    	var topic;
+    	if (chart_romney.getSelection().length == 0) {
+    		topic = obama_topic;
+    	} else {
+    		topic = data_romney[chart_romney.getSelection()[0].row + 1][0];
+    		romney_topic = topic;
+    	}
     	click_topic(topic);
     }); 
     google.visualization.events.addListener(chart_romney, 'onmouseover', function(){
@@ -60,11 +70,6 @@ function sortingFunc(a, b) {
 	if (a[0] < b[0]) return -1;
 	else if (a[0] > b[0]) return 1;
 	return 0;
-}
-
-function hover_topic(d) {
-	//perform(update_tweet, 'tweet' + time + d.topic, "/tweet.json?topic=" + d.topic + "&time=" + time);
-	//TODO show small box
 }
 
 function click_topic(topic) {

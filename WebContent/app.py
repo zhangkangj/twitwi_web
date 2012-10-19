@@ -143,5 +143,30 @@ def sample_tweet():
 def get_news():
     return json.dumps(news)
 
+@app.route('/realtime_tweet.json')
+def get_tweet():
+    result = []
+    try:
+        time = request.args.get('time')
+    except:
+        return json.dumps(result)
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
+    cursor = g.con.cursor()
+    if time == None:
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 10""")
+    else:
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 10""", (time))
+    entry = cursor.fetchone()
+    while entry:
+        id = str(entry[0])
+        name = entry[2].decode("utf-8",errors='ignore') 
+        text = entry[4].decode('utf-8',errors='ignore')
+        result.append({'id':id,'created_at':entry[1],'name':name, 'screen_name': entry[3], 'text': text})
+        entry = cursor.fetchone()
+    return json.dumps(result)
+
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

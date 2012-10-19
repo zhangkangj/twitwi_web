@@ -17,13 +17,9 @@ function update_topic(json) {
 	data_obama = data_obama.sort(sortingFunc);
 	data_obama.unshift(['candidate', 'mentions']);
     var chart_obama = new google.visualization.PieChart(document.getElementById('topic_obama'));
-    console.log(google.visualization.arrayToDataTable(data_obama));
     chart_obama.draw(google.visualization.arrayToDataTable(data_obama), options);
     google.visualization.events.addListener(chart_obama, 'select', function(){
-    	console.log(chart_obama.getSelection()[0].row);
-    	console.log(data_obama);
     	var topic = data_obama[chart_obama.getSelection()[0].row + 1][0];
-    	console.log(topic);
     	click_topic(topic);
     }); 
     google.visualization.events.addListener(chart_obama, 'onmouseover', function(){

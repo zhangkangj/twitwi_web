@@ -168,16 +168,27 @@ function index(times, date) {
 
 function slide_carousel(id){
 	 if (id == "map_container"){
-	    	$("#topic_container").attr("class", "item carousel_element");
-	    	$("#map_container").attr("class", "active item carousel_element");
-	    	$("#topic_menu").attr("class", "");
-	    	$("#map_menu").attr("class", "active");
-	    }else if (id == "topic_container"){
-	    	$("#map_container").attr("class", "item carousel_element");
-	    	$("#topic_container").attr("class", "active item carousel_element");
-	    	$("#map_menu").attr("class", "");
-	    	$("#topic_menu").attr("class", "active");
-	    }
+		 $("#topic_container").attr("class", "item carousel_element");
+		 $("#map_container").attr("class", "active item carousel_element");
+		 $("#realtime_container").attr("class", "item carousel_element");
+		 $("#map_menu").attr("class", "active");
+		 $("#topic_menu").attr("class", "");
+		 $("#realtime_menu").attr("class", "");
+	 } else if (id == "topic_container"){
+		 $("#map_container").attr("class", "item carousel_element");
+		 $("#topic_container").attr("class", "active item carousel_element");
+		 $("#realtime_container").attr("class", "item carousel_element");
+		 $("#map_menu").attr("class", "");
+		 $("#topic_menu").attr("class", "active");
+		 $("#realtime_menu").attr("class", "");
+	 } else if (id == "realtime_container"){
+		 $("#map_container").attr("class", "item carousel_element");
+		 $("#topic_container").attr("class", "item carousel_element");
+		 $("#realtime_container").attr("class", "active item carousel_element");
+		 $("#map_menu").attr("class", "");
+		 $("#topic_menu").attr("class", "");
+		 $("#realtime_menu").attr("class", "active"); 
+	 }
 }
 
 //global variables

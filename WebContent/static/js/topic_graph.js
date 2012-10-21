@@ -39,7 +39,7 @@ function update_topic(json) {
 			   	   backgroundColor:'transparent',
 			   	   legend:null,
 			   	   chartArea:{width:"85%",height:"85%"},
-			   	   egend:{position:"none"}};
+			   	   legend:{position:"none"}};
 	var data_romney = [];
 	for (var key in topics){
 		data_romney.push([topics[key], json['romney'][topics[key]]]);

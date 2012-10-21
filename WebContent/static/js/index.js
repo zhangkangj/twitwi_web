@@ -167,33 +167,34 @@ function index(times, date) {
 }
 
 function slide_carousel(id){
-	 if (id == "map_container"){
-		 $("#topic_container").attr("class", "item carousel_element");
-		 $("#map_container").attr("class", "active item carousel_element");
-		 $("#realtime_container").attr("class", "item carousel_element");
-		 $("#map_menu").attr("class", "active");
-		 $("#topic_menu").attr("class", "");
-		 $("#realtime_menu").attr("class", "");
-		 $("#control").fadeIn();
-		 $("#tweet_panel").fadeIn();
-	 } else if (id == "topic_container"){
-		 $("#map_container").attr("class", "item carousel_element");
-		 $("#topic_container").attr("class", "active item carousel_element");
-		 $("#realtime_container").attr("class", "item carousel_element");
-		 $("#map_menu").attr("class", "");
-		 $("#topic_menu").attr("class", "active");
-		 $("#realtime_menu").attr("class", "");
-		 $("#control").fadeIn();
-		 $("#tweet_panel").fadeIn();
+	if (id == "map_container"){
+		$("#topic_container").attr("class", "item carousel_element");
+		$("#map_container").attr("class", "active item carousel_element");
+		$("#realtime_container").attr("class", "item carousel_element");
+		$("#map_menu").attr("class", "active");
+		$("#topic_menu").attr("class", "");
+		$("#realtime_menu").attr("class", "");
+		$("#control").fadeIn();
+		$("#tweet_panel").fadeIn();
+	} else if (id == "topic_container"){
+		$("#map_container").attr("class", "item carousel_element");
+		$("#topic_container").attr("class", "active item carousel_element");
+		$("#realtime_container").attr("class", "item carousel_element");
+		$("#map_menu").attr("class", "");
+		$("#topic_menu").attr("class", "active");
+		$("#realtime_menu").attr("class", "");
+		$("#control").fadeIn();
+		$("#tweet_panel").fadeIn();
 	 } else if (id == "realtime_container"){
-		 $("#map_container").attr("class", "item carousel_element");
-		 $("#topic_container").attr("class", "item carousel_element");
-		 $("#realtime_container").attr("class", "active item carousel_element");
-		 $("#map_menu").attr("class", "");
-		 $("#topic_menu").attr("class", "");
-		 $("#realtime_menu").attr("class", "active");
-		 $("#control").fadeOut();
-		 $("#tweet_panel").fadeOut();
+		$("#map_container").attr("class", "item carousel_element");
+		$("#topic_container").attr("class", "item carousel_element");
+		$("#realtime_container").attr("class", "active item carousel_element");
+		$("#map_menu").attr("class", "");
+		$("#topic_menu").attr("class", "");
+		$("#realtime_menu").attr("class", "active");
+		$("#control").fadeOut();
+		$("#tweet_panel").fadeOut();
+		setup_realtime();
 	 }
 }
 
@@ -226,7 +227,6 @@ $(document).ready(function() {
 	load_counter--;
 	if (load_counter == 0){
 		setup_time();
-		setup_topic();
 		setup_map();
 		setup_date_selection();
 	}

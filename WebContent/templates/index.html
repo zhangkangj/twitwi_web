@@ -17,27 +17,25 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
 	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-tooltip.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
-	<!--<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>-->
-	
 	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
-	<!--<link type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
-	<link type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
 
-	{% block page_head %}
-	<!--<link type="text/css" href="/static/lib/jquery-ui/custom-theme/jquery-ui-1.8.24.custom.css" rel="stylesheet"/>-->
-	<link type="text/css" href="/static/css/index.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"/>
-	
-	<!--<script type="text/javascript" src="/static/lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>-->
-	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-	<!--<script src="http://d3js.org/d3.v2.min.js"></script> -->
+
+	{% block page_head %}	
+	<script type="text/javascript" src="/static/lib/d3/d3.v2.min.js"></script>
 	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/static/lib/jquery/jquery.cycle.all.js"></script>
+	
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
 	<script type="text/javascript" src="/static/js/index.js"></script>
 	<script type="text/javascript" src="/static/js/map.js"></script>
 	<script type="text/javascript" src="/static/js/topic_graph.js"></script>
-	<script type="text/javascript" src="/static/lib/jquery/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="/static/js/realtime.js"></script>
+	
+	<link type="text/css" href="/static/css/index.css" rel="stylesheet"/>
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"/>
 	{% endblock %}
 	
 	<script type="text/javascript">
@@ -88,10 +86,9 @@
 				<li id = "topic_menu">
 					<a href="#" class="black" onclick="slide_carousel('topic_container')" rel="tooltip" data-placement="bottom" data-original-title="This chart shows what topics people are talking about when a candidate is mentioned.">Election Topics </a>
 				</li>
-				<!--
 				<li id = "realtime_menu">
 					<a href="#" class="black" onclick="slide_carousel('realtime_container')" rel="tooltip" data-placement="bottom" data-original-title="Election tweets in real time.">Election Realtime </a>
-				</li>-->
+				</li>
 				<li class="pull-right" style = "margin-top:13px;" >
 					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-text = "twithinks, 2012 Presidential Election on Twitter" data-size="medium">Tweet</a>
 					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwitwi.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>					
@@ -111,10 +108,13 @@
   						<div id = "topic_romney" class = "span5" style = "margin-left:30px"></div>
 					</div>
 				</div>
-				<!-- 
 				<div id="realtime_container" class="item carousel_element">
-					<h4> Under Construction</h4>
-				</div> -->
+					<button id = "realtime_tweet_up" class="btn btn-small btn-primary" type="button" style = "margin: 5px; margin-left: 100px;"><i class="icon-chevron-up icon-white"></i></button>
+					<button id = "realtime_tweet_down" class="btn btn-small btn-primary" type="button" style = "margin: 5px;"><i class="icon-chevron-down icon-white"></i></button>
+					<button id = "realtime_tweet_refresh" class="btn btn-small btn-primary" type="button" style = "margin: 5px;"><i class="icon-refresh icon-white"></i></button>
+					<div style = "display:inline;"><img id = "load_icon" src = '/static/img/loading.gif' style = "width:26px; height:26px; margin:5px; display:none;"></div>
+					<ul id="realtime_tweet" style = "margin:auto; margin-top:10px"></ul>
+				</div>
 			</div>
 		  	<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> 
 			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
@@ -126,9 +126,7 @@
 			</div>
 			
 			<div id = "tweet_panel">
-				<div id = 'tweet_container'>
-					<ul id = 'tweet'></ul>
-				</div>
+				<ul id = 'tweet'></ul>
 				<div style = "float:right;">
 					<button id = "tweet_up" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-up icon-white"></i></button>
 					<button id = "tweet_down" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-down icon-white"></i></button>  

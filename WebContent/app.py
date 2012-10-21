@@ -31,7 +31,7 @@ def index():
 
 @app.route('/test')
 def test():
-    return render_template('test.html')
+    return 'this is a test'
 
 @app.route('/about')
 def about():
@@ -156,9 +156,9 @@ def get_tweet():
         return 'server down'
     cursor = g.con.cursor()
     if time == None:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 10""")
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 8""")
     else:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 10""", (time))
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime where created_at >= %s ORDER BY created_at DESC LIMIT 8""", (time))
     entry = cursor.fetchone()
     while entry:
         id = str(entry[0])

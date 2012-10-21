@@ -1,4 +1,4 @@
-var latest = null, isFetching = false;
+var latest = null, isFetching = false, notificationOn = true;
 
 function setup_realtime(){
 	d3.json("/realtime_tweet.json", function(json) {
@@ -6,13 +6,27 @@ function setup_realtime(){
 		start_cycle();
 	});
 	$("#realtime_tweet_refresh").click(function(){
-		if (!isFetching){
-			isFetching = true;
-			$("#load_icon").show();
-			$("#realtime_tweet_refresh").addClass("disabled");
-			load_realtime_tweet();
-		}
+		notificationOn = false;
+		$("#new_tweet_notification").fadeOut(function(){
+			if (!isFetching){
+				isFetching = true;
+				$("#load_icon").show();
+				$("#realtime_tweet_refresh").addClass("disabled");
+				load_realtime_tweet();
+			}
+		});	
 	});
+	setTimeout(function(){
+		if (notificationOn){
+			$("#new_tweet_notification").fadeIn(function(){
+				setInterval(function(){
+					if (notificationOn){
+						$("#new_tweet_notification").fadeIn();	
+					}
+				}, 10000);
+			});	
+		}
+	}, 4000);
 }
 
 function load_realtime_tweet(){
@@ -24,6 +38,7 @@ function load_realtime_tweet(){
 			$('#realtime_tweet').cycle("destroy");
 			update_realtime_tweet(json);
 			start_cycle();
+			notificationOn = true;
 		} else {
 			setTimeout(function(){
 				load_realtime_tweet();

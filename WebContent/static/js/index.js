@@ -194,7 +194,6 @@ function slide_carousel(id){
 		$("#realtime_menu").attr("class", "active");
 		$("#control").fadeOut();
 		$("#tweet_panel").fadeOut();
-		setup_realtime();
 	 }
 }
 
@@ -228,6 +227,7 @@ $(document).ready(function() {
 	if (load_counter == 0){
 		setup_time();
 		setup_map();
+		setup_realtime();
 		setup_date_selection();
 	}
 });
@@ -246,6 +246,7 @@ d3.json("/topic.json", function(json) {
 			if (load_counter == 0){
 				setup_time();
 				setup_map();
+				setup_realtime();
 				setup_date_selection();
 			}
 		});

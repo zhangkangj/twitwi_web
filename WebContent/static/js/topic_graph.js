@@ -1,4 +1,5 @@
 var obama_topic = null, romney_topic = null;
+var topics = ["Economy", "Budget", "Foreign policy", "Healthcare", "Terrorism", "Immigration", "Education", "Abortion", "Same-sex marriage", "Energy"];
 
 function update_topic(json) {
 	var options = {'width':600,
@@ -9,10 +10,9 @@ function update_topic(json) {
 				   chartArea:{width:"95%",height:"95%"},
 				   legend:{alignment:"end", textStyle: {fontSize: 12}}};
 	var data_obama = [];
-	for (var key in json['obama']){
-		data_obama.push([key, json['obama'][key]]);
+	for (var key in topics){
+		data_obama.push([topics[key], json['obama'][topics[key]]]);
 	}
-	data_obama = data_obama.sort(sortingFunc);
 	data_obama.unshift(['candidate', 'mentions']);
     var chart_obama = new google.visualization.PieChart(document.getElementById('topic_obama'));
     chart_obama.draw(google.visualization.arrayToDataTable(data_obama), options);
@@ -34,17 +34,16 @@ function update_topic(json) {
     }); 
     
 	var options = {'width':415,
-			   'height':500,
-			   is3D: true,
-			   backgroundColor:'transparent',
-			   legend:null,
-			   chartArea:{width:"85%",height:"85%"},
-			   legend:{position:"none"}};
+			   	   'height':500,
+			   	   is3D: true,
+			   	   backgroundColor:'transparent',
+			   	   legend:null,
+			   	   chartArea:{width:"85%",height:"85%"},
+			   	   egend:{position:"none"}};
 	var data_romney = [];
-	for (var key in json['romney']){
-		data_romney.push([key, json['romney'][key]]);
+	for (var key in topics){
+		data_romney.push([topics[key], json['romney'][topics[key]]]);
 	}
-	data_romney = data_romney.sort(sortingFunc);
 	data_romney.unshift(['candidate', 'mentions']);
     var chart_romney = new google.visualization.PieChart(document.getElementById('topic_romney'));
     chart_romney.draw(google.visualization.arrayToDataTable(data_romney), options);	

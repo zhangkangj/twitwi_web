@@ -16,9 +16,8 @@ function setup_realtime(){
 }
 
 function load_realtime_tweet(){
-	console.log("fired");
 	d3.json("/realtime_tweet.json?time=" + latest, function(json) {
-		if (json.length == 8) {
+		if (json.length == 7) {
 			$("#load_icon").hide();
 			$("#realtime_tweet_refresh").removeClass("disabled");
 			isFetching = false;
@@ -41,6 +40,20 @@ function start_cycle(){
 	    nowrap:  1, 
 	    timeout: 0,
 	    startingSlide: $('#realtime_tweet').children().length - 1,
+	    after: function(curr,next,opts){
+	    	if (opts.slideCount <= 1) {
+				$("#realtime_tweet_up").addClass("disabled");
+				$("#realtime_tweet_down").addClass("disabled");
+	    	} else {
+	    		$("#realtime_tweet_up").removeClass("disabled");
+	    		$("#realtime_tweet_down").removeClass("disabled");
+	    	}
+	    	if (opts.currSlide == $('#realtime_tweet').children().length - 1){
+	    		$("#realtime_tweet_up").addClass("disabled");
+	    	} else if (opts.currSlide == 0){
+	    		$("#realtime_tweet_down").addClass("disabled");
+	    	}
+	    }
 	});
 }
 

@@ -156,10 +156,12 @@ def get_tweet():
         return 'server down'
     cursor = g.con.cursor()
     if time == None:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 8""")
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 7""")
     else:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime where created_at >= %s ORDER BY created_at DESC LIMIT 8""", (time))
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime where created_at >= %s ORDER BY created_at DESC LIMIT 7""", (time))
     entry = cursor.fetchone()
+    if cursor.rowcount != 7:
+        return json.dumps(result) 
     while entry:
         id = str(entry[0])
         name = entry[2].decode("utf-8",errors='ignore') 

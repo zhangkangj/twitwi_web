@@ -65,8 +65,10 @@
 		
 		<strong>Software</strong>
 		<p>
-			There are many database systems to choose from, but on a single node, good old MySQL is probably the best choice. Putting a few billion rows in a table usually hogs it down and the main bottleneck is that you can't load the entire index into memory. We decided to "divide and conquer" and deployed a variety of tricks: partitioning, bulk loading, logging and sorting by index. They are implemented in Java as an optimization layer on top of MySQL.
+			There are many database systems to choose from, but on a single node, good old MySQL is probably the best choice. Putting a few billion rows in a table usually hogs it down and the main bottleneck is that you can't load the entire index into memory. We decided to "divide and conquer" and deployed a variety of tricks: partitioning, bulk loading, logging and sorting by index. They are implemented in Java as an optimization layer on top of MySQL. The chart below shows how the system works as a whole.
 		</p>
+		
+		<img src = '/static/img/system.png' style = "margin-left:150px"><br>
 	
 		<a href = "#introduction" class = "pull-right">back</a>
 		<a href = "http://news.ycombinator.com/" target = "_blank" class = "pull-right" style = "margin-right:20px">comment</a> 

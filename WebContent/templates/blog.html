@@ -7,15 +7,23 @@
 {% endblock %}
 
 {% block content %}
-<div class = 'container'>
+<div id = "introduction" class = 'container'>
 	<div class = 'shadowlight contentblock'>
 		<h4>
-			Big Data DIY
+			Twithinks Blog: An Introduction
+		</h4>
+		<hr>
+	</div>
+	<br><br>
+	
+	<div id = "big_data_diy" class = 'shadowlight contentblock'>
+		<h4>
+			Big Data DIY (for techies)
 			<span class = "pull-right"> Oct 8, 2012</span>
 		</h4>
 		<hr>
 		<p>
-			In the era of cloud storage, scaling with Big Data is no longer hard. Hosting a few terabytes on Amazon or Google is almost a standard procedure, only if you have the money to pay for the servers. But today we want to show that one could build a database system for Big Data even on a student budget.
+			In the era of cloud storage, scaling with Big Data is no longer hard. Hosting a few terabytes on AWS or Google is almost a standard procedure, only if you have the money to pay for the servers. But today we want to show that one could build a database system for Big Data even on a student budget.
 		</p>
 		<p>
 			Here are some rough numbers about the volume of Twitter data we are dealing with:
@@ -26,72 +34,107 @@
 			Users, relations and other data: ~80GB
 		</p>
 		<p>
-			In total there are tens of billions of rows. They are stored on a single machine that costs ~3000 dollars. Here is some general experience:
+			In total there are billions of rows. They are stored on a single machine that costs ~3000 dollars. Here is some general experience:
 		</p>
 		
 		<strong>Hardware</strong>
 		<p>
-			Of course, we have to build the hardware ourselves. Some specs: 32GB Rem, 2 x 128GB SSD on RAID 0, 4 x 3TB hard drives on RAID 10. There are three layers of storage: memory, SSD and HD, with increasing performance and cost. Surely we want to put the most frequently accessed data, such as table index, on memory. We use SSD array for most non-volatile storage except for tweets. Tweets reside on the HD array since sequential scan is the most common operation and HD array is just the most cost-efficient.	
+			Of course, we have to build the hardware ourselves. Some specs: 32GB Rem, 2 x 128GB SSD on RAID 0, 4 x 3TB hard drives on RAID 10. There are three layers of storage: memory, SSD and HD, with increasing performance and cost. Surely we want to put the most frequently accessed data, such as table index and client-facing tables, on memory. We use SSD array for most non-volatile storage except for tweets. Tweets, usually sequentially scanned, conveniently reside on the HD array.	
 		</p>
 		
 		<strong>Software</strong>
 		<p>
-			There are many database systems to choose from, but on a single node, the good old MySQL is probably the best choice. Putting a few billion rows in a table is not easy. The main problem is that you can't load the entire index into memory. We deploy a variety of tricks to handle that: partitioning, bulk loading, logging and sorting. They are implemented in Java as an optimization layer on top of MySQL.
-		</p>
-		
-		<strong>Fault Tolerance</strong>
-		<p>
-			Losing so much data is just not an option. Hard drives tend to fail in a year or two, so a redundant array is a must. Also, if an operation takes a little time, log ahead so that an OS/power failure would not lead to catastrophic consequences. 
-		</p>
-		
-		<strong>Schema Design</strong>
-		<p>
-			Many people like to normalize their database to save space or just to make it more elegant. This is not necessarily true for Big Data, since I/O is more of a bottleneck than storage space. It is better to have a few redundant columns in one table than to do a join with another table. After all, the schema design that suits the access pattern is the best.			 
+			There are many database systems to choose from, but on a single node, the good old MySQL is probably the best choice. Putting a few billion rows in a table is not easy, but it could be done. The main problem is that you can't load the entire index into memory. We decide to "divide and conquer" and deployed a variety of tricks: partitioning, bulk loading, logging and sorting by index. They are implemented in Java as an optimization layer on top of MySQL.
 		</p>
 		
 		<strong>Other Thoughts</strong>
 		<p>
-			Simple analyses like counting words or basic arithmetics can reveal tons of interesting facts from Big Data. But we just showed how much work needed to be done before we can get our hands dirty. For small data, tools like MS Excel abstract away most of low level implementations. We are looking forward to a generic, inexpensive and preferably open-sourced solution that works for Big Data.
+			Simple analysis like counting words or basic arithmetics can reveal tons of interesting facts from Big Data. But we just showed how much work needed to be done before we can get our hands dirty. For small data, tools like MS Excel abstract away most of low level implementations. We are looking forward to a generic, inexpensive and preferably open-sourced solution that works for Big Data.
 		</p>
-		<br>
+		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
 	<br><br>
 	
-	<div class = 'shadowlight contentblock'>
+	<div id = "primary" class = 'shadowlight contentblock'>
 		<h4>
-			 Twitter Mention part 1
+			 Twitter Mention & Republican Primary
 			<span class = "pull-right"> Oct 9, 2012</span>
 		</h4>
 		<hr>
 		<p>
-			To start with something simple, we look at the Twitter mention of the election candidates and investigate their characteristics. It is surprising that even such a simple statistic reveals lots of insights.
+			To start with something simple, we look at the Twitter mention of the election candidates. It is surprising that even such a simple statistic reveals lots of insights.
+			The following graph counts the Twitter mention of the word “Romney” on a daily basis during the Republican Primary. A few patterns to note:
+		</p>
+		<ul>
+			<li>The spikes well matches with major events like the primary nights and televised debates. Interestingly, only CNN and FOX debates caused major spikes.</li>
+			<li>Significant weekly periodicity of Twitter mention. People tweet more about election during weekdays (in office? in class? :D).</li>
+			<li>If we ignore event-driven spikes, Romney is getting more mentions over time. Does this correlate with his odds of winning?</li>
+		</ul>
+		<img src = '/static/img/romney.png'><br><br>
+		
+		<p>
+			Now let's look at the relative twitter mention of each candidate relative to one another. The next plot shows the republican primaries, a race among Romney, Santorum, Gingrich and Paul.
 		</p>
 		<p>
-			The following graph counts the Twitter mention of the word “Romney” on a daily basis during the Republican Primary. There are a few things to observe from the plot. The first features to notice are the spikes. The date of the spikes correspond exactly with major election events like the primary nights and televised candidate debates. However, interestingly, only CNN and FOX debates result in a spike on Twitter mention. The second feature to notice is the weekly pattern of Twitter mention. The difference between the weekly trough and weekly peak is rather striking. This is in fact a general pattern that is not uniquely “Romney”. People tend to tweet more during the middle of the week and tweet much less during the weekends. (So now we know how many people hang onto Twitter in offices or classrooms stay through Wednesday).
+			Wow! The winner of each primaries tended to be the one with the greatest number of twitter mention or the strongest up-trend momentum. 
 		</p>
-		<img src = '/static/img/romney.png'>
-		<br>
+		<p>
+			At the first look, it might seem crazy that the noisy micro-blogosphere, in which people complain about overbaking their pancakes or brag about their vodka melon hangovers, has any predictive value on any significant event. More serious researchers will point out various biases, such as demographics, negative tweets, etc.
+			However, on a second thought this might not be too bizarre an idea after all. Being mentioned a lot may be good or bad, depending on how favorable tweets are. But not being mentioned is certainly bad; that means no one cares about the candidate.
+			Certainly, this won't explain away all the biases. The cause of this correlation is worth further investigation.			 
+		</p>
+		<img src = '/static/img/primary.png' style = 'text-align:center'><br>
+		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
 	<br><br>
 	
-	<div class = 'shadowlight contentblock'>
+	<div id = "presidential_race" class = 'shadowlight contentblock'>
 		<h4>
-			 Twitter Mention part 2
-			<span class = "pull-right"> Oct 9, 2012</span>
+			 Twitter Mention & Presidential Race
+			<span class = "pull-right"> Oct 19, 2012</span>
 		</h4>
 		<hr>
-		<p>
-			In addition to the absolute twitter mentions of a candidate, we can look at the relative twitter mention of each candidate relative to one another. The next plot shows the republican primaries, a race among Romney, Santorum, Gingrich and Paul.
+		<p>Now that we have tested our muscle, we are ready to move on to the big game, the Presidential Election. Here is a simple plot of the percentage Twitter mention for the two candidates since January.</p>
+		<img src = '/static/img/obama_romney.png' style = "width:900px;height:500px"><br>
+		<p> 
+		   Not surprisingly, Obama, as the incumbent President, receives way more mentions than Romney for most of the time. Nonetheless, there are a few spikes in Romney’s mention plot that is worth investigating.
+		   What are some events that allow Romney to attain greater Twitter attention? Is it good for Romney? We wrote a program to help us identify some major events:
 		</p>
-		<p>
-			We match each primary with the mentions on that day. The most exciting feature to observe from this plot is that the winner of each primaries tended to be the one with the greatest number of twitter mention or the strongest up-trend momentum before or during the election itself. At first look, it might seem crazy that the noisy micro-blogosphere, in which people complain about overbaking their pancakes or brag about their vodka melon hangovers, has any predictive value on events as important as the elections. However, on a second thought this might not be too bizarre an idea after all. For example, for any particular state, as the primary election approaches, we can expect more people rally for their favorite candidate on twitter. The unusual twitter volume on the favorite candidate in that state will feed through to the global twitter count and result in the observed spike and uptrend momentum in winner’s twitter mention before and during the election. Another possibility is that as the election approaches, recent poll results are reflected on Twitter and the mostly likely Winner would feature more prominently among discussions. This would show up in terms of mention count and mention momentum. 
-		</p>
-		<p>
-			The strong correlation between Twitter mentions and election outcome is actually surprising. Some literature has pointed out that Twitter mentions have strong demographic biases. 
-			It may be possible that some biases actually cancel each other. The reason for this correlation is worth further investigation.			 
-		</p>
-		<img src = '/static/img/primary.png'>
-		<br>
+		<ul>
+			<li>On Apr 12, most of the discussion focused on the “stay-at-home-mom” comment by Hilary Rosen on Ann Romney. Here is a tweet supporting Ann: 
+				<span style = "font-style:italic">"also disappointed in hilary rosen's comments about ann romney. they were inappropriate and offensive."</span>
+				Of course, not all of them are defending Ann.
+			</li>
+			<li> On Jul 11, Romney spoke at NAACP and got booed, according to Twitter. </li>
+			<li> On Jul 26, Romney attended the Olympic Opening Ceremony, sweating about his “Olympic gaffes”.</li>
+			<li> On Aug 10, Romney picked Ryan as the running mate. The most retweeted post: “Really Romney?”</li>
+		</ul>
+		<p> Well, Twitter is full of interesting information, blended in sarcasm, humor and irony. It reminds me of a quote: </p>
+		<p style = "font-style:italic;text-align:center">With the absence of the false, you have the truth and noise.</p>
+		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
+	<br><br>
+	
+	<div id = "track_romney" class = 'shadowlight contentblock'>
+		<h4>
+			Putting a GPS Tracker on Romney
+			<span class = "pull-right"> Oct 20, 2012</span>
+		</h4>
+		<hr>
+		
+		<a href = "#introduction" class = "pull-right">back</a>
+	</div>
+	<br><br>
+	
+	<div id = "obama_economy" class = 'shadowlight contentblock'>
+		<h4>
+			Obama, Economy Huh?
+			<span class = "pull-right"> Oct 21, 2012</span>
+		</h4>
+		<hr>
+		
+		<a href = "#introduction" class = "pull-right">back</a>
+	</div>
+	<br><br>
 </div>
 {% endblock %}

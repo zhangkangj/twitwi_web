@@ -13,4 +13,6 @@ body {
 .contentblock {
 	background: white;
 	padding: 30px;
+	width:1000px;
+	margin:auto;
 }

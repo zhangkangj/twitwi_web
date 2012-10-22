@@ -67,12 +67,6 @@ function update_topic(json) {
     }); 
 }
 
-function sortingFunc(a, b) {
-	if (a[0] < b[0]) return -1;
-	else if (a[0] > b[0]) return 1;
-	return 0;
-}
-
 function click_topic(topic) {
 	$('#detail_name').text("Twitter mentions #" + topic);
 	$('#detail').unbind();

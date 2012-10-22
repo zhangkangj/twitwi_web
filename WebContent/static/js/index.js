@@ -14,8 +14,8 @@ function setup_index(){
 		obama.push(obama_total / total);
 		romney.push(romney_total / total);
 	}
-	obama = movingAverage(obama, 7);
-	romney = movingAverage(romney, 7);
+	obama = movingAverage(obama, 3);
+	romney = movingAverage(romney, 3);
 	
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Date');
@@ -44,20 +44,28 @@ function setup_index(){
 		}
 	}
     var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('index_panel'));
-    annotatedtimeline.draw(data, {"width":"800px", "height":"500px",'displayAnnotations': true, 'zoomStartTime': new Date(1343793600000)});
+    annotatedtimeline.draw(data, {"width":"800px", "height":"500px",'displayAnnotations': true, 'zoomStartTime': new Date(1338523200000)});
 }
 
 function movingAverage(input, n){
 	var output = [];
-	var moving_sum = 0;
 	for (var i = 0; i < input.length; i++){
+		var moving_sum = 0;
 		if (i < n){
-			moving_sum += input[i];
-			output.push(moving_sum / (i + 1));
-		}else{
-			moving_sum += input[i];
-			moving_sum -= input[i-n];
-			output.push(moving_sum / n);
+			for (var j = -i; j <= i; j++){
+				moving_sum += input[i + j];	
+			}
+			output.push(moving_sum / (2 * i + 1));
+		} else if (input.length - i - 1 < n){
+			for (var j = -(input.length - i - 1); j <= (input.length - i - 1); j++){
+				moving_sum += input[i + j];	
+			}
+			output.push(moving_sum / ((input.length - i - 1) * 2 + 1));
+		} else{
+			for (var j = -n; j <=n; j++){
+				moving_sum += input[i + j];	
+			}
+			output.push(moving_sum / (2 * n + 1));
 		}
 	}
 	return output;

@@ -14,15 +14,14 @@
 		</h4>
 		<hr>
 		<p>
-			We are a team of students and We have been playing with Twitter data for a while.
-			Attracted by the hype around the 2012 Presidential Election, we wondered, what if the President is to be elected by Twitter users.
-			With some simple techniques and algorithms, we tried to learn the wisdom of the crowd.
-			We discovered many things deeply interesting to us, and we hope that you find them interesting as well. 
+			We are a team of students and we have been playing with data we've gathered from Twitter for a while.
+			Attracted by the hype around the 2012 Presidential Election, we wondered, what it would be like if the President were to be elected by Twitter users!
+			We tried to see what we can find with some simple analysis, and discovered lots of things that were deeply interesting to us. We hope you find them interesting, too! 
 		</p>
 		<ul>
 			<li><a href = "#big_data_diy" style = "font-weight:bold">Big Data DIY</a></li>
-			<li><a href = "#primary" style = "font-weight:bold">Twitter Mention & Republican Primary</a></li>
-			<li><a href = "#presidential_race" style = "font-weight:bold">Twitter Mention & Presidential Race</a></li>
+			<li><a href = "#primary" style = "font-weight:bold">Twitter Mention & Republican Primaries</a></li>
+			<li><a href = "#presidential_race" style = "font-weight:bold">Twitter Mentions & the Presidential Race</a></li>
 			<li><a href = "#track_romney" style = "font-weight:bold">Putting a GPS Tracker on Romney</a></li>
 			<li><a href = "#obama_economy" style = "font-weight:bold">Obama, Economy, Huh?</a></li>
 		</ul>
@@ -40,10 +39,10 @@
 		</h4>
 		<hr>
 		<p>
-			In the era of cloud storage and computing, scaling with Big Data Analysis is really not that difficult. Hosting a few terabytes on AWS or Google is almost a standard procedure, only if you have the money to pay for the servers. But today we want to show that one could build a database system for Big Data even on a student budget.
+			In the era of cloud storage and computing, scaling Big Data Analysis is really not that difficult. Hosting a few terabytes on AWS or Google is almost a standard procedure, only if you have the money to pay for the servers. But today we want to show that you can build a database system for Big Data even on a student budget.
 		</p>
 		<p>
-			Here are some rough numbers about the volume of Twitter data we are dealing with:
+			Here are some rough numbers about the volume of Twitter data we have been dealing with:
 		</p>
 		<p>
 			Tweets: 2TB and growing
@@ -51,54 +50,55 @@
 			Users, relations and other data: ~80GB
 		</p>
 		<p>
-			In total there are billions of rows. They are stored on a single machine that costs ~3000 dollars. Here is some general experience:
+			In total, there are billions of rows. They are stored on a single machine that costs only about ~3000 dollars. Here is some general experience:
 		</p>
 		
 		<strong>Hardware</strong>
 		<p>
-			Of course, we have to build the hardware ourselves. Some specs: 32GB Rem, 2 x 128GB SSD on RAID 0, 4 x 3TB hard drives on RAID 10. There are three layers of storage: memory, SSD and HD, with increasing performance and cost. Surely we want to put the most frequently accessed data, such as table index and client-facing tables, on memory. We use SSD array for most non-volatile storage except for tweets. Tweets, usually sequentially scanned, conveniently reside on the HD array.	
+			We've of course had to put together the hardware ourselves. The specs of the machine we use are: 
+
+			32GB Rem, 2 x 128GB SSD on RAID 0, 4 x 3TB hard drives on RAID 10. 
+
+			There are three layers of storage: memory, SSD and HDD, with decreasing performance and costs. We've of course wanted to put the most frequently accessed data, such as database table indices and our client-facing data, on memory. We used our SSD array for most non-volatile storage except for tweets. Tweets, which are usually sequentially scanned, conveniently reside on the HDD array.
 		</p>
 		
 		<strong>Software</strong>
 		<p>
-			There are many database systems to choose from, but on a single node, the good old MySQL is probably the best choice. Putting a few billion rows in a table is not easy, but it could be done. The main problem is that you can't load the entire index into memory. We decide to "divide and conquer" and deployed a variety of tricks: partitioning, bulk loading, logging and sorting by index. They are implemented in Java as an optimization layer on top of MySQL.
+			There are many database systems to choose from, but on a single node, good old MySQL is probably the best choice. Putting a few billion rows in a table usually hogs it down and the main bottleneck is that you can't load the entire index into memory. We decided to "divide and conquer" and deployed a variety of tricks: partitioning, bulk loading, logging and sorting by index. They are implemented in Java as an optimization layer on top of MySQL.
 		</p>
-		
-		<strong>Other Thoughts</strong>
-		<p>
-			Simple analysis like counting words or basic arithmetics can reveal tons of interesting facts from Big Data. But we just showed how much work needed to be done before we can get our hands dirty. For small data, tools like MS Excel abstract away most of low level implementations. We are looking forward to a generic, inexpensive and preferably open-sourced solution that works for Big Data.
-		</p>
+	
 		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
 	<br><br>
 	
 	<div id = "primary" class = 'shadowlight contentblock'>
 		<h4>
-			 Twitter Mention & Republican Primary
+			 Twitter Mentions & Republican Primaries
 			<span class = "pull-right"> Oct 9, 2012</span>
 		</h4>
 		<hr>
 		<p>
-			To start with something simple, we look at the Twitter mention of the election candidates. It is surprising that even such a simple statistic reveals lots of insights.
-			The following graph counts the Twitter mention of the word “Romney” on a daily basis during the Republican Primary. A few patterns to note:
+			To start with something simple, we look at the Twitter mentions of the election candidates. It is surprising that even such a simple statistic reveals lots of insights.
+			The following graph counts the Twitter mentions of the word “Romney” on a daily basis during the Republican Primaries. A few patterns to note:
 		</p>
 		<ul>
-			<li>The spikes well matches with major events like the primary nights and televised debates. Interestingly, only CNN and FOX debates caused major spikes.</li>
-			<li>Significant weekly periodicity of Twitter mention. People tweet more about election during weekdays (in office? in class? :D).</li>
+			<li>The spikes match well with major events like the primary nights and televised debates. Interestingly, only CNN and FOX debates caused major spikes.</li>
+			<li>Significant weekly periodicity of Twitter mentions. People tweet more about the election during weekdays (at work? in class? :D).</li>
 			<li>If we ignore event-driven spikes, Romney is getting more mentions over time. Does this correlate with his odds of winning?</li>
 		</ul>
 		<img src = '/static/img/romney.png'><br><br>
 		
 		<p>
-			Now let's look at the relative twitter mention of each candidate relative to one another. The next plot shows the republican primaries, a race among Romney, Santorum, Gingrich and Paul.
+			Now let's look at the relative twitter mentions of each candidate relative to one another. The next plot shows the republican primaries, a race among Romney, Santorum, Gingrich and Paul.
 		</p>
 		<p>
 			Wow! The winner of each primaries tended to be the one with the greatest number of twitter mention or the strongest up-trend momentum. 
 		</p>
 		<p>
-			At the first look, it might seem crazy that the noisy micro-blogosphere, in which people complain about overbaking their pancakes or brag about their vodka melon hangovers, has any predictive value on any significant event. More serious researchers will point out various biases, such as demographics, negative tweets, etc.
+			At the first sight, it might seem crazy that the noisy micro-blogosphere, in which people complain about overbaking their pancakes or brag about their vodka melon hangovers, has any predictive value on any significant event. Moreover, more serious researchers will point out various biases, such as user demographics, negative tweets, etc.
 			However, on a second thought this might not be too bizarre an idea after all. Being mentioned a lot may be good or bad, depending on how favorable tweets are. But not being mentioned is certainly bad; that means no one cares about the candidate.
-			Certainly, this won't explain away all the biases. The cause of this correlation is worth further investigation.			 
+			
+			Certainly, this won't explain all the biases and the reason behind the correlation is defintiely worth further investigation.			 
 		</p>
 		<img src = '/static/img/primary.png' style = 'text-align:center'><br>
 		<a href = "#introduction" class = "pull-right">back</a>
@@ -107,15 +107,15 @@
 	
 	<div id = "presidential_race" class = 'shadowlight contentblock'>
 		<h4>
-			 Twitter Mention & Presidential Race
+			 Twitter Mentions & the Presidential Race
 			<span class = "pull-right"> Oct 19, 2012</span>
 		</h4>
 		<hr>
-		<p>Now that we have tested our muscle, we are ready to move on to the big game, the Presidential Election. Here is a simple plot of the percentage Twitter mention for the two candidates since January.</p>
+		<p>Now that we have tested our muscles, we are ready to move on to the big game, the Presidential Election. Here is a simple plot of the percentage of Twitter mentions for the two candidates since January.</p>
 		<img src = '/static/img/obama_romney.png' style = "width:900px;height:500px"><br>
 		<p> 
-		   Not surprisingly, Obama, as the incumbent President, receives way more mentions than Romney for most of the time. Nonetheless, there are a few spikes in Romney’s mention plot that is worth investigating.
-		   What are some events that allow Romney to attain greater Twitter attention? Is it good for Romney? We wrote a program to help us identify some major events:
+		   Not surprisingly, Obama, as the incumbent President, receives way more mentions than Romney for most of the time. Nonetheless, there are a few spikes in Romney’s mentions plot that are worth investigating.
+		   What are some events that let Romney get more attention on the Twitter sphere? Are they good for Romney? We wrote some code to help us identify some of the major events:
 		</p>
 		<ul>
 			<li>On Apr 12, most of the discussion focused on the “stay-at-home-mom” comment by Hilary Rosen on Ann Romney. Here is a tweet supporting Ann: 
@@ -126,7 +126,7 @@
 			<li> On Jul 26, Romney attended the Olympic Opening Ceremony, sweating about his “Olympic gaffes”.</li>
 			<li> On Aug 10, Romney picked Ryan as the running mate. The most retweeted post: “Really Romney?”</li>
 		</ul>
-		<p> Well, Twitter is full of interesting information, blended in sarcasm, humor and irony. It reminds me of a quote: </p>
+		<p> Twitter is full of interesting information, blended in sarcasm, humor and irony. It reminds me of a quote: </p>
 		<p style = "font-style:italic;text-align:center">With the absence of the false, you have the truth and noise.</p>
 		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
@@ -140,9 +140,9 @@
 		<hr>
 		<p>
 			We'd like to test an interesting hypothesis: Twitter knows Romney's whereabouts.
-			The idea is that if Romney is present in a State on a day, there would be a jump in the share of Romney mention in that State compared to the nation-wide mentions. 
-			So examining the jump would allow us to track down the campaign schedule of Romney. Based on the magnitude of the jump, we made some statistic estimations of the probability of Romney having an event in a state / having no event at all. 
-			The following table shows the top three most likely estimations. Romney's actual whereabout is highlighted in green.
+			The idea is that if Romney is present in a State on a day, there would be a jump in the share of Romney mention in that State compared to nation-wide mentions. 
+			So examining the jump would allow us to track down the campaign schedule of Romney. Based on the magnitude of the jump, we made some statistical estimations of the probability of Romney having an event in a state / having no event at all. 
+			The following table shows the top three most likely estimates. Romney's actual location is highlighted in green.
 		</p>
 		<table class="table table-condensed">
               <thead>
@@ -242,8 +242,7 @@
               </tbody>
             </table>
 		<p>
-			The results are surely not earth-shattering but we learned with good accuracy about something meaningful from Tweets. 
-			This is an illustration of the power of big data in practice. Even though we only keep tiny amount of information from each text, the information accumulated still allows us to distill fairly strong signals that reflect real world events.
+			The results are surely not earth-shattering but they're fairly accurate. This is an illustration of the power of big data in practice. Even though we only keep tiny amount of information from each tweet, the information accumulated still allows us to distill fairly strong signals that reflect real world events.
 		</p>
 		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
@@ -264,7 +263,7 @@
 		</p>
 		<img src = '/static/img/obama_employment.png' style = "width:900px;height:500px"><br>
 		<p>Hmm, so bad market and high unemployment rate reminds people of Obama? We can learn two things from these plots: 1. People talk about the economy when it sucks. 2. Obama, as the incumbent president, is taking the responsiblity of economic performance.</p>
-		<p> Additionally, since unemployment data is always released one month later, the pattern on Twitter mention is somewhat predictive of the unemployment rate. I'll bet that Oct unemployment rate will be higher than that in Sep. </p>
+		<p> Additionally, since unemployment data is always released one month later, the pattern on Twitter mention is somewhat predictive of the unemployment rate. I'll bet that the October unemployment rate will be higher than that of September! </p>
 		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
 	<br><br>

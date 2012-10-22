@@ -219,7 +219,7 @@ var current_time, times;
 var current_topic;
 var mention_json, topic_graph_json, map_json, news_json;
 var load_counter = 2;
-
+var user_json;
 
 $(document).ready(function() {
 	// carousel
@@ -253,21 +253,26 @@ d3.json("/news.json", function(json) {
 	news_json = json;
 });
 
-d3.json("/topic.json", function(json) {
-	topic_graph_json = json;
-	d3.json("/mention.json", function(json){
-		mention_json = json;
-		d3.json("/static/dat/us_states.json", function(json){
-			map_json = json;
-			load_counter--;
-			if (load_counter == 0){
-				setup_time();
-				setup_map();
-				setup_realtime();
-				setup_date_selection();
-			}
+d3.json("/static/dat/user_states.json", function(json) {
+	user_json = json;
+	d3.json("/topic.json", function(json) {
+		topic_graph_json = json;
+		d3.json("/mention.json", function(json){
+			mention_json = json;
+			d3.json("/static/dat/us_states.json", function(json){
+				map_json = json;
+				load_counter--;
+				if (load_counter == 0){
+					setup_time();
+					setup_index();
+					setup_map();
+					setup_realtime();
+					setup_date_selection();
+				}
+			});
 		});
 	});
 });
+
 
 google.load("visualization", "1.0", {"packages":["corechart", "annotatedtimeline"]});

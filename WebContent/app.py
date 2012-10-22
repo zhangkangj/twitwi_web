@@ -144,7 +144,7 @@ def get_news():
     return json.dumps(news)
 
 @app.route('/realtime_tweet.json')
-def get_tweet():
+def realtime():
     result = []
     try:
         time = request.args.get('time')

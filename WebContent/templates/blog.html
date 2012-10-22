@@ -10,9 +10,26 @@
 <div id = "introduction" class = 'container'>
 	<div class = 'shadowlight contentblock'>
 		<h4>
-			Twithinks Blog: An Introduction
+			Twithinks Blog: An Brief Introduction
 		</h4>
 		<hr>
+		<p>
+			We are a team of students and We have been playing with Twitter data for a while.
+			Attracted by the hype around the 2012 Presidential Election, we wondered, what if the President is to be elected by Twitter users.
+			With some simple techniques and algorithms, we tried to learn the wisdom of the crowd.
+			We discovered many things deeply interesting to us, and we hope that you find them interesting as well. 
+		</p>
+		<ul>
+			<li><a href = "#big_data_diy" style = "font-weight:bold">Big Data DIY</a></li>
+			<li><a href = "#primary" style = "font-weight:bold">Twitter Mention & Republican Primary</a></li>
+			<li><a href = "#presidential_race" style = "font-weight:bold">Twitter Mention & Presidential Race</a></li>
+			<li><a href = "#track_romney" style = "font-weight:bold">Putting a GPS Tracker on Romney</a></li>
+			<li><a href = "#obama_economy" style = "font-weight:bold">Obama, Economy, Huh?</a></li>
+		</ul>
+		<div class="pull-right" style = "margin-top:0px;" >
+			<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-text = "twithinks, 2012 Presidential Election on Twitter" data-size="medium">Tweet</a>
+			<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwitwi.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>					
+		</div>
 	</div>
 	<br><br>
 	
@@ -23,7 +40,7 @@
 		</h4>
 		<hr>
 		<p>
-			In the era of cloud storage, scaling with Big Data is no longer hard. Hosting a few terabytes on AWS or Google is almost a standard procedure, only if you have the money to pay for the servers. But today we want to show that one could build a database system for Big Data even on a student budget.
+			In the era of cloud storage and computing, scaling with Big Data Analysis is really not that difficult. Hosting a few terabytes on AWS or Google is almost a standard procedure, only if you have the money to pay for the servers. But today we want to show that one could build a database system for Big Data even on a student budget.
 		</p>
 		<p>
 			Here are some rough numbers about the volume of Twitter data we are dealing with:
@@ -121,18 +138,133 @@
 			<span class = "pull-right"> Oct 20, 2012</span>
 		</h4>
 		<hr>
-		
+		<p>
+			We'd like to test an interesting hypothesis: Twitter knows Romney's whereabouts.
+			The idea is that if Romney is present in a State on a day, there would be a jump in the share of Romney mention in that State compared to the nation-wide mentions. 
+			So examining the jump would allow us to track down the campaign schedule of Romney. Based on the magnitude of the jump, we made some statistic estimations of the probability of Romney having an event in a state / having no event at all. 
+			The following table shows the top three most likely estimations. Romney's actual whereabout is highlighted in green.
+		</p>
+		<table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Most Likely</th>
+                  <th>Second Likely</th>
+                  <th>Third Likely</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Oct 1</td>
+                  <td style = "color:green;font-weight:bold;">CO 62%</td>
+                  <td>MI 13%</td>
+                  <td>No Event 11%</td>
+                </tr>
+                <tr>
+                  <td>Oct 2</td>
+                  <td>CO 57%</td>
+                  <td style = "color:green;font-weight:bold;">No Event 15%</td>
+                  <td>MI 10%</td>
+                </tr>
+                <tr>
+                  <td>Oct 3</td>
+                  <td>IN 37%</td>
+                  <td>NC 26%</td>
+                  <td style = "color:green;font-weight:bold;">No Event 14%</td>
+                </tr>
+                <tr>
+                  <td>Oct 4</td>
+                  <td>IN 32%</td>
+                  <td>PA 29%</td>
+                  <td>No Event 20%</td>
+                </tr>
+                <tr>
+                  <td>Oct 5</td>
+                  <td>No event 31%</td>
+                  <td>OH 26%</td>
+                  <td style = "color:green;font-weight:bold;">FL 19%</td>
+                </tr>
+                <tr>
+                  <td>Oct 6</td>
+                  <td style = "color:green;font-weight:bold;">FL 37%</td>
+                  <td>No event 21%</td>
+                  <td>MI 18%</td>
+                </tr>
+                <tr>
+                  <td>Oct 7</td>
+                  <td>NC 42%</td>
+                  <td style = "color:green;font-weight:bold;">FL 27%</td>
+                  <td>No event 16%</td>
+                </tr>
+                <tr>
+                  <td>Oct 8</td>
+                  <td style = "color:green;font-weight:bold;">VA 31%</td>
+                  <td>NC 25%</td>
+                  <td>No event 21%</td>
+                </tr>
+                <tr>
+                  <td>Oct 9</td>
+                  <td style = "color:green;font-weight:bold;">OH 45%</td>
+                  <td>PA 17%</td>
+                  <td>No event 16%</td>
+                </tr>
+                <tr>
+                  <td>Oct 10</td>
+                  <td style = "color:green;font-weight:bold;">OH 33%r</td>
+                  <td>PA 22%</td>
+                  <td>No event 21%</td>
+                </tr>
+                <tr>
+                  <td>Oct 11</td>
+                  <td style = "color:green;font-weight:bold;">NC 43%</td>
+                  <td>OH 20%</td>
+                  <td>IN 18%</td>
+                </tr>
+                <tr>
+                  <td>Oct 12</td>
+                  <td style = "color:green;font-weight:bold;">OH 32%</td>
+                  <td>NC 27%</td>
+                  <td>No event 21%</td>
+                </tr>
+                <tr>
+                  <td>Oct 13</td>
+                  <td style = "color:green;font-weight:bold;">OH 38%</td>
+                  <td>NC 29%</td>
+                  <td>No event 16%</td>
+                </tr>
+                <tr>
+                  <td>Oct 14</td>
+                  <td>FL 31%</td>
+                  <td style = "color:green;font-weight:bold;">No event 22%</td>
+                  <td>WI 21%</td>
+                </tr>
+                
+              </tbody>
+            </table>
+		<p>
+			The results are surely not earth-shattering but we learned with good accuracy about something meaningful from Tweets. 
+			This is an illustration of the power of big data in practice. Even though we only keep tiny amount of information from each text, the information accumulated still allows us to distill fairly strong signals that reflect real world events.
+		</p>
 		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
 	<br><br>
 	
 	<div id = "obama_economy" class = 'shadowlight contentblock'>
 		<h4>
-			Obama, Economy Huh?
+			Obama, Economy, Huh?
 			<span class = "pull-right"> Oct 21, 2012</span>
 		</h4>
 		<hr>
-		
+		<p>
+			You don’t need to follow the election to know that this election is about the ECONOMY, and this is the one area where Obama is clearly on the defensive. We want to see whether Twitter can tell us anything interesting on this front. Therefore we look for tweets about Obama that also talk about the state of the economy. We then compare it with two important economic indices. The first one is the S&P500. And we have the following plot.
+		</p>
+		<img src = '/static/img/obama_economy.png' style = "width:900px;height:500px"><br>
+		<p>
+			You may be thinking that they don't correlate at all. You're right. Not only they don't correlate, they actually anti-correlate! Now let's see something that correlates: obama and unemployment rate.
+		</p>
+		<img src = '/static/img/obama_employment.png' style = "width:900px;height:500px"><br>
+		<p>Hmm, so bad market and high unemployment rate reminds people of Obama? We can learn two things from these plots: 1. People talk about the economy when it sucks. 2. Obama, as the incumbent president, is taking the responsiblity of economic performance.</p>
+		<p> Additionally, since unemployment data is always released one month later, the pattern on Twitter mention is somewhat predictive of the unemployment rate. I'll bet that Oct unemployment rate will be higher than that in Sep. </p>
 		<a href = "#introduction" class = "pull-right">back</a>
 	</div>
 	<br><br>

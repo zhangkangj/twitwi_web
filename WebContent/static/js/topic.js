@@ -8,7 +8,7 @@ function update_topic(json) {
 				   left:50,
 				   backgroundColor:'transparent',
 				   chartArea:{width:"95%",height:"95%"},
-           slices: [{color: '#1f77b4'},{color: '#ff7f0e'},{color: '#2ca02c'},{color: '#d62728'},{color: '#9467bd'},{color: '#8c564b'},{color: '#e377c2'},{color: '#7f7f7f'},{color: '#bcbd22'},{color: '#17becf'}],
+				   slices: [{color: '#1f77b4'},{color: '#ff7f0e'},{color: '#2ca02c'},{color: '#d62728'},{color: '#9467bd'},{color: '#8c564b'},{color: '#e377c2'},{color: '#7f7f7f'},{color: '#bcbd22'},{color: '#17becf'}],
 				   legend:{alignment:"end", textStyle: {fontSize: 12}}};
 	var data_obama = [];
 	for (var key in topics){
@@ -40,6 +40,7 @@ function update_topic(json) {
 			   	   backgroundColor:'transparent',
 			   	   legend:null,
 			   	   chartArea:{width:"85%",height:"85%"},
+				   slices: [{color: '#1f77b4'},{color: '#ff7f0e'},{color: '#2ca02c'},{color: '#d62728'},{color: '#9467bd'},{color: '#8c564b'},{color: '#e377c2'},{color: '#7f7f7f'},{color: '#bcbd22'},{color: '#17becf'}],
 			   	   legend:{position:"none"}};
 	var data_romney = [];
 	for (var key in topics){

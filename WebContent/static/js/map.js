@@ -119,7 +119,7 @@ function draw_state_detail_chart(d){
 	data.addColumn('number', 'Romney');
 	data.addColumn('string', 'title1');
 	data.addColumn('string', 'text1');
-	for (var time in mention_json){
+	for (var time in times){
 		var obama_count  = mention_json[time][state].obama;
 		var romney_count = mention_json[time][state].romney;
 		time = parseInt(time);

@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 	<script type="text/javascript" src="/static/js/base.js"></script>
+	<script type="text/javascript" src="/static/js/index.js"></script>
 	<script type="text/javascript" src="/static/js/map.js"></script>
 	<script type="text/javascript" src="/static/js/topic.js"></script>
 	<script type="text/javascript" src="/static/js/realtime.js"></script>
@@ -80,17 +81,17 @@
 	<div id="page" class="container-fluid">
 		<div id = "menu">
 			<ul class="nav nav-tabs">
-				<li id = "index_menu" class="active">
-					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="An election index based on Twitter mentions, normalized by the popultion and TWitter users of each state.">Election Index </a>
-				</li>
-				<li id = "map_menu">
-					<a href="#" class="black" onclick="slide_carousel('map_container')" rel="tooltip" data-placement="bottom" data-original-title="This map shows how many times Obama and Romney are mentioned. The color indicates their relative percentage.">Election Map </a>
+				<li id = "map_menu" class="active">
+					<a href="#" class="black" onclick="slide_carousel('map_container')" rel="tooltip" data-placement="bottom" data-original-title="How many times Obama and Romney are mentioned in each state. The color indicates their relative percentage.">Election Map </a>
 				</li>
 				<li id = "topic_menu">
-					<a href="#" class="black" onclick="slide_carousel('topic_container')" rel="tooltip" data-placement="bottom" data-original-title="This chart shows what topics people are talking about when a candidate is mentioned.">Election Topics </a>
+					<a href="#" class="black" onclick="slide_carousel('topic_container')" rel="tooltip" data-placement="bottom" data-original-title="Trending topics people tweet about when a candidate is mentioned.">Trending Topics </a>
 				</li>
 				<li id = "realtime_menu">
-					<a href="#" class="black" onclick="slide_carousel('realtime_container')" rel="tooltip" data-placement="bottom" data-original-title="Election tweets in real time.">Election Realtime </a>
+					<a href="#" class="black" onclick="slide_carousel('realtime_container')" rel="tooltip" data-placement="bottom" data-original-title="Latest tweets about the election">Real-time Tweets</a>
+				</li>
+				<li id = "index_menu">
+					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="Nation-wide Twitter mentions, normalized by the electoral college vote and Twitter user population of each state.">Twitter Publicity</a>
 				</li>
 				<li class="pull-right" style = "margin-top:13px;" >
 					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-text = "twithinks, 2012 Presidential Election on Twitter" data-size="medium">Tweet</a>
@@ -102,8 +103,7 @@
 		</div>	
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
-				<div id="index_container" class="active item carousel_element">under construction</div>
-				<div id="map_container" class="item carousel_element"></div>
+				<div id="map_container" class="active item carousel_element"></div>
 				<div id="topic_container" class="item carousel_element"> 
 					<div class="row-fluid" style = "margin-left:60px">
 						<h4 style = "position: absolute; top:30px">When mentioning Obama, people tweet about:</h4>
@@ -119,6 +119,9 @@
 					<div style = "display:inline"><img id = "load_icon" src = '/static/img/loading.gif' style = "width:25px; height:25px; margin:5px; display:none;"></div>
 					<div style = "display:inline"><span id = "new_tweet_notification" class="label label-info" style = "width:25px; height:25px; margin-left:150px; display:none">New tweets available, click refresh to view</span></div>
 					<ul id="realtime_tweet" style = "margin:auto; margin-top:10px"></ul>
+				</div>
+				<div id="index_container" class="item carousel_element">
+					<div id = "index_panel" style = "margin-left:100px; width:800px; height:500px"></div>
 				</div>
 			</div>
 		  	<a class="carousel-control left " href="#myCarousel" data-slide="prev">&lsaquo;</a> 

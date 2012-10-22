@@ -205,6 +205,7 @@ function slide_carousel(id){
 		$("#topic_container").attr("class", "item carousel_element");
 		$("#realtime_container").attr("class", "item carousel_element");
 		$("#index_container").attr("class", "active item carousel_element");
+		setup_index();
 		$("#map_menu").attr("class", "");
 		$("#topic_menu").attr("class", "");
 		$("#realtime_menu").attr("class", "");
@@ -264,7 +265,6 @@ d3.json("/static/dat/user_states.json", function(json) {
 				load_counter--;
 				if (load_counter == 0){
 					setup_time();
-					setup_index();
 					setup_map();
 					setup_realtime();
 					setup_date_selection();

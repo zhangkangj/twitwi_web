@@ -23,7 +23,7 @@ function setup_realtime(){
 					if (notificationOn){
 						$("#new_tweet_notification").fadeIn();	
 					}
-				}, 20000);
+				}, 15000);
 			});	
 		}
 	}, 4000);

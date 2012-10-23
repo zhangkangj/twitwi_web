@@ -4,11 +4,12 @@
 <head>
 	{% block head %}
 	<title>twithinks{% block subtitle %}{% endblock %}</title>
-	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-ico">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="keyword" content="twitter data analysis, election twitter data">
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="keyword" content="twitter data analysis, election twitter data, presidential election 2012, data mining" />
+	<meta name="description" content="Analyzing and visualizing 2012 presidential election on Twitter." />
 	
 	<script type="text/javascript">
 		var TWITWI_ROOT = {{ request.script_root|tojson|safe }};	// build absolute path in JS with this constant
@@ -37,6 +38,14 @@
 	
 	<link type="text/css" href="/static/css/index.css" rel="stylesheet"/>
 	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"/>
+	
+	<meta property="og:title" content="Twitizen&#039;s election on TwiThinks" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://twithinks.mit.edu" />
+	<meta property="og:image" content="http://twithinks.mit.edu/static/img/logo_256x256.png" />
+	<meta property="og:site_name" content="TwiThinks" />
+	<meta property="og:description" content="Analyzing and visualizing 2012 presidential election on Twitter." />
+	<meta property="fb:admins" content="680266857" />
 	{% endblock %}
 	
 	<script type="text/javascript">
@@ -94,8 +103,8 @@
 					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="Nation-wide Twitter mentions, normalized by the electoral college vote and Twitter user population of each state.">Twitter Publicity</a>
 				</li>
 				<li class="pull-right" style = "margin-top:13px;" >
-					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-text = "twithinks, 2012 Presidential Election on Twitter" data-size="medium">Tweet</a>
-					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwitwi.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>					
+					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-url="http://twithinks.mit.edu" data-text="TwiThinks, Visualizing 2012 Presidential Election on Twitter" data-size="medium" data-via="_twithinks">Tweet</a>
+					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>					
 				</li>
 				<li class="pull-right">
         		</li>

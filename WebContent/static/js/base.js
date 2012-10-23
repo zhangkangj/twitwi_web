@@ -18,6 +18,7 @@ function setup_date_selection() {
 		create: function(event, ui) {
 					$('#date').val(date(times[times.length-1])); 
 					update_time(times[times.length-1]);
+					$('#next-day-btn').addClass('disabled');
 				},
 		slide:  function(event, ui) {
 					$('#date').val(date(times[ui.value]));
@@ -27,8 +28,10 @@ function setup_date_selection() {
 					update_time(times[ui.value]);
 					if (ui.value == 0) {
 						$('#prev-day-btn').addClass('disabled');
+						$('#next-day-btn').removeClass('disabled');
 					} else if (ui.value == times.length-1) {
 						$('#next-day-btn').addClass('disabled');
+						$('#prev-day-btn').removeClass('disabled');
 					} else {
 						$('#next-day-btn').removeClass('disabled');
 						$('#prev-day-btn').removeClass('disabled');

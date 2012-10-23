@@ -46,6 +46,7 @@
 	<meta property="og:site_name" content="TwiThinks" />
 	<meta property="og:description" content="Analyzing and visualizing 2012 presidential election on Twitter." />
 	<meta property="fb:admins" content="680266857,608188613" />
+	
 	{% endblock %}
 	
 	<script type="text/javascript">
@@ -169,7 +170,25 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="tweet-box"></div>
+		<script src="http://platform.twitter.com/anywhere.js?id=ZLwKF2qboQxoRGagpOOg" type="text/javascript"></script>
+		<script>
+			twttr.anywhere(function(t) {
+				t('#tweet-box').tweetBox({
+					witdth: 800,
+					height: 400,
+					label: 'Comments',
+					defaultContent: '@_twithinks #election ',
+					onTweet: function (plain_tweet, html_tweet) { 
+						alert(plain_tweet); 
+						alert(html_tweet);
+					}
+				}); 
+			});
+		</script>
 	</div>
+	
 	{% endblock %}
 	
 	<footer class="footer">

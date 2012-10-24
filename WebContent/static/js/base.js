@@ -170,51 +170,59 @@ function index(times, date) {
 }
 
 function slide_carousel(id){
-	if (id == "map_container"){
-		$("#topic_container").attr("class", "item carousel_element");
-		$("#map_container").attr("class", "active item carousel_element");
-		$("#realtime_container").attr("class", "item carousel_element");
-		$("#index_container").attr("class", "item carousel_element");
-		$("#map_menu").attr("class", "active");
-		$("#topic_menu").attr("class", "");
-		$("#realtime_menu").attr("class", "");
-		$("#index_menu").attr("class", "");
-		$("#control").fadeIn();
-		$("#tweet_panel").fadeIn();
-	} else if (id == "topic_container"){
-		$("#map_container").attr("class", "item carousel_element");
-		$("#topic_container").attr("class", "active item carousel_element");
-		$("#realtime_container").attr("class", "item carousel_element");
-		$("#index_container").attr("class", "item carousel_element");
-		$("#map_menu").attr("class", "");
-		$("#topic_menu").attr("class", "active");
-		$("#realtime_menu").attr("class", "");
-		$("#index_menu").attr("class", "");
-		$("#control").fadeIn();
-		$("#tweet_panel").fadeIn();
-	 } else if (id == "realtime_container"){
-		$("#map_container").attr("class", "item carousel_element");
-		$("#topic_container").attr("class", "item carousel_element");
-		$("#realtime_container").attr("class", "active item carousel_element");
-		$("#index_container").attr("class", "item carousel_element");
-		$("#map_menu").attr("class", "");
-		$("#topic_menu").attr("class", "");
-		$("#realtime_menu").attr("class", "active");
-		$("#index_menu").attr("class", "");
-		$("#control").fadeOut();
-		$("#tweet_panel").fadeOut();
-	 } else if (id == "index_container"){
-		$("#map_container").attr("class", "item carousel_element");
-		$("#topic_container").attr("class", "item carousel_element");
-		$("#realtime_container").attr("class", "item carousel_element");
-		$("#index_container").attr("class", "active item carousel_element");
-		setup_index();
-		$("#map_menu").attr("class", "");
-		$("#topic_menu").attr("class", "");
-		$("#realtime_menu").attr("class", "");
-		$("#index_menu").attr("class", "active");
-		$("#control").fadeOut();
-		$("#tweet_panel").fadeOut();
+	switch (id) {
+		// TODO needs refactoring with classAdd/class
+		case "map_container":
+			$("#topic_container").attr("class", "item carousel_element");
+			$("#map_container").attr("class", "active item carousel_element");
+			$("#realtime_container").attr("class", "item carousel_element");
+			$("#index_container").attr("class", "item carousel_element");
+			$("#map_menu").attr("class", "active");
+			$("#topic_menu").attr("class", "");
+			$("#realtime_menu").attr("class", "");
+			$("#index_menu").attr("class", "");
+			$("#control-wrapper").slideDown();
+			break;
+		
+		case "topic_container":
+			$("#map_container").attr("class", "item carousel_element");
+			$("#topic_container").attr("class", "active item carousel_element");
+			$("#realtime_container").attr("class", "item carousel_element");
+			$("#index_container").attr("class", "item carousel_element");
+			$("#map_menu").attr("class", "");
+			$("#topic_menu").attr("class", "active");
+			$("#realtime_menu").attr("class", "");
+			$("#index_menu").attr("class", "");
+			$("#control-wrapper").slideDown();
+			break;
+
+		case "realtime_container":
+			$("#map_container").attr("class", "item carousel_element");
+			$("#topic_container").attr("class", "item carousel_element");
+			$("#realtime_container").attr("class", "active item carousel_element");
+			$("#index_container").attr("class", "item carousel_element");
+			$("#map_menu").attr("class", "");
+			$("#topic_menu").attr("class", "");
+			$("#realtime_menu").attr("class", "active");
+			$("#index_menu").attr("class", "");
+			$("#control-wrapper").slideUp();
+			break;
+		
+		case "index_container":
+			$("#map_container").attr("class", "item carousel_element");
+			$("#topic_container").attr("class", "item carousel_element");
+			$("#realtime_container").attr("class", "item carousel_element");
+			$("#index_container").attr("class", "active item carousel_element");
+			setup_index();
+			$("#map_menu").attr("class", "");
+			$("#topic_menu").attr("class", "");
+			$("#realtime_menu").attr("class", "");
+			$("#index_menu").attr("class", "active");
+			$("#control-wrapper").slideUp();
+			break;
+		
+		default:
+			console.log('unknown id.');
 	 }
 }
 

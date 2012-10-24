@@ -127,3 +127,8 @@ body {
   fill: #444;
   font: 12px sans-serif;
 }
+
+.footer {
+	font-size: 16px;
+	margin-bottom: 20px;
+}

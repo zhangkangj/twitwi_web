@@ -18,6 +18,7 @@ news = {1344704400-46800:'R:Paul Ryan as VP Candidate',
         1350406800-46800:'B:2nd Presidential Debate',
         1327428000-46800:'O:State of the Union Address',
         1336582800-46800:'O:Supports Same Sex Marriage',
+        1350878400:'B:3rd Presidential Debate',
 }
 
 @app.before_request

@@ -30,6 +30,11 @@ def index():
     response = make_response(render_template('index.html'))
     return response
 
+@app.route('/frame')
+def frame():
+    response = make_response(render_template('frame.html'))
+    return response
+
 @app.route('/test')
 def test():
     return 'this is a test'

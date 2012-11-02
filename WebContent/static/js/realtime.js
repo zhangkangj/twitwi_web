@@ -31,7 +31,7 @@ function setup_realtime(){
 
 function load_realtime_tweet(){
 	d3.json("/realtime_tweet.json?time=" + latest, function(json) {
-		if (json.length == 7) {
+		if (json.length == 6) {
 			$("#load_icon").hide();
 			$("#realtime_tweet_refresh").removeClass("disabled");
 			isFetching = false;

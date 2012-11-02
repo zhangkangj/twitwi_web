@@ -162,11 +162,11 @@ def realtime():
         return 'server down'
     cursor = g.con.cursor()
     if time == None:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 7""")
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 6""")
     else:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime where created_at >= %s ORDER BY created_at DESC LIMIT 7""", (time))
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime where created_at >= %s ORDER BY created_at DESC LIMIT 6""", (time))
     entry = cursor.fetchone()
-    if cursor.rowcount != 7:
+    if cursor.rowcount != 6:
         return json.dumps(result) 
     while entry:
         id = str(entry[0])

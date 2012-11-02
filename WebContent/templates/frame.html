@@ -50,7 +50,7 @@
 	<style>
 		body {
 			width: 1050px;
-			height: 750px;
+			height: 760px;
 			overflow: hidden;
 		}
 		
@@ -61,8 +61,9 @@
 			top: 0;
 			left: 0;
 			z-index: 1040;
-			background-color: white;
-			FILTER: alpha(opacity=0);
+			background-image: url(/static/img/embed-IE.png);
+			#background-color: white;
+			#FILTER: alpha(opacity=0);
 		}
 	</style>
 	{% endblock %}
@@ -87,17 +88,19 @@
 		<div id="ie-notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">IE is not fully supported</h3>
+			<h4 id="myModalLabel">Embedded visualizations are not supported in IE</h4>
 		  </div>
 		  <div class="modal-body">
-			<p>We are working hard to ensure the best possible user experience for every user. But unfortunately, your current browser, Internet Explorer, is not fully supported yet. Please consider using <a href="https://www.google.com/chrome" target="_blank">Chrome</a> or <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a> instead. You are welcomed to look around if you wish.</p>
+			<p>We are working hard to ensure the best possible user experience for every user. But unfortunately, your current browser, Internet Explorer, is not fully supported yet. Please consider using <a href="https://www.google.com/chrome" target="_blank">Chrome</a> or <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a> instead. Please visit our website <a href="http://twithinks.mit.edu" target="_blank">TwiThinks</a> for interactive visualizations and more information. </p>
 		  </div>
 		  <div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Dismiss and Visit</button>
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Dismiss</button>
 		  </div>
 		</div>
 		<div id="glass">
 		</div>
+		
+		
 		<script type="text/javascript">
 			$('#glass').on('click', function(e) {
 				$('#ie-notice').modal();
@@ -109,9 +112,9 @@
 			});
 		</script>
 	<![endif]-->
-	
+
 	{% block content %}
-	<div id="page" class="container-fluid" style = "margin-top:10px; margin-left:40px;width:1000px">
+	<div id="page" class="container-fluid" style = "margin-top:10px;width:1000px">
 		<div id = "menu" style = "margin-left:0px">
 			<ul class="nav nav-tabs">
 				<li id = "map_menu" class="active">

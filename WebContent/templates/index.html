@@ -88,6 +88,25 @@
 	</div>
 	
 	{% block content %}
+	<!--[if IE]>
+		<div id="ie-notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">IE is not fully supported</h3>
+		  </div>
+		  <div class="modal-body">
+			<p>We are working hard to ensure the best possible user experience for every user. But unfortunately, your current browser, Internet Explorer, is not fully supported yet. Please consider using <a href="https://www.google.com/chrome" target="_blank">Chrome</a> or <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a> instead. You are welcomed to look around if you wish.</p>
+		  </div>
+		  <div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Dismiss and Visit</button>
+		  </div>
+		</div>
+	<![endif]-->
+	
+	<script type="text/javascript">
+		$('#ie-notice').modal();
+	</script>
+	
 	<div id="page" class="container-fluid">
 		<div id = "menu">
 			<ul class="nav nav-tabs">

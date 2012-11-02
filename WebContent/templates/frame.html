@@ -32,7 +32,7 @@
 
 	<script type="text/javascript" src="/static/js/base.js"></script>
 	<script type="text/javascript" src="/static/js/index.js"></script>
-	<script type="text/javascript" src="/static/js/map.js"></script>
+	<script type="text/javascript" src="/static/js/map2.js"></script>
 	<script type="text/javascript" src="/static/js/topic.js"></script>
 	<script type="text/javascript" src="/static/js/realtime.js"></script>
 	
@@ -117,16 +117,16 @@
 		<div id = "menu" style = "margin-left:0px">
 			<ul class="nav nav-tabs">
 				<li id = "map_menu" class="active">
-					<a href="#" class="black" onclick="slide_carousel('map_container')" rel="tooltip" data-placement="bottom" data-original-title="How many times Obama and Romney are mentioned in each state. The color indicates their relative percentage.">Election Map </a>
+					<a href="#" class="black" onclick="slide_carousel('map_container')" rel="tooltip" data-placement="bottom" data-original-title="Wie oft werden Obama und Romney in den Bundesstaaten erwähnt."> Die Karte  </a>
 				</li>
 				<li id = "topic_menu">
-					<a href="#" class="black" onclick="slide_carousel('topic_container')" rel="tooltip" data-placement="bottom" data-original-title="Trending topics people tweet about when a candidate is mentioned.">Trending Topics </a>
+					<a href="#" class="black" onclick="slide_carousel('topic_container')" rel="tooltip" data-placement="bottom" data-original-title="Mit welchen Themen werden die Kandidaten auf Twitter erwähnt."> Aktuelle Themen </a>
 				</li>
 				<li id = "realtime_menu">
-					<a href="#" class="black" onclick="slide_carousel('realtime_container')" rel="tooltip" data-placement="bottom" data-original-title="Latest tweets about the election">Real-time Tweets</a>
+					<a href="#" class="black" onclick="slide_carousel('realtime_container')" rel="tooltip" data-placement="bottom" data-original-title="Aktuelle Tweets zu den Wahlen."> Tweets zu den Wahlen </a>
 				</li>
 				<li id = "index_menu">
-					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="Nation-wide Twitter mentions, normalized by the electoral college vote and Twitter user population of each state.">Twitter Publicity</a>
+					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="Wie populär sind Obama und Romney auf Twitter. Eine nationale Auswertung und Übersicht."> Popularität auf Twitter </a>
 				</li>
 				<li class="pull-right" style = "margin-top:13px;" >
 					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-url="http://twithinks.mit.edu" data-text="TwiThinks, Visualizing 2012 Presidential Election on Twitter" data-size="medium" data-via="_twithinks">Tweet</a>
@@ -141,8 +141,8 @@
 				<div id="map_container" class="active item carousel_element"></div>
 				<div id="topic_container" class="item carousel_element"> 
 					<div class="row-fluid" style = "margin-left:60px">
-						<h4 style = "position: absolute; top:30px">When mentioning Obama, people tweet about:</h4>
-						<h4 style = "position: absolute; left:550px; top:30px">When mentioning Romney, people tweet about:</h4>						
+						<h4 style = "position: absolute; top:30px"> Mit welchen Themen wird Obama erwähnt </h4>
+						<h4 style = "position: absolute; left:550px; top:30px">Mit welchen Themen wird Romney erwähnt</h4>						
   						<div id = "topic_obama" class = "span5"></div>
   						<div id = "topic_romney" class = "span5" style = "margin-left:30px"></div>
 					</div>

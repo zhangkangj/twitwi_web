@@ -7,7 +7,6 @@
 	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-ico" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="keyword" content="twitter data analysis, election twitter data, presidential election 2012, data mining" />
 	<meta name="description" content="Analyzing and visualizing 2012 presidential election on Twitter." />
 	
@@ -36,8 +35,8 @@
 	<script type="text/javascript" src="/static/js/topic.js"></script>
 	<script type="text/javascript" src="/static/js/realtime.js"></script>
 	
-	<link type="text/css" href="/static/css/index.css" rel="stylesheet"/>
 	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"/>
+	<link type="text/css" href="/static/css/index.css" rel="stylesheet"/>
 	
 	<meta property="og:title" content="Twitizen&#039;s election on TwiThinks" />
 	<meta property="og:type" content="website" />
@@ -63,9 +62,9 @@
 	{% endblock %}
 </head>
 
-<body>
+<body class="page">
 	{% block body %}
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
@@ -88,7 +87,7 @@
 	</div>
 	
 	{% block content %}
-	<div id="page" class="container-fluid">
+	<div id="page">
 		<div id = "menu">
 			<ul class="nav nav-tabs">
 				<li id = "map_menu" class="active">
@@ -115,23 +114,27 @@
 			<div class="carousel-inner">
 				<div id="map_container" class="active item carousel_element"></div>
 				<div id="topic_container" class="item carousel_element"> 
-					<div class="row-fluid" style = "margin-left:60px">
-						<h4 style = "position: absolute; top:30px">When mentioning Obama, people tweet about:</h4>
-						<h4 style = "position: absolute; left:550px; top:30px">When mentioning Romney, people tweet about:</h4>						
-  						<div id = "topic_obama" class = "span5"></div>
-  						<div id = "topic_romney" class = "span5" style = "margin-left:30px"></div>
+					<div>
+						<h4 class="topic-title">When mentioning Obama, people tweet about:</h4>
+						<h4 class="topic-title">When mentioning Romney, people tweet about:</h4>
+					</div>
+					<div id="topic-graph">
+  						<div id = "topic_obama"></div>
+  						<div id = "topic_romney"></div>
 					</div>
 				</div>
 				<div id="realtime_container" class="item carousel_element">
-					<button id = "realtime_tweet_up" class="btn btn-small disabled" type="button" style = "margin: 5px; margin-left: 100px;"><i class="icon-chevron-up"></i></button>
-					<button id = "realtime_tweet_down" class="btn btn-small disabled" type="button" style = "margin: 5px;"><i class="icon-chevron-down"></i></button>
-					<button id = "realtime_tweet_refresh" class="btn btn-small" type="button" style = "margin: 5px;"><i class="icon-refresh"></i></button>
-					<div style = "display:inline"><img id = "load_icon" src = '/static/img/loading.gif' style = "width:25px; height:25px; margin:5px; display:none;"></div>
-					<div style = "display:inline"><span id = "new_tweet_notification" class="label label-info" style = "width:25px; height:25px; margin-left:150px; display:none">New tweets available, click refresh to view</span></div>
+					<div id="realtime-control">
+						<button id = "realtime_tweet_up" class="btn btn-small disabled" type="button"><i class="icon-chevron-up"></i></button>
+						<button id = "realtime_tweet_down" class="btn btn-small disabled" type="button" style = "margin: 5px;"><i class="icon-chevron-down"></i></button>
+						<button id = "realtime_tweet_refresh" class="btn btn-small" type="button" style = "margin: 5px;"><i class="icon-refresh"></i></button>
+						<div style = "display:inline"><img id = "load_icon" src = '/static/img/loading.gif' style = "width:25px; height:25px; margin:5px; display:none;"></div>
+						<div style = "display:inline"><span id = "new_tweet_notification" class="label label-info" style = "width:25px; height:25px; display:none">New tweets available, click refresh to view</span></div>
+					</div>
 					<ul id="realtime_tweet" style = "margin:auto; margin-top:10px"></ul>
 				</div>
 				<div id="index_container" class="item carousel_element">
-					<div id = "index_panel" style = "margin-left:100px; width:800px; height:500px"></div>
+					<div id = "index_panel"></div>
 				</div>
 			</div>
 		  	<a class="carousel-control left " href="#myCarousel" data-slide="prev">&lsaquo;</a> 
@@ -140,13 +143,13 @@
 
 		<div id="control-wrapper"> 
 			<div id="control">
-				<div style="margin-left:20px;"><input type="text" id="date" size="10" style="width:140px;"/></div>
+				<div><input type="text" id="date" size="10" style="width:140px;"/></div>
 			</div>
 			
-			<div id = "tweet_panel">
-				<span style = "margin-left:120px" class="label label-info">Most Retweeted:</span>
-				<ul id = 'tweet' style = "margin-top:5px"></ul>
-				<div style = "float:right;">
+			<div id="tweet_panel">
+				<div class="label label-info">Most Retweeted:</div>
+				<ul id="tweet" style="margin-top:5px"></ul>
+				<div style="display:inline-block">
 					<button id = "tweet_up" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-up icon-white"></i></button>
 					<button id = "tweet_down" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-down icon-white"></i></button>  
 				</div>

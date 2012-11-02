@@ -13,20 +13,34 @@ function setup_map() {
 					  .attr("class", "background")
 					  .on("click", click_state)
 					  .on("mouseover", hover_state);
-	g = svg.append("g").attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");	
+	g = svg.append('g').attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");	
 	c = svg[0][0];
 	svgns = c.namespaceURI;
+	/*
 	box = $(document.createElementNS(svgns, 'g')).attr('id', 'box').attr('class', 'hover-box').hide()
 		.append($(document.createElementNS(svgns, 'rect')).attr('width','160').attr('height','70').attr('rx', '3'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-name').attr('class', 'hover-box-title').attr('x', '10').attr('y', '17'))
 		.append($(document.createElementNS(svgns, 'text')).attr('id', 'state-info').attr('class', 'hover-box-body').attr('x', '10').attr('y', '40'));
+	*/
+	box = $('<div>').attr('id', 'map-tooltip').attr('class', 'hover-box')
+		.append($('<div>').attr('id', 'state-name'))
+		.append($('<div>').attr('class', 'candidate-row')
+			.html('Obama: <span id="obama-count"></span> mentions'))
+		.append($('<div>').attr('class', 'candidate-row')
+			.html('Romney: <span id="romney-count"></span> mentions'))
+		.hide();
+		
+	$(document).ready(function(){
+		$(document.body).append(box);
+	});
+	
 	var ss = g.selectAll("g").data(map_json.features).enter()
 				.append("g").attr("class", "state")
 				.attr("id", function(d){return d.properties.abbreviation;})
 				.on("click", click_state)
 				.on("mouseover", hover_state)
 				.on("mousemove", move_box)
-				.on('mouseout', hide_box);
+				.on('mouseout', function() {box.hide();});
 	ss.append("path").attr("d", path);
 	// legend
 	var gradient_width=40, gradient_height=10, gradient_count=gradient.length;
@@ -34,8 +48,6 @@ function setup_map() {
 	legend.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
 	legend.append('text').text('More Romney Mentions').attr('x', -155).attr('y', 10);
 	legend.append('text').text('More Obama Mentions').attr('x', gradient_width*gradient_count+10).attr('y', 10);
-	
-	$(c).append(box);
 }
 
 function color_states(json) {
@@ -100,10 +112,10 @@ function hover_state(d) {
 		// calculate stats
 		var obama_count  = mention_json[current_time][d.properties.abbreviation].obama;
 		var romney_count = mention_json[current_time][d.properties.abbreviation].romney;
-		$('#state-info').append($(document.createElementNS(svgns, 'tspan')).attr('x','10').text('Obama : ' + obama_count + " mentions"))
-						.append($(document.createElementNS(svgns, 'tspan')).attr('x','11').attr('y','57').text('Romney: ' + romney_count + " mentions"));	
-		var m = d3.mouse(c);
-		box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')').show();
+		$('#obama-count').text(obama_count);
+		$('#romney-count').text(romney_count);
+		move_box();
+		box.show();
 		//update_state_tweet(current_time, d.properties.abbreviation);
 	}
 	g.selectAll("g.state").classed("hover", over_state && function(d) { return d == over_state; });
@@ -155,11 +167,6 @@ function update_state_tweet(time, state){
 }
 
 function move_box() {
-	var m = d3.mouse(c);
-	box.attr('transform', 'translate('+(m[0]+box_offset)+','+(m[1]+box_offset)+')');
-}
-
-function hide_box() {
-	box.hide();
-	$('#state-info').empty();
+	var m = d3.mouse(document.body);
+	box.css('left', m[0]+box_offset).css('top', m[1]+box_offset);
 }

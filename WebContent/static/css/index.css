@@ -1,5 +1,5 @@
 body {
-	padding-top: 60px;
+	min-width: 1200px;
 	background-image: url('../img/bgnoise.png');
 }
 
@@ -9,15 +9,12 @@ body {
 }
 
 #page {
-	width: 1200px;
-	margin-left: auto;
-	margin-right: auto;
+	margin: auto;
 }
 
 #menu {
 	width: 1000px;
-	margin-left: 100px;
-	margin-top: 0px;
+	margin: auto;
 }
 
 .black{
@@ -31,49 +28,51 @@ body {
 
 #myCarousel {
 	width: 1000px;
-	margin-left: auto;
-  	margin-right: auto;
+  	margin: auto;
 }
 
 .carousel-control {
 	top: 50%
 }
 
+div.label.label-info {
+	width: 100px;
+}
+
 #tweet{
-	width: 880px;
-	margin-left:120px;
-	margin-right:auto;
+	margin: 0;
+	padding: 0;
+	width: 950px;
 	display:inline-block;
 }
 
 #tweet_panel {
-	width:1100px;
+	width: 100%;
 }
 
 #detail {
 	width: 800px;
-	left:42%;
-	top:42%
+	left: 42%;
+	top: 42%
 }
 
 #detail_chart {
 	width: 700px;
 	height: 400px;
-	margin:auto;
+	margin: auto;
 }
 
 #detail_tweet {
-	width:700px;
-	display:inline-block;
+	width: 700px;
+	display: inline-block;
 }
 
 #control {
-  margin-left: 100px;
-  height : 20px;
+  margin: 5px auto 10px auto;
 }
 
 #control div {
-  float: left;
+  display: inline-block;
   font-family: sans-serif;
 }
 
@@ -85,14 +84,42 @@ body {
 }
 
 #slider+div {
-	margin-left: 20px;
+	margin: 0 20px 9px 20px;
+}
+
+#myCarousel {
+}
+
+/* topic */
+.topic-title {
+	margin: 0 20px 0 20px;
+	display: inline;
+}
+
+#topic-graph {
+	height: 450px;
+}
+
+#topic_obama, #topic_romney {
+	display: inline-block;
+	width: 45%;
+	height: 100%;
+}
+
+#topic_container {
+	text-align: center;
+}
+
+/* realtime */
+#realtime-control {
+	width: 800px;
+	margin: auto;
 }
 
 /* map */
 #map_container, #topic_container {
 	margin-left:auto;
 	margin-right:auto;
-  	height: 500px;
 }
 
 .state path {
@@ -111,30 +138,43 @@ body {
   stroke: #888;
 }
 
+/* index */
+#index_panel {
+	margin: auto;
+	width: 800px;
+	height: 500px;
+}
+
 /* hover-box */
-.hover-box rect {
-  fill: white;
-  stroke: #aaa;
-  stroke-width: 3px;
+.hover-box {
+	background-color: white;
+	border-radius: 3px;
+	border: 2px solid #aaa;
+	position: absolute;
+	padding: 10px;
+	width: 180px;
 }
 
-.hover-box-title {
-  fill: #222;
-  font: bold 14px sans-serif;
+#state-name {
+	font: bold 14px sans-serif;
+	width: 100%;
+	border-bottom: 2px solid #ddd;
+	margin-bottom: 5px;
+	padding-bottom: 3px;
 }
 
-.hover-box-body {
-  fill: #444;
-  font: 12px sans-serif;
+#obama-count, #romney-count {
+	display: inline;
 }
 
 #control-wrapper {
-	margin-bottom: 20px;
+	width: 1000px;
+	margin: 10px auto 20px auto;
 }
 
 #disqus_thread {
 	width: 1000px;
-	margin: 0 auto 20px auto;
+	margin: 20px auto 20px auto;
 }
 
 .footer {

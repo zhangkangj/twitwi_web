@@ -2,14 +2,11 @@ var obama_topic = null, romney_topic = null;
 var topics = ["Economy", "Budget", "Foreign policy", "Healthcare", "Terrorism", "Immigration", "Education", "Abortion", "Same-sex marriage", "Energy"];
 
 function update_topic(json) {
-	var options = {'width':600,
-				   'height':500,
-				   is3D: true,
-				   left:50,
+	var options = {width: 450, height: 450,
 				   backgroundColor:'transparent',
-				   chartArea:{width:"95%",height:"95%"},
+				   chartArea:{left: 50, width:"100%",height:"100%"},
 				   slices: [{color: '#1f77b4'},{color: '#ff7f0e'},{color: '#2ca02c'},{color: '#d62728'},{color: '#9467bd'},{color: '#8c564b'},{color: '#e377c2'},{color: '#7f7f7f'},{color: '#bcbd22'},{color: '#17becf'}],
-				   legend:{alignment:"end", textStyle: {fontSize: 12}}};
+				   legend:{position: 'right', alignment:"center", textStyle: {fontSize: 12}}};
 	var data_obama = [];
 	for (var key in topics){
 		data_obama.push([topics[key], json['obama'][topics[key]]]);
@@ -34,12 +31,11 @@ function update_topic(json) {
     	$("#topic_obama").css("cursor", "auto");
     }); 
     
-	var options = {'width':415,
-			   	   'height':500,
-			   	   is3D: true,
-			   	   backgroundColor:'transparent',
-			   	   legend:null,
-			   	   chartArea:{width:"85%",height:"85%"},
+	var options = { width: 450,
+				height: 450,
+				backgroundColor:'transparent',
+			   	legend:null,
+			   	   chartArea:{width:"55%",height:"55%"},
 				   slices: [{color: '#1f77b4'},{color: '#ff7f0e'},{color: '#2ca02c'},{color: '#d62728'},{color: '#9467bd'},{color: '#8c564b'},{color: '#e377c2'},{color: '#7f7f7f'},{color: '#bcbd22'},{color: '#17becf'}],
 			   	   legend:{position:"none"}};
 	var data_romney = [];

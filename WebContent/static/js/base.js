@@ -90,7 +90,7 @@ function update_tweet(json){
 				}).css({"color": "#999"}))
 			.append($("<div>",{
 				text: new Date(time * 1000).toLocaleTimeString(),
-				}).css({float: "right", "color": "#999"}))
+				}).css({"float": "right", "color": "#999"}))
 			.append($("<br>"))
 			.append($("<a>",{
 				href: "http://www.twitter.com/" + screen_name + "/status/" + id,

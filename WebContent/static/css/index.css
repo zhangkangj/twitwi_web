@@ -112,20 +112,25 @@ body {
 }
 
 /* hover-box */
-.hover-box rect {
-  fill: white;
-  stroke: #aaa;
-  stroke-width: 3px;
+.hover-box {
+	background-color: white;
+	border-radius: 3px;
+	border: 2px solid #aaa;
+	position: absolute;
+	padding: 10px;
+	width: 180px;
 }
 
-.hover-box-title {
-  fill: #222;
-  font: bold 14px sans-serif;
+#state-name {
+	font: bold 14px sans-serif;
+	width: 100%;
+	border-bottom: 2px solid #ddd;
+	margin-bottom: 5px;
+	padding-bottom: 3px;
 }
 
-.hover-box-body {
-  fill: #444;
-  font: 12px sans-serif;
+#obama-count, #romney-count {
+	display: inline;
 }
 
 #control-wrapper {

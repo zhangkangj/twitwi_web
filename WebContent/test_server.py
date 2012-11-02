@@ -37,6 +37,10 @@ def contact():
 def research():
     return make_response(render_template('research.html'))
 
+@app.route('/frame')
+def frame():
+    return render_template('frame.html')
+	
 # the meat
 @app.route('/<call>.json')
 def ajax(call):

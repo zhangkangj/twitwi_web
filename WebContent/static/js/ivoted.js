@@ -47,8 +47,10 @@ function setup_map() {
 
 function color_states(json) {
 	for (state in json){
-		var item = json[state];
-		g.select("#" + state).select("path").style("fill", color(item.obama/(item.obama+item.romney)));
+		if (state != "US"){
+			var item = json[state];
+			g.select("#" + state).select("path").style("fill", color(item[0]/(item[0]+item[1])));	
+		}
 	}
 }
 
@@ -111,6 +113,7 @@ $(document).ready(function() {
 		d3.json("/ivoted.json", function(json){
 			mention_json = json;
 			setup_map();
+			color_states(mention_json);
 		});
 	});
 });

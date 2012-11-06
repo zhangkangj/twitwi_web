@@ -81,16 +81,43 @@ function update_tweet(){
 	time = parseInt(Date.now()/ 1000);
 	d3.json("/ivoted_tweet.json", function(json){
 		for (i in json){
-			console.log(json[i]);
-			setTimeout(function(){
-				show_tweet(json[i]);
-			}, i * 1000 + Math.floor((Math.random()*3)));
+			setTimeout(show_tweet, i * 4000 + Math.floor((Math.random()*3000)), i, json);
+			//setTimeout(function(i, json){console.log(json[i]["name"]);}, i * 1000 + Math.floor((Math.random()*3)), i, json);
 		}
 	});
 }
 
-function show_tweet(tweet){
-	console.log(tweet);
+function show_tweet(i, json){
+	tweet = json[i];
+	var screen_name = tweet["screen_name"];
+	var name = tweet["name"];
+	var time = tweet["created_at"];
+	var text = tweet["text"];
+	var id = tweet["id"];
+	var tweet_element = $("<div>")
+			.append($("<a>", {
+			    href: "http://www.twitter.com/" + screen_name,
+			    text: name,
+			    target: "_blank"}).css({"color": "#333",  "font-weight": "bold"}))
+			.append($("<span>",{
+				text: " @" + screen_name
+				}).css({"color": "#999"}))
+			.append($("<div>",{
+				text: new Date(time * 1000).toLocaleTimeString(),
+				}).css({float: "right", "color": "#999"}))
+			.append($("<br>"))
+			.append($("<a>",{
+				href: "http://www.twitter.com/" + screen_name + "/status/" + id,
+				text: text,
+				target: "_blank"}).css({"color": "#333"}))
+			.append($("<br>"));
+	$("#tweet_holder").fadeOut(
+		function(){
+			$("#tweet_holder").empty();
+			$("#tweet_holder").append(tweet_element);
+			$("#tweet_holder").fadeIn();	
+		}	
+	);
 }
 
 var map_json, mention_json;

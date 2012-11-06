@@ -94,6 +94,8 @@ function show_tweet(i, json){
 	var time = tweet["created_at"];
 	var text = tweet["text"];
 	var id = tweet["id"];
+	var entity = tweet["entity"];
+	var state = tweet["state"];
 	var tweet_element = $("<div>")
 			.append($("<a>", {
 			    href: "http://www.twitter.com/" + screen_name,
@@ -103,7 +105,7 @@ function show_tweet(i, json){
 				text: " @" + screen_name
 				}).css({"color": "#999"}))
 			.append($("<div>",{
-				text: new Date(time * 1000).toLocaleTimeString(),
+				text: "from " + state,
 				}).css({float: "right", "color": "#999"}))
 			.append($("<br>"))
 			.append($("<a>",{

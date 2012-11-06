@@ -217,5 +217,10 @@ def ivoted_tweet():
         entry = cursor.fetchone()
     return json.dumps(result)
 
+@app.route('/ivoted')
+def ivoted_page():
+    response = make_response(render_template('ivoted.html'))
+    return response
+
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

@@ -77,7 +77,7 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li {% if request.path==url_for('index') %}class="active"{% endif %}><a href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">Home</a></li>
-						<li {% if request.path==url_for('ivoted') %}class="active"{% endif %}><a href="{% if request.path==url_for('ivoted') %}#{% else %}{{ url_for('ivoted') }}{% endif %}">#IVoted</a></li>
+						<li {% if request.path==url_for('ivoted_page') %}class="active"{% endif %}><a href="{% if request.path==url_for('ivoted_page') %}#{% else %}{{ url_for('ivoted_page') }}{% endif %}">#IVoted</a></li>
 						<li {% if request.path==url_for('research') %}class="active"{% endif %}><a href="{% if request.path==url_for('research') %}#{% else %}{{ url_for('research') }}{% endif %}">Research</a></li>
 						<li {% if request.path==url_for('blog') %}class="active"{% endif %}><a href="{% if request.path==url_for('blog') %}#{% else %}{{ url_for('blog') }}{% endif %}">Blog</a></li>
 						<li {% if request.path==url_for('contact') %}class="active"{% endif %}><a href="{% if request.path==url_for('contact') %}#{% else %}{{ url_for('contact') }}{% endif %}">Contact</a></li>

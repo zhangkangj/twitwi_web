@@ -36,7 +36,7 @@ def frame():
     return response
 
 @app.route('/frame_en')
-def frame():
+def frame_en():
     response = make_response(render_template('frame_en.html'))
     return response
 

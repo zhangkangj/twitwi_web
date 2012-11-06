@@ -19,9 +19,9 @@ function setup_map() {
 	box = $('<div>').attr('id', 'map-tooltip').attr('class', 'hover-box')
 		.append($('<div>').attr('id', 'state-name'))
 		.append($('<div>').attr('class', 'candidate-row')
-			.html('Obama: <span id="obama-count"></span> mentions'))
+			.html('Obama: <span id="obama-count"></span> votes'))
 		.append($('<div>').attr('class', 'candidate-row')
-			.html('Romney: <span id="romney-count"></span> mentions'))
+			.html('Romney: <span id="romney-count"></span> votes'))
 		.hide();
 		
 	$(document).ready(function(){

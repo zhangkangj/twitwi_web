@@ -261,8 +261,9 @@
 			var total = obama + romney;
 			var ow = bar_w * obama / total;
 			var rw = bar_w * romney / total
+			var data = [{name: 'obama', w: ow}, {name: 'romney', w: rw}];
 			bar_svg.selectAll('rect')
-				.data([{name: 'obama', w: ow}, {name: 'romney', w: rw}])
+				.data(data)
 				.attr('x', function(d) {return (d.name=='obama')? 0 : data[0].w;})
 				.attr('width', function(d) {return d.w;})
 				.enter().append('rect')

@@ -176,5 +176,46 @@ def realtime():
         entry = cursor.fetchone()
     return json.dumps(result)
 
+@app.route('/ivoted.json')
+def ivoted():
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
+    cursor = g.con.cursor()
+    cursor.execute("""SELECT state, obama, romney FROM ivoted_count""")
+    result = {}
+    entry = cursor.fetchone()
+    while entry:
+        state = entry[0]
+        result[state] = [entry[1], entry[2]]
+        entry = cursor.fetchone()
+    return json.dumps(result)
+
+@app.route('/ivoted_tweet.json')
+def ivoted_tweet():
+    result = []
+    try:
+        time = request.args.get('time')
+    except:
+        return json.dumps(result)
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
+    cursor = g.con.cursor()
+    if time == None:
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 60""")
+    else:
+        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime where created_at <= %s and created_at > %s - 60 ORDER BY created_at DESC LIMIT 60""", (time, time))
+    entry = cursor.fetchone()
+    while entry:
+        id = str(entry[0])
+        name = entry[2].decode("utf-8",errors='ignore') 
+        text = entry[4].decode('utf-8',errors='ignore')
+        result.append({'id':id,'created_at':entry[1],'name':name, 'screen_name': entry[3], 'text': text})
+        entry = cursor.fetchone()
+    return json.dumps(result)
+
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

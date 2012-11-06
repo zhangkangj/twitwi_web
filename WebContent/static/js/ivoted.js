@@ -52,7 +52,7 @@ function color_states(json) {
 	for (state in json){
 		if (state != "US"){
 			var item = json[state];
-			g.select("#" + state).select("path").style("fill", color(item[0]/(item[0]+item[1])));	
+			g.select("#" + state).select("path").style("fill", color(item[0]/(item[0]+item[1])));
 		}
 	}
 }
@@ -125,6 +125,18 @@ function show_tweet(i, json){
 			$("#tweet_holder").fadeIn();	
 		}	
 	);
+	if (state != 'US') {
+		//flash = (entity=='romney') ? 'flash-red' : 'flash-blue';
+		var item = mention_json[state];
+		if (entity == 'romney') {
+			g.select("#" + state).select("path").style('fill', '#9E2017');
+		} else {
+			g.select("#" + state).select("path").style('fill', '#0D406B');
+		}
+		setTimeout(function() {
+			g.select("#" + state).select("path").style("fill", color(item[0]/(item[0]+item[1])));
+		}, 400);
+	}
 }
 
 var map_json, mention_json;

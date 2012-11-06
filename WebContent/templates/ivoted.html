@@ -134,6 +134,7 @@
 		#obama-count, #romney-count {
 			display: inline;
 		}
+		
 	</style>
 	<script type="text/javascript" src="/static/lib/d3/d3.v2.min.js"></script>
 	<script type="text/javascript" src="/static/js/ivoted.js"></script>
@@ -240,6 +241,9 @@
 		});
 		setInterval(function() {
 			fetch();
+		}, interval);
+		setInterval(function() {
+			color_states(next);
 		}, interval);
 		
 		function update() {

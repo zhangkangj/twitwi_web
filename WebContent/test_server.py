@@ -42,7 +42,7 @@ def frame():
     return render_template('frame.html')
 	
 @app.route('/ivoted')
-def ivoted():
+def ivoted_page():
 	return render_template('ivoted.html')
 	
 # the meat

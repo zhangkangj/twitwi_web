@@ -47,6 +47,24 @@
 	<meta property="og:description" content="Analyzing and visualizing 2012 presidential election on Twitter." />
 	<meta property="fb:admins" content="680266857,608188613" />
 	
+	<style>
+		body {
+			width: 1120px;
+			height: 770px;
+			overflow: hidden;
+		}
+		
+		#glass {
+			position: fixed;
+			bottom: 0;
+			right: 0;
+			top: 0;
+			left: 0;
+			z-index: 1040;
+			background-image: url(/static/img/embed-IE.png);
+			background-repeat: no-repeat;
+		}
+	</style>
 	{% endblock %}
 	
 	<script type="text/javascript">
@@ -63,51 +81,40 @@
 	{% endblock %}
 </head>
 
-<body>
+<body style = "padding-top: 0px;">
 	{% block body %}
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
-				</a> 
-				<a class="brand" href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">TwiThinks!</a>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li {% if request.path==url_for('index') %}class="active"{% endif %}><a href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">Home</a></li>
-						<li {% if request.path==url_for('ivoted_page') %}class="active"{% endif %}><a href="{% if request.path==url_for('ivoted_page') %}#{% else %}{{ url_for('ivoted_page') }}{% endif %}">#IVoted</a></li>
-						<li {% if request.path==url_for('research') %}class="active"{% endif %}><a href="{% if request.path==url_for('research') %}#{% else %}{{ url_for('research') }}{% endif %}">Research</a></li>
-						<li {% if request.path==url_for('blog') %}class="active"{% endif %}><a href="{% if request.path==url_for('blog') %}#{% else %}{{ url_for('blog') }}{% endif %}">Blog</a></li>
-						<li {% if request.path==url_for('contact') %}class="active"{% endif %}><a href="{% if request.path==url_for('contact') %}#{% else %}{{ url_for('contact') }}{% endif %}">Contact</a></li>
-						<li {% if request.path==url_for('about') %}class="active"{% endif %}><a href="{% if request.path==url_for('about') %}#{% else %}{{ url_for('about') }}{% endif %}">About</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	{% block content %}
 	<!--[if IE]>
 		<div id="ie-notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">IE is not fully supported</h3>
+			<h4 id="myModalLabel">Embedded visualizations are not supported in IE</h4>
 		  </div>
 		  <div class="modal-body">
-			<p>We are working hard to ensure the best possible user experience for every user. But unfortunately, your current browser, Internet Explorer, is not fully supported yet. Please consider using <a href="https://www.google.com/chrome" target="_blank">Chrome</a> or <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a> instead. You are welcomed to look around if you wish.</p>
+			<p>We are working hard to ensure the best possible user experience for every user. But unfortunately, your current browser, Internet Explorer, is not fully supported yet. Please consider using <a href="https://www.google.com/chrome" target="_blank">Chrome</a> or <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a> instead. Please visit our website <a href="http://twithinks.mit.edu" target="_blank">TwiThinks</a> for interactive visualizations and more information. </p>
 		  </div>
 		  <div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Dismiss and Visit</button>
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Dismiss</button>
 		  </div>
 		</div>
+		<div id="glass">
+		</div>
+		
+		
 		<script type="text/javascript">
-			$('#ie-notice').modal();
+			$('#glass').on('click', function(e) {
+				$('#ie-notice').modal();
+				e.preventDefault();
+
+				if (!e) var e = window.event;
+				e.cancelBubble = true;
+				if (e.stopPropagation) e.stopPropagation();
+			});
 		</script>
 	<![endif]-->
-	<div id="page" class="container-fluid">
-		<div id = "menu">
+
+	{% block content %}
+	<div id="page" class="container-fluid" style = "margin-top:10px;margin-left:40px;width:1000px">
+		<div id = "menu" style = "margin-left:0px">
 			<ul class="nav nav-tabs">
 				<li id = "map_menu" class="active">
 					<a href="#" class="black" onclick="slide_carousel('map_container')" rel="tooltip" data-placement="bottom" data-original-title="How many times Obama and Romney are mentioned in each state. The color indicates their relative percentage.">Election Map </a>
@@ -122,22 +129,18 @@
 					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="Nation-wide Twitter mentions, normalized by the electoral college vote and Twitter user population of each state.">Twitter Publicity</a>
 				</li>
 				<li class="pull-right" style = "margin-top:13px;" >
-					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-url="http://twithinks.mit.edu" data-text="Watch Twitter users voting in realtime on Twithinks" data-size="medium" data-via="_twithinks">Tweet</a>
+					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-url="http://twithinks.mit.edu" data-text="TwiThinks, Visualizing 2012 Presidential Election on Twitter" data-size="medium" data-via="_twithinks">Tweet</a>
 					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-right: 20px;" allowTransparency="true"></iframe>					
 				</li>
-				<li class="pull-right">
-        		</li>
 			</ul>
 		</div>	
-		
-		<div id="myCarousel" class="carousel slide">
-			<a class="badge badge-success" href = "http://twithinks.mit.edu/ivoted" target = "_blank" style = "margin-left:370px;"> &nbsp Watch Twitter User Voting in Realtime &nbsp</a>
+		<div id="myCarousel" class="carousel slide" style = "height:500px;margin-left:0px">
 			<div class="carousel-inner">
 				<div id="map_container" class="active item carousel_element"></div>
 				<div id="topic_container" class="item carousel_element"> 
 					<div class="row-fluid" style = "margin-left:60px">
 						<h4 style = "position: absolute; top:30px">When mentioning Obama, people tweet about:</h4>
-						<h4 style = "position: absolute; left:550px; top:30px">When mentioning Romney, people tweet about:</h4>						
+						<h4 style = "position: absolute; left:550px; top:30px">When mentioning Romney, people tweet about:</h4>							
   						<div id = "topic_obama" class = "span5"></div>
   						<div id = "topic_romney" class = "span5" style = "margin-left:30px"></div>
 					</div>
@@ -157,23 +160,26 @@
 		  	<a class="carousel-control left " href="#myCarousel" data-slide="prev">&lsaquo;</a> 
 			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		</div>
-
-		<div id="control-wrapper"> 
-			<div id="control">
-				<div style="margin-left:20px;"><input type="text" id="date" size="10" style="width:140px;"/></div>
-			</div>
-			
-			<div id = "tweet_panel">
-				<span style = "margin-left:120px" class="label label-info">Most Retweeted:</span>
-				<ul id = 'tweet' style = "margin-top:5px"></ul>
-				<div style = "float:right;">
-					<button id = "tweet_up" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-up icon-white"></i></button>
-					<button id = "tweet_down" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-down icon-white"></i></button>  
+		
+		<div style = "height:110px;">
+			<div id="control-wrapper" style = "margin-bottom:0px"> 
+				<div id="control" style = "margin-left:0px">
+					<div style="margin-left:20px;"><input type="text" id="date" size="10" style="width:140px;"/></div>
+				</div>
+				<div id = "tweet_panel" style = "margin-left:0px;width:1000px;">
+					<span style = "margin-left:20px" class="label label-info">Most Retweeted:</span>
+					<br>
+					<ul id = 'tweet' style = "margin-top:5px;margin-left:20px;overflow:hidden;"></ul>
+					<div style = "float:right;">
+						<button id = "tweet_up" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-up icon-white"></i></button>
+						<button id = "tweet_down" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-down icon-white"></i></button>  
+					</div>
 				</div>
 			</div>
 		</div>
 		
-		<div class="modal hide fade" id="detail" tabindex="-1">
+		
+		<div class="modal hide fade" id="detail" style = "left:39%" tabindex="-1">
 			<div class="modal-header">
 				<h3 id="detail_name"></h3>
 			</div>
@@ -190,30 +196,13 @@
 				</div>
 			</div>
 		</div>
-		
-		<div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'twithinks'; // required: replace example with your forum shortname
-			//var disqus_developer = 1;
-			var disqus_url = 'http://twithinks.mit.edu';
-
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 	</div>
 	
 	{% endblock %}
 	
-	<footer class="footer">
-		<hr>
-    	<div align="center"> &copy; <b>TwiThinks</b> 2012</div>
+	<footer class="footer" style = "margin-bottom:0px">
+		<hr style = "margin-bottom:10px">
+    	<div align="center"> <font size="2"> Powered by <a href = "http://twithinks.mit.edu" target="_blank">TwiThinks</a></font></div>
     </footer>
 	{% endblock %}
 </body>

@@ -35,6 +35,11 @@ def frame():
     response = make_response(render_template('frame.html'))
     return response
 
+@app.route('/frame_en')
+def frame_en():
+    response = make_response(render_template('frame_en.html'))
+    return response
+
 @app.route('/test')
 def test():
     return 'this is a test'
@@ -205,15 +210,17 @@ def ivoted_tweet():
         return 'server down'
     cursor = g.con.cursor()
     if time == None:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime ORDER BY created_at DESC LIMIT 60""")
+        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM ivoted_realtime WHERE !isnull(state) ORDER BY created_at DESC LIMIT 15""")
     else:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text FROM election_realtime where created_at <= %s and created_at > %s - 60 ORDER BY created_at DESC LIMIT 60""", (time, time))
+        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM ivoted_realtime WHERE created_at <= %s and created_at > %s - 60 AND !isnull(state) AND state != 'US' LIMIT 15""", (time, time))
     entry = cursor.fetchone()
     while entry:
         id = str(entry[0])
         name = entry[2].decode("utf-8",errors='ignore') 
         text = entry[4].decode('utf-8',errors='ignore')
-        result.append({'id':id,'created_at':entry[1],'name':name, 'screen_name': entry[3], 'text': text})
+        state = entry[5]
+        entity = entry[6]
+        result.append({'id':id,'created_at':entry[1],'name':name, 'screen_name': entry[3], 'text': text, "state":state, "entity":entity})
         entry = cursor.fetchone()
     return json.dumps(result)
 

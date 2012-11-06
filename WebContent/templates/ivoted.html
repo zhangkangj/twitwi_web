@@ -160,7 +160,7 @@
 			<div>@MittRomney</div>
 			<div><div id="romney-vote">-</div> </div>
 		</div>
-		<p style = "font-style:italic;color:grey;font-size:10px">Self-declared votes on Twitter are biased. The results do not necessarily reflect actual voting behavior.</p>
+		<p style = "font-style:italic;color:grey;font-size:10px">Self-declared votes on Twitter do not necessarily reflect actual voting behavior.</p>
 		<div class="pull-right" style = "margin-top:-30px" >
 			<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-url="http://twithinks.mit.edu/ivoted" data-text="TwiThinks, Watch Twitter users voting in realtime" data-size="medium" data-via="_twithinks">Tweet</a>
 			<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-right: 20px;" allowTransparency="true"></iframe>					
@@ -254,8 +254,8 @@
 			var rc = current.US[1] * (1-progress) + progress * next.US[1];
 			update_count(oc, rc);
 			update_bar(oc, rc);
-			$("#obama_percent").text(parseInt(oc/(oc+rc)*100) + "%");
-			$("#romney_percent").text(parseInt(rc/(oc+rc)*100) + "%");
+			$("#obama_percent").text(Math.round(oc/(oc+rc)*100) + "%");
+			$("#romney_percent").text(Math.round(rc/(oc+rc)*100) + "%");
 		}
 		
 		function update_count(obama, romney) {

@@ -53,7 +53,32 @@
 		
 		#vote-map {
 			margin: auto;
+			width:1000px;
+			height:500px;
+			margin-bottom:30px
 		}
+		
+		.state path {
+			opacity: 1;
+			fill: #aaa;
+			stroke: #fff;
+			stroke-width: 1.5px;
+			transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+			-moz-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+			-ms-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+			-webkit-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+			-o-transition: opacity 0.5s ease-in-out, stroke 0.4s ease-in-out, fill 0.5s ease-in-out;
+		}
+		
+		.hover path {
+			stroke: #888;
+		}
+		
+		.background {
+			fill: none;
+			pointer-events: all;
+		}
+		
 	</style>
 	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
 	<script type="text/javascript" src="/static/js/ivoted.js"></script>
@@ -78,7 +103,7 @@
 		</div>
 	</div>
 	
-	<div id="vote-map" style = "width:1000px;height:500px;margin:auto">
+	<div id="vote-map">
 	</div>
 
 	<div class="container-fluid" style = "width:1100px; margin:auto">

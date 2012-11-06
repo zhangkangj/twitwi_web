@@ -65,6 +65,30 @@
 
 <body>
 	{% block body %}
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span>
+				</a> 
+				<a class="brand" href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">TwiThinks!</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li {% if request.path==url_for('index') %}class="active"{% endif %}><a href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">Home</a></li>
+						<li {% if request.path==url_for('ivoted') %}class="active"{% endif %}><a href="{% if request.path==url_for('ivoted') %}#{% else %}{{ url_for('ivoted') }}{% endif %}">#IVoted</a></li>
+						<li {% if request.path==url_for('research') %}class="active"{% endif %}><a href="{% if request.path==url_for('research') %}#{% else %}{{ url_for('research') }}{% endif %}">Research</a></li>
+						<li {% if request.path==url_for('blog') %}class="active"{% endif %}><a href="{% if request.path==url_for('blog') %}#{% else %}{{ url_for('blog') }}{% endif %}">Blog</a></li>
+						<li {% if request.path==url_for('contact') %}class="active"{% endif %}><a href="{% if request.path==url_for('contact') %}#{% else %}{{ url_for('contact') }}{% endif %}">Contact</a></li>
+						<li {% if request.path==url_for('about') %}class="active"{% endif %}><a href="{% if request.path==url_for('about') %}#{% else %}{{ url_for('about') }}{% endif %}">About</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	{% block content %}
 	<!--[if IE]>
 		<div id="ie-notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">
@@ -82,30 +106,6 @@
 			$('#ie-notice').modal();
 		</script>
 	<![endif]-->
-	
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
-				</a> 
-				<a class="brand" href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">TwiThinks!</a>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li {% if request.path==url_for('index') %}class="active"{% endif %}><a href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">Home</a></li>
-						<li {% if request.path==url_for('research') %}class="active"{% endif %}><a href="{% if request.path==url_for('research') %}#{% else %}{{ url_for('research') }}{% endif %}">Research</a></li>
-						<li {% if request.path==url_for('blog') %}class="active"{% endif %}><a href="{% if request.path==url_for('blog') %}#{% else %}{{ url_for('blog') }}{% endif %}">Blog</a></li>
-						<li {% if request.path==url_for('contact') %}class="active"{% endif %}><a href="{% if request.path==url_for('contact') %}#{% else %}{{ url_for('contact') }}{% endif %}">Contact</a></li>
-						<li {% if request.path==url_for('about') %}class="active"{% endif %}><a href="{% if request.path==url_for('about') %}#{% else %}{{ url_for('about') }}{% endif %}">About</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	{% block content %}
 	<div id="page" class="container-fluid">
 		<div id = "menu">
 			<ul class="nav nav-tabs">

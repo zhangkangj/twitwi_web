@@ -41,6 +41,10 @@ def research():
 def frame():
     return render_template('frame.html')
 	
+@app.route('/ivoted')
+def ivoted():
+	return render_template('ivoted.html')
+	
 # the meat
 @app.route('/<call>.json')
 def ajax(call):

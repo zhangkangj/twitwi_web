@@ -98,6 +98,7 @@ function show_tweet(i, json){
 	var name = tweet["name"];
 	var text = tweet["text"];
 	var id = tweet["id"];
+	var entity = tweet['entity'];
 	var state = tweet["state"];
 	var tweet_element = $("<div>")
 			.append($("<a>", {

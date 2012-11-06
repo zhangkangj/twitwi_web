@@ -86,7 +86,7 @@ function update_tweet(){
 	time = parseInt(Date.now()/ 1000);
 	d3.json("/ivoted_tweet.json", function(json){
 		for (i in json){
-			setTimeout(show_tweet, i * 4000 + Math.floor((Math.random()*3000)), i, json);
+			setTimeout(show_tweet, i * 4000 + Math.floor((Math.random()*1000)), i, json);
 			//setTimeout(function(i, json){console.log(json[i]["name"]);}, i * 1000 + Math.floor((Math.random()*3)), i, json);
 		}
 	});

@@ -9,6 +9,22 @@
 			background-image: url(static/img/bgnoise.png);
 		}
 		
+		.shadowlight {
+			-webkit-box-shadow: 0 8px 50px rgba(0, 0, 0, 0.2);
+			-moz-box-shadow: 0 8px 50px rgba(0, 0, 0, 0.2);
+			-box-shadow: 0 8px 50px rgba(0, 0, 0, 0.2);
+		}
+	
+		.contentblock {
+			background: white;
+			padding: 50px;
+			width:1000px;
+			margin:auto;
+		  	-webkit-border-radius: 5px;
+		 	-moz-border-radius: 5px;
+		 	border-radius: 5px;
+		}
+		
 		#vote-meter {
 			margin: 10px auto 10px auto;
 			width: 1000px;
@@ -66,7 +82,8 @@
 			margin: auto;
 			width:1000px;
 			height:500px;
-			margin-bottom:30px
+			margin-top:30px;
+			margin-bottom:30px;
 		}
 		
 		.state path {
@@ -97,7 +114,7 @@
 {% endblock %}
 
 {% block content %}
-	<div id="vote-meter">
+	<div id="vote-meter" class = 'shadowlight contentblock'>
 		<div class="candidate-box">
 			<img src="https://twimg0-a.akamaihd.net/profile_images/2325704772/wrrmef61i6jl91kwkmzq.png" width="160" height="160">
 			<div>@BarackObama</div>
@@ -116,10 +133,9 @@
 			<div><div id="romney-vote">-</div> </div>
 		</div>
 	</div>
+		
+	<div id="vote-map" class = 'shadowlight contentblock'></div>
 	
-	<div id="vote-map">
-	</div>
-
 	<div class="container-fluid" style = "width:1100px; margin:auto">
 		<div class="row-fluid" style = "margin:auto">
 			<div class="span6">

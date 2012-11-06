@@ -84,6 +84,8 @@
 		var interval = 60 * 1000;
 		var bar_w = 400, bar_h = 100;
 		var bar_svg = d3.select('#vote-bar').append('svg').attr('width', bar_w).attr('height', bar_h);
+		bar_svg.selectAll('rect').data();
+		var count_url = 'http://twitwi.mit.edu:5000/ivoted.json';
 		var current = {
 			timestamp: Date.now(),
 			obama: 50000,
@@ -98,7 +100,19 @@
 		};
 		var comma = d3.format(',');
 		
-		function update(current, next) {
+		
+		// start fetching counts
+		setInterval(function () {
+			d3.json(count_url, function(json) {
+				current = next;
+			});
+		}, interval);
+		
+		function convert(json) {
+			
+		}
+		
+		function update() {
 			var ct = Date.now();
 			var progress = (ct - current.timestamp) / interval;
 			console.log(progress);
@@ -119,7 +133,7 @@
 			var ow = bar_w * obama / total;
 			var rw = bar_w * romney / total;
 			
-			bar_svg.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
+			.enter().append('rect').attr('width', function(d) {gradient_width}).attr('height', bar_h).attr('fill', function(d) { return d; }));
 		}
 		
 		var width = 1000, height = 500;

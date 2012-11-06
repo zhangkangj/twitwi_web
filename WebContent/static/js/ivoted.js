@@ -91,7 +91,7 @@ function update_tweet(){
 }
 
 function show_tweet(tweet){
-	alert(tweet);
+	console.log(tweet);
 }
 
 var map_json, mention_json;

@@ -58,7 +58,6 @@ function hover_state(d) {
 		over_state = d;
 		// switch place to be drawn on top
 		var region = g.select('#'+d.properties.abbreviation)[0][0];
-		region.style.cursor = 'hand';
 		$(region).parent().append(region);
 		// show a hover box next to the cursor
 		$('#state-name').text(d.properties.name);

@@ -212,7 +212,7 @@ def ivoted_tweet():
     if time == None:
         cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM election_realtime WHERE !isnull(state) ORDER BY created_at DESC LIMIT 60""")
     else:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM election_realtime WHERE created_at <= %s and created_at > %s - 60 AND !isnull(state) ORDER BY created_at DESC LIMIT 60""", (time, time))
+        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM election_realtime WHERE created_at <= %s and created_at > %s - 60 AND !isnull(state) LIMIT 60""", (time, time))
     entry = cursor.fetchone()
     while entry:
         id = str(entry[0])

@@ -53,7 +53,6 @@ function color_states(json) {
 }
 
 function hover_state(d) {
-	console.log(13);
 	over_state = null;
 	if (d) {
 		over_state = d;
@@ -79,6 +78,22 @@ function move_box() {
 	box.css('left', m[0]+box_offset).css('top', m[1]+box_offset);
 }
 
+function update_tweet(){
+	time = parseInt(Date.now()/ 1000);
+	d3.json("/ivoted_tweet.json", function(json){
+		for (i in json){
+			console.log(json[i]);
+			setTimeout(function(){
+				show_tweet(json[i]);
+			}, i * 1000 + Math.floor((Math.random()*3)));
+		}
+	});
+}
+
+function show_tweet(tweet){
+	alert(tweet);
+}
+
 var map_json, mention_json;
 $(document).ready(function() {
 	d3.json("/static/dat/us_states.json", function(json){
@@ -87,6 +102,10 @@ $(document).ready(function() {
 			mention_json = json;
 			setup_map();
 			color_states(mention_json);
+			update_tweet();
+			setInterval(function(){
+				update_tweet();
+			}, 60000);
 		});
 	});
 });

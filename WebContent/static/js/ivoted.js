@@ -19,9 +19,9 @@ function setup_map() {
 	box = $('<div>').attr('id', 'map-tooltip').attr('class', 'hover-box')
 		.append($('<div>').attr('id', 'state-name'))
 		.append($('<div>').attr('class', 'candidate-row')
-			.html('Obama: <span id="obama-count"></span> mentions'))
+			.html('Obama: <span id="obama-count"></span> votes'))
 		.append($('<div>').attr('class', 'candidate-row')
-			.html('Romney: <span id="romney-count"></span> mentions'))
+			.html('Romney: <span id="romney-count"></span> votes'))
 		.hide();
 		
 	$(document).ready(function(){
@@ -37,10 +37,15 @@ function setup_map() {
 	ss.append("path").attr("d", path);
 	// legend
 	var gradient_width=40, gradient_height=10, gradient_count=gradient.length;
+	var len_grad = [];
+	
+	for (var i=0; i<gradient_count; i++) {
+		len_grad[i] = gradient[gradient_count-i-1];
+	}
 	var legend = svg.append('g').attr('id', 'legend').attr('transform', 'translate('+(width/2-gradient_width*gradient_count/2)+','+(height-gradient_height-10)+')');
-	legend.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
-	legend.append('text').text('More Romney Votes').attr('x', -145).attr('y', 10);
-	legend.append('text').text('More Obama Votes').attr('x', gradient_width*gradient_count+10).attr('y', 10);
+	legend.selectAll('rect').data(len_grad).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
+	legend.append('text').text('More Obama Votes').attr('x', -145).attr('y', 10);
+	legend.append('text').text('More Romney Votes').attr('x', gradient_width*gradient_count+10).attr('y', 10);
 }
 
 function color_states(json) {

@@ -210,9 +210,9 @@ def ivoted_tweet():
         return 'server down'
     cursor = g.con.cursor()
     if time == None:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM election_realtime WHERE !isnull(state) ORDER BY created_at DESC LIMIT 60""")
+        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM ivoted_realtime WHERE !isnull(state) ORDER BY created_at DESC LIMIT 15""")
     else:
-        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM election_realtime WHERE created_at <= %s and created_at > %s - 60 AND !isnull(state) AND state != 'US' LIMIT 15""", (time, time))
+        cursor.execute("""SELECT id,created_at,name,screen_name,text, state, entity FROM ivoted_realtime WHERE created_at <= %s and created_at > %s - 60 AND !isnull(state) AND state != 'US' LIMIT 15""", (time, time))
     entry = cursor.fetchone()
     while entry:
         id = str(entry[0])

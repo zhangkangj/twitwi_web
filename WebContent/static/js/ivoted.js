@@ -11,7 +11,6 @@ function setup_map() {
 	svg.append("rect").attr("width", width)
 					  .attr("height", height)
 					  .attr("class", "background")
-					  .on("click", click_state)
 					  .on("mouseover", hover_state);
 	g = svg.append('g').attr("transform", "translate(" + width/2 + "," + height/2 + ")").append("g").attr("id", "map");	
 	c = svg[0][0];
@@ -32,7 +31,6 @@ function setup_map() {
 	var ss = g.selectAll("g").data(map_json.features).enter()
 				.append("g").attr("class", "state")
 				.attr("id", function(d){return d.properties.abbreviation;})
-				.on("click", click_state)
 				.on("mouseover", hover_state)
 				.on("mousemove", move_box)
 				.on('mouseout', function() {box.hide();});
@@ -41,8 +39,8 @@ function setup_map() {
 	var gradient_width=40, gradient_height=10, gradient_count=gradient.length;
 	var legend = svg.append('g').attr('id', 'legend').attr('transform', 'translate('+(width/2-gradient_width*gradient_count/2)+','+(height-gradient_height-10)+')');
 	legend.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
-	legend.append('text').text('More Romney Mentions').attr('x', -155).attr('y', 10);
-	legend.append('text').text('More Obama Mentions').attr('x', gradient_width*gradient_count+10).attr('y', 10);
+	legend.append('text').text('More Romney Votes').attr('x', -145).attr('y', 10);
+	legend.append('text').text('More Obama Votes').attr('x', gradient_width*gradient_count+10).attr('y', 10);
 }
 
 function color_states(json) {
@@ -54,33 +52,8 @@ function color_states(json) {
 	}
 }
 
-function click_state(d) {
-	var x = 0, y = 0, k = 1;
-	if (d && centered_state != d) {
-		var centroid = path.centroid(d);
-		x = -centroid[0];
-		y = -centroid[1];
-		// zoom level depends on the size of the state, make an exception for Hawaii (small area but large span)
-		if (d.properties.name == "Hawaii") {
-			k = 4;
-		} else {
-			k = 200*Math.sqrt(1/(path.area(d) + 20000/path.area(d)));
-		}
-		centered_state = d;
-	} else {
-		centered_state = null;
-	}
-	g.selectAll("g.state").classed("deactive", centered_state && function(d) { return d != centered_state; });
-	g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
-	if (centered_state != null) {
-		centered_state_state = null;
-		g.selectAll("g.state").classed("deactive", true);
-		var x = 0, y = 0, k = 1;
-		g.transition().duration(1000).attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")").style("stroke-width", 1.5 / k + "px");
-	}
-}
-
 function hover_state(d) {
+	console.log(13);
 	over_state = null;
 	if (d) {
 		over_state = d;

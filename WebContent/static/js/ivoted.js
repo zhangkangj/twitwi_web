@@ -25,7 +25,9 @@ function setup_map() {
 			.html('Romney: <span id="romney-count"></span> mentions'))
 		.hide();
 		
-	$(document.body).append(box);
+	$(document).ready(function(){
+		$(document.body).append(box);
+	});
 	
 	var ss = g.selectAll("g").data(map_json.features).enter()
 				.append("g").attr("class", "state")

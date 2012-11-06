@@ -134,7 +134,7 @@ function show_tweet(i, json){
 		}
 		setTimeout(function() {
 			g.select("#" + state).select("path").style("fill", color(item[0]/(item[0]+item[1])));
-		}, 400);
+		}, 600);
 	}
 }
 

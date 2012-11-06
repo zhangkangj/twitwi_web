@@ -84,24 +84,6 @@
 	
 	</div>
 
-	<div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'twithinks'; // required: replace example with your forum shortname
-			//var disqus_developer = 1;
-			var disqus_url = 'http://twithinks.mit.edu/ivoted';
-
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-	</div>
-
 	<div class="container-fluid" style = "width:1100px; margin:auto">
 		<div class="row-fluid" style = "margin:auto">
 			<div class="span6">
@@ -117,7 +99,23 @@
 		</div>
 	</div>
 	
-				
+	<div id="disqus_thread" style = "margin:auto; margin-top:30px">
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'twithinks'; // required: replace example with your forum shortname
+			//var disqus_developer = 1;
+			var disqus_url = 'http://twithinks.mit.edu/ivoted';
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+	
 	<script type="text/javascript">
 		var interval = 60 * 1000;
 		var bar_w = 400, bar_h = 100;
@@ -156,7 +154,6 @@
 			var total = obama + romney;
 			var ow = bar_w * obama / total;
 			var rw = bar_w * romney / total;
-			
 			bar_svg.selectAll('rect').data(gradient).enter().append('rect').attr('class', 'gradient').attr('width', gradient_width).attr('height', gradient_height).attr('fill', function(d) { return d; }).attr('x', function(d, k) {return k*gradient_width;});
 		}
 		
@@ -273,54 +270,8 @@
 				$('#romney-count').text(romney_count);
 				move_box();
 				box.show();
-				//update_state_tweet(current_time, d.properties.abbreviation);
 			}
 			g.selectAll("g.state").classed("hover", over_state && function(d) { return d == over_state; });
-		}
-
-		function draw_state_detail_chart(d){
-			var state = d.properties.abbreviation;
-			var data = new google.visualization.DataTable();
-			data.addColumn('date', 'Date');
-			data.addColumn('number', 'Obama');
-			data.addColumn('string', 'title1');
-			data.addColumn('string', 'text1');
-			data.addColumn('number', 'Romney');
-			data.addColumn('string', 'title1');
-			data.addColumn('string', 'text1');
-			for (var i in times){
-				var time = times[i];
-				var obama_count  = mention_json[time][state].obama;
-				var romney_count = mention_json[time][state].romney;
-				time = parseInt(time);
-				if (news_json[time] == null){
-					data.addRow([new Date(time * 1000), obama_count, null, null, romney_count, null, null]);	
-				} else{
-					var parts = news_json[time].split(':');
-					if (parts[0] == 'O'){
-						data.addRow([new Date(time * 1000), obama_count, 'Obama', parts[1], romney_count, null, null]);
-					} else if (parts[0] == 'R') {
-						data.addRow([new Date(time * 1000), obama_count, null, null, romney_count, 'Romney', parts[1]]);
-					} else {
-						data.addRow([new Date(time * 1000), obama_count, parts[1], null, romney_count, null, null]);	
-					}
-				}
-			}
-			var annotatedtimeline = new google.visualization.AnnotatedTimeLine(document.getElementById('detail_chart'));
-			google.visualization.events.addListener(annotatedtimeline, 'select', function(){
-				var time = times[annotatedtimeline.getSelection()[0].row];
-				update_state_detail_tweet(time, state);
-			}); 
-			annotatedtimeline.draw(data, {'displayAnnotations': true, 'zoomStartTime': new Date(1343793600000)});
-			update_state_detail_tweet(current_time, state);
-		}
-
-		function update_state_detail_tweet(time, state){
-			perform(update_detail_tweet, 'tweet'+ time + state, "/tweet.json?topic=mention&time=" + time + '&state=' + state);
-		}
-
-		function update_state_tweet(time, state){
-			perform(update_tweet, 'tweet'+ time + state, "/tweet.json?topic=mention&time=" + time + '&state=' + state);
 		}
 
 		function move_box() {

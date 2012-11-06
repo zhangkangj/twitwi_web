@@ -18,6 +18,8 @@
 		.contentblock {
 			background: white;
 			padding: 50px;
+			padding-top: 20px;
+			padding-bottom: 20px;
 			width:1000px;
 			margin:auto;
 		  	-webkit-border-radius: 5px;
@@ -85,7 +87,7 @@
 		#vote-map {
 			margin: auto;
 			width:1000px;
-			height:500px;
+			height:550px;
 			margin-top:30px;
 			margin-bottom:30px;
 		}
@@ -147,7 +149,7 @@
 		</div>
 	
 		<div id="vote-bar-box">
-			<div>Who voted? Who is voted for?</div>
+			<div>Twitter users voted for</div>
 			<div id="vote-bar">
 			</div>
 		</div>
@@ -157,9 +159,12 @@
 			<div>@MittRomney</div>
 			<div><div id="romney-vote">-</div> </div>
 		</div>
+		<p style = "margin-bottom:10px;font-style:italic;color:grey;font-size:10px">Self-declared votes on Twitter are biased. The results do not necessarily reflect actual voting behavior.</p>
 	</div>
 		
-	<div id="vote-map" class = 'shadowlight contentblock'></div>
+	<div id="vote-map" class = 'shadowlight contentblock'>
+		<div id = "tweet_holder" style = "height:50px"></div>
+	</div>
 	
 	<div class="container-fluid" style = "width:1100px; margin:auto">
 		<div class="row-fluid" style = "margin:auto">
@@ -256,8 +261,8 @@
 			var total = obama + romney;
 			var ow = bar_w * obama / total;
 			var rw = bar_w * romney / total
-			var data = [{name: 'obama', w: ow}, {name: 'romney', w: rw}];		
-			bar_svg.selectAll('rect').data(data)
+			bar_svg.selectAll('rect')
+				.data([{name: 'obama', w: ow}, {name: 'romney', w: rw}])
 				.attr('x', function(d) {return (d.name=='obama')? 0 : data[0].w;})
 				.attr('width', function(d) {return d.w;})
 				.enter().append('rect')

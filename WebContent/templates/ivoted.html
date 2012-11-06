@@ -46,9 +46,20 @@
 			color: #9E2017;
 		}
 		
+		#vote-bar-box {
+			display: inline-block;
+			position: relative;
+			bottom: 65px;
+		}
+		
+		#vote-bar-box div:first-child {
+			font-size: 30px;
+			font-weight: 700;
+			margin-bottom: 50px;
+		}
+		
 		#vote-bar {
 			margin: auto 10px auto 10px;
-			display: inline-block;
 		}
 		
 		#vote-map {
@@ -93,7 +104,10 @@
 			<div> <div id="obama-vote">-</div> </div>
 		</div>
 	
-		<div id="vote-bar">
+		<div id="vote-bar-box">
+			<div>Who voted? Who is voted for?</div>
+			<div id="vote-bar">
+			</div>
 		</div>
 		
 		<div class="candidate-box">
@@ -140,7 +154,7 @@
 	
 	<script type="text/javascript">
 		var interval = 60 * 1000;
-		var bar_w = 400, bar_h = 100;
+		var bar_w = 420, bar_h = 80;
 		var bar_svg = d3.select('#vote-bar').append('svg').attr('width', bar_w).attr('height', bar_h);
 		bar_svg.selectAll('rect').data();
 		var count_url = '/ivoted.json';
@@ -170,14 +184,12 @@
 		// start fetching counts
 		d3.json(count_url, function(json) {
 			last_json_fetch = Date.now();
-			current = json;
-			setTimeout(function() {
-				d3.json(count_url, function(next_json) {
-					next = next_json;
-					// start updating graphs
-					requestAnimationFrame(update);
-				});
-			}, 5*1000);
+			next = json;
+			current = $.extend(true, {}, next);
+			current.US[0] -= Math.floor((Math.random() * 100)) + 20;
+			current.US[1] -= Math.floor((Math.random() * 100)) + 20;
+			// start updating graphs
+			setInterval(update, 500);
 		});
 		setInterval(function() {
 			fetch();
@@ -190,23 +202,26 @@
 			var rc = current.US[1] * (1-progress) + progress * next.US[1];
 			
 			update_count(oc, rc);
-			
-			requestAnimationFrame(update);
+			update_bar(oc, rc);
 		}
 		
 		function update_count(obama, romney) {
-			d3.select('#obama-vote').text(comma(obama.toFixed(0)));
-			d3.select('#romney-vote').text(comma(romney.toFixed(0)));
+			d3.select('#obama-vote').text(comma(Math.floor(obama)));
+			d3.select('#romney-vote').text(comma(Math.floor(romney)));
 		}
 		
 		function update_bar(obama, romney) {
 			var total = obama + romney;
 			var ow = bar_w * obama / total;
 			var rw = bar_w * romney / total
-			
-			bar_svg.selectAll('rect').data([{name: 'obama', proportion: ow}, {name: 'romney', proportion: rw}])
+			var data = [{name: 'obama', w: ow}, {name: 'romney', w: rw}];
+			console.log(data);
+			bar_svg.selectAll('rect').data(data)
+			.attr('x', function(d) {return (d.name=='obama')? 0 : data[0].w;})
+			.attr('width', function(d) {return d.w;})
 			.enter().append('rect')
-			.attr('width', function(d) {console.log(d); return bar_w*d.proportion;})
+			.attr('x', function(d) {return (d.name=='obama')? 0 : data[0].w;})
+			.attr('width', function(d) {return d.w;})
 			.attr('height', bar_h)
 			.attr('fill', function(d) {return (d.name=='obama')? '#0D406B' : '#9E2017';});
 		}

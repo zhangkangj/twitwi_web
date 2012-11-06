@@ -56,6 +56,9 @@
 		}
 	</style>
 	<script type="text/javascript" src="/static/lib/d3/d3.v2.js"></script>
+	<script type="text/javascript" src="/static/js/ivoted.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/static/lib/jquery/jquery.cycle.all.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -79,7 +82,23 @@
 	<div id="vote-map">
 	
 	</div>
+
+	<div class="container-fluid" style = "width:1100px; margin:auto">
+		<div class="row-fluid" style = "margin:auto">
+			<div class="span6">
+				<h3>I voted for Obama</h3>
+				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=%22voted+for%22+obama" data-widget-id="265841091654324224">Tweets about ""voted for" obama"</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+			<div class="span6">
+				<h3>I voted for Romney</h3>
+				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=%22voted+for%22+romney" data-widget-id="265844840665858048">Tweets about ""voted for" romney"</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+		</div>
+	</div>
 	
+				
 	<script type="text/javascript">
 		var interval = 60 * 1000;
 		var bar_w = 400, bar_h = 100;

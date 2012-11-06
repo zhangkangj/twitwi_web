@@ -1,0 +1,209 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	{% block head %}
+	<title>twithinks{% block subtitle %}{% endblock %}</title>
+	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="keyword" content="twitter data analysis, election twitter data, presidential election 2012, data mining" />
+	<meta name="description" content="Analyzing and visualizing 2012 presidential election on Twitter." />
+	
+	<script type="text/javascript">
+		var TWITWI_ROOT = {{ request.script_root|tojson|safe }};	// build absolute path in JS with this constant
+	</script>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
+	<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-tooltip.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+
+	{% block page_head %}	
+	<script type="text/javascript" src="/static/lib/d3/d3.v2.min.js"></script>
+	<script type="text/javascript" src="/static/lib/d3/d3-cache-helper.js"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/static/lib/jquery/jquery.cycle.all.js"></script>
+	
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	<script type="text/javascript" src="/static/js/base.js"></script>
+	<script type="text/javascript" src="/static/js/index.js"></script>
+	<script type="text/javascript" src="/static/js/map.js"></script>
+	<script type="text/javascript" src="/static/js/topic.js"></script>
+	<script type="text/javascript" src="/static/js/realtime.js"></script>
+	
+	<link type="text/css" href="/static/css/index.css" rel="stylesheet"/>
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"/>
+	
+	<meta property="og:title" content="Twitizen&#039;s election on TwiThinks" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://twithinks.mit.edu" />
+	<meta property="og:image" content="http://twithinks.mit.edu/static/img/logo_256x256.png" />
+	<meta property="og:site_name" content="TwiThinks" />
+	<meta property="og:description" content="Analyzing and visualizing 2012 presidential election on Twitter." />
+	<meta property="fb:admins" content="680266857,608188613" />
+	
+	<style>
+		body {
+			width: 1120px;
+			height: 770px;
+			overflow: hidden;
+		}
+		
+		#glass {
+			position: fixed;
+			bottom: 0;
+			right: 0;
+			top: 0;
+			left: 0;
+			z-index: 1040;
+			background-image: url(/static/img/embed-IE.png);
+			background-repeat: no-repeat;
+		}
+	</style>
+	{% endblock %}
+	
+	<script type="text/javascript">
+	  	var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-35060935-1']);
+	  	_gaq.push(['_trackPageview']);	
+	  	(function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  	})();
+	</script>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	{% endblock %}
+</head>
+
+<body style = "padding-top: 0px;">
+	{% block body %}
+	<!--[if IE]>
+		<div id="ie-notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h4 id="myModalLabel">Embedded visualizations are not supported in IE</h4>
+		  </div>
+		  <div class="modal-body">
+			<p>We are working hard to ensure the best possible user experience for every user. But unfortunately, your current browser, Internet Explorer, is not fully supported yet. Please consider using <a href="https://www.google.com/chrome" target="_blank">Chrome</a> or <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a> instead. Please visit our website <a href="http://twithinks.mit.edu" target="_blank">TwiThinks</a> for interactive visualizations and more information. </p>
+		  </div>
+		  <div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Dismiss</button>
+		  </div>
+		</div>
+		<div id="glass">
+		</div>
+		
+		
+		<script type="text/javascript">
+			$('#glass').on('click', function(e) {
+				$('#ie-notice').modal();
+				e.preventDefault();
+
+				if (!e) var e = window.event;
+				e.cancelBubble = true;
+				if (e.stopPropagation) e.stopPropagation();
+			});
+		</script>
+	<![endif]-->
+
+	{% block content %}
+	<div id="page" class="container-fluid" style = "margin-top:10px;margin-left:40px;width:1000px">
+		<div id = "menu" style = "margin-left:0px">
+			<ul class="nav nav-tabs">
+				<li id = "map_menu" class="active">
+					<a href="#" class="black" onclick="slide_carousel('map_container')" rel="tooltip" data-placement="bottom" data-original-title="How many times Obama and Romney are mentioned in each state. The color indicates their relative percentage.">Election Map </a>
+				</li>
+				<li id = "topic_menu">
+					<a href="#" class="black" onclick="slide_carousel('topic_container')" rel="tooltip" data-placement="bottom" data-original-title="Trending topics people tweet about when a candidate is mentioned.">Trending Topics </a>
+				</li>
+				<li id = "realtime_menu">
+					<a href="#" class="black" onclick="slide_carousel('realtime_container')" rel="tooltip" data-placement="bottom" data-original-title="Latest tweets about the election">Real-time Tweets</a>
+				</li>
+				<li id = "index_menu">
+					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="Nation-wide Twitter mentions, normalized by the electoral college vote and Twitter user population of each state.">Twitter Publicity</a>
+				</li>
+				<li class="pull-right" style = "margin-top:13px;" >
+					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-url="http://twithinks.mit.edu" data-text="TwiThinks, Visualizing 2012 Presidential Election on Twitter" data-size="medium" data-via="_twithinks">Tweet</a>
+					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-right: 20px;" allowTransparency="true"></iframe>					
+				</li>
+			</ul>
+		</div>	
+		<div id="myCarousel" class="carousel slide" style = "height:500px;margin-left:0px">
+			<div class="carousel-inner">
+				<div id="map_container" class="active item carousel_element"></div>
+				<div id="topic_container" class="item carousel_element"> 
+					<div class="row-fluid" style = "margin-left:60px">
+						<h4 style = "position: absolute; top:30px">When mentioning Obama, people tweet about:</h4>
+						<h4 style = "position: absolute; left:550px; top:30px">When mentioning Romney, people tweet about:</h4>							
+  						<div id = "topic_obama" class = "span5"></div>
+  						<div id = "topic_romney" class = "span5" style = "margin-left:30px"></div>
+					</div>
+				</div>
+				<div id="realtime_container" class="item carousel_element">
+					<button id = "realtime_tweet_up" class="btn btn-small disabled" type="button" style = "margin: 5px; margin-left: 100px;"><i class="icon-chevron-up"></i></button>
+					<button id = "realtime_tweet_down" class="btn btn-small disabled" type="button" style = "margin: 5px;"><i class="icon-chevron-down"></i></button>
+					<button id = "realtime_tweet_refresh" class="btn btn-small" type="button" style = "margin: 5px;"><i class="icon-refresh"></i></button>
+					<div style = "display:inline"><img id = "load_icon" src = '/static/img/loading.gif' style = "width:25px; height:25px; margin:5px; display:none;"></div>
+					<div style = "display:inline"><span id = "new_tweet_notification" class="label label-info" style = "width:25px; height:25px; margin-left:150px; display:none">New tweets available, click refresh to view</span></div>
+					<ul id="realtime_tweet" style = "margin:auto; margin-top:10px"></ul>
+				</div>
+				<div id="index_container" class="item carousel_element">
+					<div id = "index_panel" style = "margin-left:100px; width:800px; height:500px"></div>
+				</div>
+			</div>
+		  	<a class="carousel-control left " href="#myCarousel" data-slide="prev">&lsaquo;</a> 
+			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		</div>
+		
+		<div style = "height:110px;">
+			<div id="control-wrapper" style = "margin-bottom:0px"> 
+				<div id="control" style = "margin-left:0px">
+					<div style="margin-left:20px;"><input type="text" id="date" size="10" style="width:140px;"/></div>
+				</div>
+				<div id = "tweet_panel" style = "margin-left:0px;width:1000px;">
+					<span style = "margin-left:20px" class="label label-info">Most Retweeted:</span>
+					<br>
+					<ul id = 'tweet' style = "margin-top:5px;margin-left:20px;overflow:hidden;"></ul>
+					<div style = "float:right;">
+						<button id = "tweet_up" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-up icon-white"></i></button>
+						<button id = "tweet_down" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-down icon-white"></i></button>  
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="modal hide fade" id="detail" style = "left:39%" tabindex="-1">
+			<div class="modal-header">
+				<h3 id="detail_name"></h3>
+			</div>
+			<div class="modal-body">
+				<div id="detail_chart"></div>
+			</div>
+			<div class="modal-footer" style="text-align:left;">
+				<div id = "detail_tweet_panel">
+					<div id="detail_tweet"></div>
+					<div style = "float:right;">
+						<button id = "detail_tweet_up" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-up icon-white"></i></button>
+						<button id = "detail_tweet_down" class="btn btn-small btn-primary" type="button" style = "display:block; margin: 5px;"><i class="icon-chevron-down icon-white"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	{% endblock %}
+	
+	<footer class="footer" style = "margin-bottom:0px">
+		<hr style = "margin-bottom:10px">
+    	<div align="center"> <font size="2"> Powered by <a href = "http://twithinks.mit.edu" target="_blank">TwiThinks</a></font></div>
+    </footer>
+	{% endblock %}
+</body>
+</html>

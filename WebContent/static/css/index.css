@@ -3,6 +3,11 @@ body {
 	background-image: url('../img/bgnoise.png');
 }
 
+.social {
+  display: inline-block;
+  width: 88px;
+}
+
 .background {
 	fill: none;
 	pointer-events: all;

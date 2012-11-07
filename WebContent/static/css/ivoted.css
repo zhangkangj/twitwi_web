@@ -3,3 +3,7 @@
 	margin: 0 auto 20px auto;
 }
 
+.social {
+  display: inline-block;
+  width: 88px;
+}

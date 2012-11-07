@@ -121,12 +121,16 @@
 				<li id = "index_menu">
 					<a href="#" class="black" onclick="slide_carousel('index_container')" rel="tooltip" data-placement="bottom" data-original-title="Nation-wide Twitter mentions, normalized by the electoral college vote and Twitter user population of each state.">Twitter Publicity</a>
 				</li>
-				<li class="pull-right" style = "margin-top:13px;" >
+				<li class="pull-right" style="margin-top:13px;" >
 					<a href="https://twitter.com/share" style = "" class="twitter-share-button pull-right" data-lang="en" data-url="http://twithinks.mit.edu" data-text="TwiThinks, Visualizing 2012 Presidential Election on Twitter" data-size="medium" data-via="_twithinks">Tweet</a>
-					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-right: 20px;" allowTransparency="true"></iframe>					
+				
 				</li>
-				<li class="pull-right">
-        		</li>
+        <li class="pull-right" style="margin-top:13px">
+					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-right: 20px;" allowTransparency="true"></iframe>
+        </li>
+				<li class="pull-right" style="margin: 13px 20px -1px 0px">
+<div class="g-plusone" data-size="medium" data-annotation="none"></div>
+        </li>
 			</ul>
 		</div>	
 		
@@ -208,7 +212,14 @@
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 	</div>
-	
+	<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>	
 	{% endblock %}
 	
 	<footer class="footer">

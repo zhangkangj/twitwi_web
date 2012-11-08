@@ -169,7 +169,9 @@
 			<div>@MittRomney</div>
 			<div><div id="romney-vote">-</div> </div>
 		</div>
-		<p style = "font-style:italic;color:grey;font-size:10px">Self-declared votes on Twitter do not necessarily reflect actual voting behavior.</p>
+		<p style = "font-size:20px">Voting is Over.</p>
+		<!-- <p style = "font-style:italic;color:grey;font-size:10px">Self-declared votes on Twitter do not necessarily reflect actual voting behavior.</p> -->
+		<p style = "font-style:italic;color:grey;font-size:10px">New tweets are generally retrospective and are not counted.</p>
 		<div class="pull-right" style = "margin-top:-30px; width:302px" >
 			<div class="social"><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://twithinks.mit.edu/ivoted" data-text="TwiThinks, Watch Twitter users voting in realtime" data-size="medium" data-via="_twithinks">Tweet</a>
       </div>
@@ -250,18 +252,20 @@
 			last_json_fetch = Date.now();
 			next = json;
 			current = $.extend(true, {}, next);
-			current.US[0] -= Math.floor((Math.random() * 100)) + 20;
-			current.US[1] -= Math.floor((Math.random() * 100)) + 20;
+			//current.US[0] -= Math.floor((Math.random() * 100)) + 20;
+			//current.US[1] -= Math.floor((Math.random() * 100)) + 20;
 			// start updating graphs
-			setInterval(update, 500);
+			//setInterval(update, 500);
+			update();
 		});
+		/*
 		setInterval(function() {
 			fetch();
 		}, interval);
 		setInterval(function() {
 			color_states(next);
 		}, interval);
-		
+		*/
 		function update() {
 			var ct = Date.now();
 			var progress = (ct - last_json_fetch) / interval;

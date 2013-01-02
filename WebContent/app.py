@@ -227,8 +227,11 @@ def ivoted_tweet():
 
 @app.route('/ivoted')
 def ivoted_page():
-    response = make_response(render_template('ivoted.html'))
-    return response
+    return make_response(render_template('ivoted.html'))
+
+@app.route('/gun')
+def gun_page():
+    return make_response(render_template('gun.html')) 
 
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

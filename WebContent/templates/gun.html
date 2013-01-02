@@ -1,64 +1,11 @@
-<!doctype html>
+{% extends 'index.html' %}
 
-<html lang="en">
-<head>
-	{% block head %}
-	<title>twithinks{% block subtitle %}{% endblock %}</title>
-	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-ico" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<script type="text/javascript">
-		var TWITWI_ROOT = {{ request.script_root|tojson|safe }};	// build absolute path in JS with this constant
-	</script>
-	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+{% block subtitle %} : Gun Control {% endblock %}
 
-	{% block page_head %}		
+{% block page_head %}
 	<link type="text/css" href="/static/css/gun.css" rel="stylesheet"/>
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"/>
-	
-	{% endblock %}
-	
-	<script type="text/javascript">
-	  	var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-35060935-1']);
-	  	_gaq.push(['_trackPageview']);	
-	  	(function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  	})();
-	</script>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	{% endblock %}
-</head>
+{% endblock %}
 
-<body>
-	{% block body %}
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
-				</a> 
-				<a class="brand" href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">TwiThinks!</a>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li {% if request.path==url_for('index') %}class="active"{% endif %}><a href="{% if request.path==url_for('index') %}#{% else %}{{ url_for('index') }}{% endif %}">Home</a></li>
-						<li {% if request.path==url_for('ivoted_page') %}class="active"{% endif %}><a href="{% if request.path==url_for('ivoted_page') %}#{% else %}{{ url_for('ivoted_page') }}{% endif %}">#IVoted</a></li>
-						<li {% if request.path==url_for('research') %}class="active"{% endif %}><a href="{% if request.path==url_for('research') %}#{% else %}{{ url_for('research') }}{% endif %}">Research</a></li>
-						<li {% if request.path==url_for('blog') %}class="active"{% endif %}><a href="{% if request.path==url_for('blog') %}#{% else %}{{ url_for('blog') }}{% endif %}">Blog</a></li>
-						<li {% if request.path==url_for('contact') %}class="active"{% endif %}><a href="{% if request.path==url_for('contact') %}#{% else %}{{ url_for('contact') }}{% endif %}">Contact</a></li>
-						<li {% if request.path==url_for('about') %}class="active"{% endif %}><a href="{% if request.path==url_for('about') %}#{% else %}{{ url_for('about') }}{% endif %}">About</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	
 	{% block content %}
 	<!--[if IE]>
 		<div id="ie-notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -93,12 +40,6 @@
 		<iframe src="http://gun-control.herokuapp.com/graph/group-interaction" scrolling="no" frameborder="0" width="900" height="600"></iframe>
 	</div>
 	
-	{% endblock %}
-	
-	<footer class="footer">
-		<hr>
-    	<div align="center"> &copy; <b>TwiThinks</b> 2012</div>
-    </footer>
 	{% endblock %}
 </body>
 </html>

@@ -44,7 +44,11 @@ def frame():
 @app.route('/ivoted')
 def ivoted_page():
 	return render_template('ivoted.html')
-	
+
+@app.route('/gun')
+def gun_page():
+    return make_response(render_template('gun.html')) 	
+
 # the meat
 @app.route('/<call>.json')
 def ajax(call):

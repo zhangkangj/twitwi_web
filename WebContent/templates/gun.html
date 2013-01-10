@@ -4,9 +4,39 @@
 
 {% block page_head %}
 	<link type="text/css" href="/static/css/gun.css" rel="stylesheet"/>
+	<style>
+		.description {
+			font-size: 16px;
+			margin: 20px auto;
+		}
+		
+		#disqus_thread {
+			width: 1000px;
+			margin: 20px auto;
+		}
+		
+		.social {
+			display: inline-block;
+			width: 88px;
+		}
+		
+		.social-bar {
+			width: 300px;
+			margin: 10px auto;
+		}
+		
+	</style>
+	
+	<meta property="og:title" content="Gun Control Discussion on TwiThinks" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://twithinks.mit.edu/gun" />
+	<meta property="og:image" content="http://twithinks.mit.edu/static/img/gun-20130110-snapshot.png" />
+	<meta property="og:site_name" content="TwiThinks" />
+	<meta property="og:description" content="Visualizing the Twitter users' gun control discussion." />
+	<meta property="fb:admins" content="680266857,608188613" />
 {% endblock %}
 
-	{% block content %}
+{% block content %}
 	<!--[if IE]>
 		<div id="ie-notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">
@@ -27,19 +57,61 @@
 	
 	<div id="gun_map" class = 'shadowlight contentblock'>
 		<h2>Geographical and temporal distribution of discussions</h2>
+		<div class="description">
+			We counted the tweets mentioning “gun” over a period from 12/12/2012 to 12/31/2012 and we then matched the users’ locations in the US. Then we accumulated the tweet count by hour to create this visualization. You can easily see how the nation responded to several important events along the Sandy Hook shooting timeline.
+		</div>
 		<iframe src="http://gun-control.herokuapp.com/graph/geographics" scrolling="no" frameborder="0" width="900" height="600"></iframe>
 	</div>
 	
 	<div id="gun_demographics" class = 'shadowlight contentblock'>
 		<h2>Attitudes toward <em>More</em> Gun Control in demographic groups</h2>
+		<div class="description">
+			We classified Twitter users into several demographic groups based on their profile information and we partitioned the populations based on their opinions on the gun control issue. You can read the five most retweeted statuses within a slice of the entire population.
+		</div>
 		<iframe src="http://gun-control.herokuapp.com/graph/demographics" scrolling="no" frameborder="0" width="900" height="800"></iframe>
 	</div>
 	
 	<div id="gun_party" class = 'shadowlight contentblock'>
 		<h2>Political groups interactions</h2>
+		<div class="description">
+			We classified Twitter users into several demographic groups based on their profile information and we partitioned the populations based on their opinions on the gun control issue. You can read the five most retweeted statuses within a slice of the entire population.
+		</div>
 		<iframe src="http://gun-control.herokuapp.com/graph/group-interaction" scrolling="no" frameborder="0" width="900" height="600"></iframe>
 	</div>
 	
-	{% endblock %}
-</body>
-</html>
+	<div class="social-bar center">
+		<div class="social">
+			<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://twithinks.mit.edu/gun" data-text="TwiThinks, visualizing the gun control discussion on Twitter." data-size="medium" data-via="_twithinks">Tweet</a>
+		</div>
+		<div class="social">
+			<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2Fgun&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+		</div>
+		<div class="social g-plusone" data-size="medium" data-annotation="bubble"></div>
+	</div>
+	
+	<div id="disqus_thread"></div>
+		<script type="text/javascript">
+				/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+				var disqus_shortname = 'twithinks'; // required: replace example with your forum shortname
+	//var disqus_developer = 1;
+	var disqus_url = 'http://twithinks.mit.edu/gun';
+
+				/* * * DON'T EDIT BELOW THIS LINE * * */
+				(function() {
+						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+						dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+	
+	<script type="text/javascript">
+		(function() {
+			var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+			po.src = 'https://apis.google.com/js/plusone.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		})();
+	</script>
+{% endblock %}

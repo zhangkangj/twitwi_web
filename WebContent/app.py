@@ -229,6 +229,49 @@ def ivoted_tweet():
 def ivoted_page():
     return make_response(render_template('ivoted.html'))
 
+@app.route('/nba.json')
+def nba():
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
+    cursor = g.con.cursor()
+    cursor.execute("""SELECT state, east, west FROM nba_count""")
+    result = {}
+    entry = cursor.fetchone()
+    while entry:
+        state = entry[0]
+        result[state] = [entry[1], entry[2]]
+        entry = cursor.fetchone()
+    return json.dumps(result)
+
+@app.route('/nba_tweet.json')
+def nba_tweet():
+    result = []
+    try:
+        time = request.args.get('time')
+    except:
+        return json.dumps(result)
+    try:
+        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+    except:
+        return 'server down'
+    cursor = g.con.cursor()
+    if time == None:
+        cursor.execute("""SELECT id,created_at,name,screen_name,text,state,entity FROM nba_realtime WHERE !isnull(name) AND !isnull(state) ORDER BY created_at DESC LIMIT 15""")
+    else:
+        cursor.execute("""SELECT id,created_at,name,screen_name,text,state,entity FROM nba_realtime WHERE !isnull(name) AND created_at <= %s and created_at > %s - 60 AND !isnull(state) AND state != 'US' AND lower(text) like '%i voted%' LIMIT 15""", (time, time))
+    entry = cursor.fetchone()
+    while entry:
+        id = str(entry[0])
+        name = entry[2].decode("utf-8",errors='ignore') 
+        text = entry[4].decode('utf-8',errors='ignore')
+        state = entry[5]
+        entity = entry[6]
+        result.append({'id':id,'created_at':entry[1],'name':name, 'screen_name': entry[3], 'text': text, "state":state, "entity":entity})
+        entry = cursor.fetchone()
+    return json.dumps(result)
+
 @app.route('/gun')
 def gun_page():
     return make_response(render_template('gun.html')) 

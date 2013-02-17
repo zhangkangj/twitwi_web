@@ -49,6 +49,10 @@ def ivoted_page():
 def gun_page():
     return make_response(render_template('gun.html')) 	
 
+@app.route('/allstar')
+def allstar_page():
+		return render_template('allstar.html')
+		
 # the meat
 @app.route('/<call>.json')
 def ajax(call):

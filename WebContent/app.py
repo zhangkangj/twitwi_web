@@ -233,5 +233,9 @@ def ivoted_page():
 def gun_page():
     return make_response(render_template('gun.html')) 
 
+@app.route('/allstar')
+def allstar_page():
+		return render_template('allstar.html')
+		
 if __name__ == '__main__':
     app.run(debug=DEBUG, host = '0.0.0.0', port = 5000)

@@ -1,0 +1,174 @@
+{% extends 'index.html' %}
+
+{% block subtitle %} : NBA All-Star Game{% endblock %}
+
+{% block page_head %}
+	<meta property="og:title" content="Discussion of NBA All-star game in realtime at TwiThinks" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://twithinks.mit.edu/allstar" />
+	<meta property="og:image" content="http://twithinks.mit.edu/static/img/allstar_snapshot.png" />
+	<meta property="og:site_name" content="TwiThinks" />
+	<meta property="og:description" content="Discussion of NBA All-star game in realtime." />
+	<meta property="fb:admins" content="680266857,608188613" />
+	<script type="text/javascript" src="/static/lib/d3/d3.v2.min.js"></script>
+	<script type="text/javascript" src="/static/js/allstar.js"></script>
+	<link type="text/css" href="/static/css/allstar.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+	<div id="vote-meter" class = 'shadowlight contentblock'>
+		<div class="candidate-box">
+			<img src="{{ url_for('static', filename='img/allstar_east.jpg') }}" width="200">
+			<div>East</div>
+			<div> <div id="east-vote">-</div> </div>
+		</div>
+	
+		<div id="vote-bar-box">
+			<div>Twitter users voted for</div>
+			<div id="vote-bar"></div>
+			<h3 id = "east_percent" style = "float:left"></h3>
+			<h3 id = "west_percent" style = "float:right"></h3>
+		</div>
+		
+		<div class="candidate-box">
+			<img src="{{ url_for('static', filename='img/allstar_west.jpg') }}" width="200">
+			<div>West</div>
+			<div><div id="west-vote">-</div> </div>
+		</div>
+		
+		<div class="pull-right" style = "margin-top:-30px; width:302px" >
+			<div class="social"><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://twithinks.mit.edu/ivoted" data-text="TwiThinks, Watch Twitter users voting in realtime" data-size="medium" data-via="_twithinks">Tweet</a>
+      </div>
+			<div class="social"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2Fivoted%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>				
+      </div>
+      <div class="social g-plusone" data-size="medium" data-annotation="bubble"></div>	
+		</div>
+	</div>
+		
+	<div id="vote-map" class = 'shadowlight contentblock'>
+		<div id = "tweet_holder" style = "height:50px"></div>
+	</div>
+	
+	<div class="container-fluid" style = "width:1100px; margin:auto">
+		<div class="row-fluid" style = "margin:auto">
+			<div class="span6">
+				<h3>Mentioning East</h3>
+				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=%22voted+for%22+east" data-widget-id="265841091654324224">Tweets about ""voted for" east"</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+			<div class="span6">
+				<h3>Mentioning West</h3>
+				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=%22voted+for%22+west" data-widget-id="265844840665858048">Tweets about ""voted for" west"</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+		</div>
+	</div>
+	
+	<div id="disqus_thread" style = "margin:auto; margin-top:30px">
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'twithinks'; // required: replace example with your forum shortname
+			//var disqus_developer = 1;
+			var disqus_url = 'http://twithinks.mit.edu/allstar';
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+	
+	<script type="text/javascript">
+		var interval = 60 * 1000;
+		var bar_w = 420, bar_h = 70;
+		var bar_svg = d3.select('#vote-bar').append('svg').attr('width', bar_w).attr('height', bar_h+30);
+		var line = bar_svg.append('line').attr('style', 'stroke:#888;stroke-width:4;stroke-dasharray:6,3;').attr('x1', bar_w/2).attr('x2', bar_w/2).attr('y1', 100).attr('y2', 0);
+		bar_svg.selectAll('rect').data();
+		var count_url = '/ivoted.json';
+		var last_json_fetch;
+		var current, next;
+		var comma = d3.format(',');
+		
+		(function requestAnimationFrame() {
+			window.requestAnimationFrame = window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.oRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function(/* function FrameRequestCallback */ callback, /* DOMElement Element */ element) {
+				return window.setTimeout(callback, 1000/60);
+			};
+		})();
+		
+		function fetch() {
+			d3.json(count_url, function(json) {
+				last_json_fetch = Date.now();
+				current = next;
+				next = json;
+			});
+		}
+		
+		// start fetching counts
+		d3.json(count_url, function(json) {
+			last_json_fetch = Date.now();
+			next = json;
+			current = $.extend(true, {}, next);
+			//current.US[0] -= Math.floor((Math.random() * 100)) + 20;
+			//current.US[1] -= Math.floor((Math.random() * 100)) + 20;
+			// start updating graphs
+			//setInterval(update, 500);
+			update();
+		});
+		/*
+		setInterval(function() {
+			fetch();
+		}, interval);
+		setInterval(function() {
+			color_states(next);
+		}, interval);
+		*/
+		function update() {
+			var ct = Date.now();
+			var progress = (ct - last_json_fetch) / interval;
+			var oc = current.US[0] * (1-progress) + progress * next.US[0];
+			var rc = current.US[1] * (1-progress) + progress * next.US[1];
+			update_count(oc, rc);
+			update_bar(oc, rc);
+			$("#east_percent").text(Math.round(oc/(oc+rc)*100) + "%");
+			$("#west_percent").text(Math.round(rc/(oc+rc)*100) + "%");
+		}
+		
+		function update_count(east, west) {
+			d3.select('#east-vote').text(comma(Math.floor(east)));
+			d3.select('#west-vote').text(comma(Math.floor(west)));
+		}
+		
+		function update_bar(east, west) {
+			var total = east + west;
+			var ow = bar_w * east / total;
+			var rw = bar_w * west / total
+			var data = [{name: 'east', w: ow}, {name: 'west', w: rw}];
+			bar_svg.selectAll('rect')
+				.data(data)
+				.attr('x', function(d) {return (d.name=='east')? 0 : data[0].w;})
+				.attr('width', function(d) {return d.w;})
+				.enter().append('rect')
+				.attr('y', 15)
+				.attr('x', function(d) {return (d.name=='east')? 0 : data[0].w;})
+				.attr('width', function(d) {return d.w;})
+				.attr('height', bar_h)
+				.attr('fill', function(d) {return (d.name=='east')? '#0D406B' : '#9E2017';});
+			bar_svg[0][0].appendChild(line[0][0]);
+		}
+	</script>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+{% endblock %}

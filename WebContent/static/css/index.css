@@ -1,6 +1,6 @@
 body {
 	padding-top: 60px;
-	background-image: url('../img/bgnoise.png');
+	background-image: url('/static/img/bgnoise.png');
 }
 
 .social {

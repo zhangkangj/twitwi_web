@@ -3,12 +3,12 @@
 {% block subtitle %} : NBA All-Star Game{% endblock %}
 
 {% block page_head %}
-	<meta property="og:title" content="Discussion of NBA All-star game in realtime at TwiThinks" />
+	<meta property="og:title" content="NBA All-star Battle on Twitter in realtime at TwiThinks" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="http://twithinks.mit.edu/allstar" />
 	<meta property="og:image" content="http://twithinks.mit.edu/static/img/allstar_snapshot.png" />
 	<meta property="og:site_name" content="TwiThinks" />
-	<meta property="og:description" content="Twitter discussion of NBA All-Star game in realtime." />
+	<meta property="og:description" content="NBA All-star Battle on Twitter in realtime." />
 	<meta property="fb:admins" content="680266857,608188613" />
 	<script type="text/javascript" src="/static/lib/d3/d3.v2.min.js"></script>
 	<script type="text/javascript" src="/static/js/allstar.js"></script>
@@ -16,15 +16,16 @@
 {% endblock %}
 
 {% block content %}
+	<h1>NBA All-Star Battle on Twitter</h1>
 	<div id="vote-meter" class = 'shadowlight contentblock'>
 		<div class="candidate-box">
 			<img src="{{ url_for('static', filename='img/allstar_east.jpg') }}" width="200">
-			<div>East</div>
 			<div> <div id="east-vote">-</div> </div>
 		</div>
 	
 		<div id="vote-bar-box">
-			<div>Twitter users are mentioning</div>
+			<div><img src="{{ url_for('static', filename='img/all-star-2013-houston.jpg') }}" width="180" style="margin-bottom: -25px"></div>
+			<div id="tagline">Tweets about East vs. West</div>
 			<div id="vote-bar"></div>
 			<h3 id = "east_percent" style = "float:left"></h3>
 			<h3 id = "west_percent" style = "float:right"></h3>
@@ -32,7 +33,6 @@
 		
 		<div class="candidate-box">
 			<img src="{{ url_for('static', filename='img/allstar_west.jpg') }}" width="200">
-			<div>West</div>
 			<div><div id="west-vote">-</div> </div>
 		</div>
 		

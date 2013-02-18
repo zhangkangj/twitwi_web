@@ -52,7 +52,8 @@ function color_states(json) {
 	for (state in json){
 		if (state != "US"){
 			var item = json[state];
-			g.select("#" + state).select("path").style("fill", color(item[0]/(item[0]+item[1])));
+			// Laplace smoothing
+			g.select("#" + state).select("path").style("fill", color((10+item[0])/(20+item[0]+item[1])));
 		}
 	}
 }

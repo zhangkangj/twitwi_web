@@ -10,7 +10,7 @@
 
 body {
 	padding-top: 60px;
-	background-image: url(static/img/bgnoise.png);
+	background-image: url('/static/img/bgnoise.png');
 }
 
 .shadowlight {
@@ -29,6 +29,12 @@ body {
   	-webkit-border-radius: 5px;
  	-moz-border-radius: 5px;
  	border-radius: 5px;
+}
+
+#tagline {
+	font-size: 24px;
+	font-weight: bolder;
+	margin-bottom: 10px;
 }
 
 #vote-meter {
@@ -110,6 +116,12 @@ body {
 
 .hover path {
 	stroke: #888;
+}
+
+h1 {
+	margin: auto;
+	display: block;
+	width: 502px;
 }
 
 .background {

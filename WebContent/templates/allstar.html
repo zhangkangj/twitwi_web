@@ -24,7 +24,7 @@
 		</div>
 	
 		<div id="vote-bar-box">
-			<div>Twitter users voted for</div>
+			<div>Twitter users are mentioning</div>
 			<div id="vote-bar"></div>
 			<h3 id = "east_percent" style = "float:left"></h3>
 			<h3 id = "west_percent" style = "float:right"></h3>
@@ -36,10 +36,10 @@
 			<div><div id="west-vote">-</div> </div>
 		</div>
 		
-		<div class="pull-right" style = "margin-top:-30px; width:302px" >
-			<div class="social"><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://twithinks.mit.edu/ivoted" data-text="TwiThinks, Watch Twitter users voting in realtime" data-size="medium" data-via="_twithinks">Tweet</a>
+		<div style="margin:-30px auto auto auto; width:302px" >
+			<div class="social"><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://twithinks.mit.edu/allstar" data-text="TwiThinks, Watch Twitter users talking about #NBAAllStar in realtime" data-size="medium" data-via="_twithinks">Tweet</a>
       </div>
-			<div class="social"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2Fivoted%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>				
+			<div class="social"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwithinks.mit.edu%2Fallstar%2F&amp;send=false&amp;layout=button_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>				
       </div>
       <div class="social g-plusone" data-size="medium" data-annotation="bubble"></div>	
 		</div>
@@ -53,12 +53,12 @@
 		<div class="row-fluid" style = "margin:auto">
 			<div class="span6">
 				<h3>Mentioning East</h3>
-				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=%22voted+for%22+east" data-widget-id="265841091654324224">Tweets about ""voted for" east"</a>
+				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=allstar+east" data-widget-id="265841091654324224">Tweets about "allstar east"</a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 			<div class="span6">
 				<h3>Mentioning West</h3>
-				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=%22voted+for%22+west" data-widget-id="265844840665858048">Tweets about ""voted for" west"</a>
+				<a class="twitter-timeline" data-dnt=true href="https://twitter.com/search?q=allstar+west" data-widget-id="265844840665858048">Tweets about "allstar west"</a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 		var bar_svg = d3.select('#vote-bar').append('svg').attr('width', bar_w).attr('height', bar_h+30);
 		var line = bar_svg.append('line').attr('style', 'stroke:#888;stroke-width:4;stroke-dasharray:6,3;').attr('x1', bar_w/2).attr('x2', bar_w/2).attr('y1', 100).attr('y2', 0);
 		bar_svg.selectAll('rect').data();
-		var count_url = '/ivoted.json';
+		var count_url = '/nba.json';
 		var last_json_fetch;
 		var current, next;
 		var comma = d3.format(',');
@@ -116,20 +116,20 @@
 			last_json_fetch = Date.now();
 			next = json;
 			current = $.extend(true, {}, next);
-			//current.US[0] -= Math.floor((Math.random() * 100)) + 20;
-			//current.US[1] -= Math.floor((Math.random() * 100)) + 20;
+			current.US[0] -= Math.floor((Math.random() * 50)) + 20;
+			current.US[1] -= Math.floor((Math.random() * 50)) + 20;
 			// start updating graphs
-			//setInterval(update, 500);
+			setInterval(update, 500);
 			update();
 		});
-		/*
+		
 		setInterval(function() {
 			fetch();
 		}, interval);
 		setInterval(function() {
 			color_states(next);
 		}, interval);
-		*/
+		
 		function update() {
 			var ct = Date.now();
 			var progress = (ct - last_json_fetch) / interval;

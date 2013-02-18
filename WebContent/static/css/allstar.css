@@ -118,12 +118,6 @@ body {
 	stroke: #888;
 }
 
-h1 {
-	margin: auto;
-	display: block;
-	width: 502px;
-}
-
 .background {
 	fill: none;
 	pointer-events: all;

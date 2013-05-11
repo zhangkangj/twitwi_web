@@ -65,7 +65,7 @@ def research():
 def mention():
     result = {}
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -92,7 +92,7 @@ def mention():
 def topic():
     result = {}
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -128,7 +128,7 @@ def sample_tweet():
     if None in [time, topic]:
         return json.dumps(result)
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -163,7 +163,7 @@ def realtime():
     except:
         return json.dumps(result)
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -185,7 +185,7 @@ def realtime():
 @app.route('/ivoted.json')
 def ivoted():
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -206,7 +206,7 @@ def ivoted_tweet():
     except:
         return json.dumps(result)
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -232,7 +232,7 @@ def ivoted_page():
 @app.route('/nba.json')
 def nba():
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()
@@ -253,7 +253,7 @@ def nba_tweet():
     except:
         return json.dumps(result)
     try:
-        g.con = MySQLdb.connect(host = 'twitwi.mit.edu', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
+        g.con = MySQLdb.connect(host = '18.239.1.192', user = 'twithinks', passwd = 'tt2012PE31415', db = 'twitwi', port = 3306)
     except:
         return 'server down'
     cursor = g.con.cursor()

@@ -69,6 +69,10 @@ def blog():
 def contact():
     return render_template('contact.html')
 
+@app.route('/alpha-signup')
+def alpha_signup():
+    return render_template('alpha-signup.html')
+
 @app.route('/research')
 def research():
     return render_template('research.html')

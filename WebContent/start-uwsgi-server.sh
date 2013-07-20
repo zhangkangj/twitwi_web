@@ -1,3 +1,10 @@
 #!/bin/bash
 
-uwsgi -s /tmp/uwsgi.sock --module app:app -p 2 --chmod-socket 664 --logto ~/log/twithinks.log &
+uwsgi	--master \
+	--socket /tmp/twithinks.com.sock \
+	--chmod-socket=666 \
+	--wsgi-file app.py \
+	--callable app \
+	--processes 2  \
+	--virtualenv venv
+#	--logto ~/log/twithinks.log

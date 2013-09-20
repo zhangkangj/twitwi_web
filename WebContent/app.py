@@ -22,7 +22,7 @@ news = {1344704400-46800:'R:Paul Ryan as VP Candidate',
         1352178000:'O:Won the election'
 }
 
-DB_HOST = '128.30.16.249'
+DB_HOST = '128.31.7.93'
 DB_PORT = 3306
 DB_NAME = 'twitwi'
 DB_USER = 'twithinks'
